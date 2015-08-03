@@ -1,0 +1,74 @@
+skip_frontmatter: false
+
+linters:
+  ClassAttributeWithStaticValue:
+    enabled: true
+
+  ClassesBeforeIds:
+    enabled: false
+
+  ConsecutiveComments:
+    enabled: true
+
+  ConsecutiveSilentScripts:
+    enabled: true
+    max_consecutive: 2
+
+  EmptyScript:
+    enabled: true
+
+  HtmlAttributes:
+    enabled: true
+
+  ImplicitDiv:
+    enabled: true
+
+  LeadingCommentSpace:
+    enabled: true
+
+  LineLength:
+    enabled: false
+
+  MultilinePipe:
+    enabled: true
+
+  ObjectReferenceAttributes:
+    enabled: true
+
+  RuboCop:
+    enabled: true
+    # These cops are incredibly noisy when it comes to HAML templates, so we
+    # ignore them.
+    ignored_cops:
+      - Lint/BlockAlignment
+      - Lint/EndAlignment
+      - Lint/Void
+      - Metrics/BlockNesting
+      - Metrics/LineLength
+      - Style/AlignParameters
+      - Style/AsciiComments
+      - Style/FileName
+      - Style/IfUnlessModifier
+      - Style/IndentationWidth
+      - Style/Next
+      - Style/SpaceBeforeComment
+      - Style/TrailingWhitespace
+      - Style/WhileUntilModifier
+
+  RubyComments:
+    enabled: true
+
+  SpaceBeforeScript:
+    enabled: true
+
+  TagName:
+    enabled: true
+
+  TrailingWhitespace:
+    enabled: true
+
+  UnnecessaryInterpolation:
+    enabled: true
+
+  UnnecessaryStringOutput:
+    enabled: true

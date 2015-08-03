@@ -1,0 +1,7 @@
+-o doc/yard
+- doc/*.md
+--title 'PolishGeeks Dev Tools documentation'
+--charset utf-8
+--markup markdown
+--private
+--protected

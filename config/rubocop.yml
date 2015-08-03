@@ -1,0 +1,35 @@
+AlignParameters:
+  Enabled: false
+ClassLength:
+  CountComments: false
+  Max: 200
+LineLength:
+  Max: 99
+MethodLength:
+  CountComments: false
+  Max: 15
+Metrics/AbcSize:
+  Max: 25
+AllCops:
+  Exclude:
+    - bin/**/*
+    - db/**/*
+    - .gemspec/**/*
+    - .bundle/**/*
+    - vendor/**/*
+    - config/**/*
+    - script/**/*
+    - !ruby/regexp /old_and_unused\.rb$/
+    - !ruby/regexp /polishgeeks-[^\/]{2,}\.rb/
+  Include:
+    - '**/Rakefile'
+    - config.ru
+    - lib/tasks/**/*.rake
+    - lib/tasks/**/*.rb
+    - lib/capistrano/**/*.rb
+    - lib/capistrano/**/*.cap
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+  SupportedStyles:
+    - aligned
+    - indented
