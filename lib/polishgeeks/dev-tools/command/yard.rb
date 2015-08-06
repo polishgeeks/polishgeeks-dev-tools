@@ -27,7 +27,7 @@ module PolishGeeks
         # @return [String] yard options that should be used to generate documentation
         def options
           config = File.join(DevTools.gem_root, 'config', 'yardopts')
-          File.readlines(config).join(' ').gsub("\n", '') + ' --list-undoc'
+          File.readlines(config).join(' ').delete("\n") + ' --list-undoc'
         end
       end
     end

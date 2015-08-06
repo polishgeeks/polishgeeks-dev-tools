@@ -48,7 +48,7 @@ RSpec.describe PolishGeeks::DevTools::Command::AllowedExtensions do
     it { expect(subject.error_message).to eq expected }
   end
 
-  describe  do
+  describe do
     before do
       subject.instance_variable_set('@output', output)
     end
