@@ -1,6 +1,7 @@
 # PolishGeeks Dev Tools
 
 [![Build Status](https://travis-ci.org/polishgeeks/polishgeeks-dev-tools.png)](https://travis-ci.org/polishgeeks/polishgeeks-dev-tools)
+[![Code Climate](https://codeclimate.com/github/polishgeeks/polishgeeks-dev-tools/badges/gpa.svg)](https://codeclimate.com/github/polishgeeks/polishgeeks-dev-tools)
 
 Gem with a set of useful tools used when developing Ruby based applications.
 
