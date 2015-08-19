@@ -27,6 +27,7 @@ module PolishGeeks
       # Available commands
       # All commands will be executed in this order (first rubocop, then rspec, etc)
       COMMANDS = %i(
+        final_blank_line
         readme
         expires_in
         brakeman
