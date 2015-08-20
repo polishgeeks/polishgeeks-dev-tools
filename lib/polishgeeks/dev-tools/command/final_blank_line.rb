@@ -69,7 +69,7 @@ module PolishGeeks
         # @return [Array<String>] list of excluded files from config
         def config_excludes
           excluded_files = []
-          config_paths = DevTools.config.final_blank_line_in_files_ignored
+          config_paths = DevTools.config.final_blank_line_ignored
           return [] unless config_paths
 
           config_paths.each do |path|

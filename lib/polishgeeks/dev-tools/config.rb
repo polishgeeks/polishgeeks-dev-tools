@@ -23,16 +23,16 @@ module PolishGeeks
       attr_accessor :simplecov_threshold
       attr_accessor :rspec_files_structure_ignored
       attr_accessor :expires_in_files_ignored
-      attr_accessor :final_blank_line_in_files_ignored
+      attr_accessor :final_blank_line_ignored
 
       # Available commands
       # All commands will be executed in this order (first rubocop, then rspec, etc)
       COMMANDS = %i(
-        final_blank_line
         readme
         expires_in
         brakeman
         rubocop
+        final_blank_line
         haml_lint
         allowed_extensions
         yml_parser

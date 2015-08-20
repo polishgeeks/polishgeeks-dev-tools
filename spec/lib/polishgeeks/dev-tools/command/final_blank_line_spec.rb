@@ -141,11 +141,11 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
   end
 
   describe '#config_excludes' do
-    context 'final_blank_line_in_files_ignored is set' do
+    context 'final_blank_line_ignored is set' do
       let(:file_path) { rand.to_s }
       let(:directory_path) { rand.to_s }
       let(:paths) { [file_path, directory_path] }
-      let(:config) { double(final_blank_line_in_files_ignored: paths) }
+      let(:config) { double(final_blank_line_ignored: paths) }
       let(:expected_file_in_directory_path) { rand.to_s }
       let(:expected_files) { [file_path, expected_file_in_directory_path] }
 
@@ -173,8 +173,8 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
       it { expect(subject.send(:config_excludes)).to eq expected_files }
     end
 
-    context 'final_blank_line_in_files_ignored is not set' do
-      let(:config) { double(final_blank_line_in_files_ignored: nil) }
+    context 'final_blank_line_ignored is not set' do
+      let(:config) { double(final_blank_line_ignored: nil) }
       before do
         expect(PolishGeeks::DevTools)
           .to receive(:config)
