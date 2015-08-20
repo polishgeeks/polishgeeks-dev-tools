@@ -9,10 +9,7 @@ module PolishGeeks
 
         # Default paths which we want to exclude from analyse
         DEFAULT_PATHS_TO_EXCLUDE = %w(
-          coverage
-          tmp
-          log
-          public
+          coverage tmp log vendor public
           app/assets/images
           app/assets/fonts
         )
