@@ -50,7 +50,7 @@ module PolishGeeks
 
         # @return [Array<String>] array with files to analyze
         def files_to_analyze
-          # expression {*,.*} is needed because glob don't take unix-like hidden files
+          # expression {*,.*} is needed because glob method don't take unix-like hidden files
           files_from_path('**/{*,.*}') - excludes
         end
 
@@ -74,9 +74,11 @@ module PolishGeeks
           excluded_files = []
           config_paths = DevTools.config.final_blank_line_in_files_ignored
           return [] unless config_paths
+
           config_paths.each do |path|
             excluded_files << (File.file?(path) ? path : files_from_path(path))
           end
+
           excluded_files
         end
 
