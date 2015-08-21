@@ -45,6 +45,11 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
           .to receive(:readlines)
           .with(not_empty_file)
           .and_return([rand.to_s + 'end'])
+
+        expect(subject)
+          .to receive(:sanitize)
+          .with(not_empty_file)
+          .and_return(not_empty_file)
         subject.execute
       end
 
@@ -145,10 +150,7 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
 
   describe '#config_excludes' do
     context 'final_blank_line_ignored is set' do
-      let(:file_path) { rand.to_s }
-      let(:directory_path) { rand.to_s }
-      let(:file_in_directory) { rand.to_s }
-      let(:paths) { [file_path, directory_path] }
+      let(:paths) { [rand.to_s, rand.to_s] }
       let(:config) { double(final_blank_line_ignored: paths) }
 
       before do
@@ -156,23 +158,15 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
           .to receive(:config)
           .and_return config
 
-        expect(File)
-          .to receive(:file?)
-          .with(file_path)
-          .and_return(true)
-
-        expect(File)
-          .to receive(:file?)
-          .with(directory_path)
-          .and_return(false)
-
-        expect(subject)
-          .to receive(:files_from_path)
-          .with(directory_path)
-          .and_return(file_in_directory)
+        paths.each do |path|
+          expect(subject)
+            .to receive(:files_from_path)
+            .with("#{path}")
+            .and_return(path)
+        end
       end
 
-      it { expect(subject.send(:config_excludes)).to eq [file_path, file_in_directory] }
+      it { expect(subject.send(:config_excludes)).to eq paths }
     end
 
     context 'final_blank_line_ignored is not set' do
@@ -187,27 +181,53 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
   end
 
   describe '#files_from_path' do
-    let(:path) { rand.to_s }
-    let(:file) { rand.to_s }
-    let(:dir) { rand.to_s }
+    let(:app_root) { PolishGeeks::DevTools.app_root }
 
-    before do
-      expect(Dir)
-        .to receive(:glob)
-        .with(path)
-        .and_return([file, dir])
+    context 'path is a directory' do
+      let(:path) { rand.to_s }
+      let(:file_in_path) { "#{app_root}/#{rand}" }
+      let(:dir_in_path) { "#{app_root}/#{rand}" }
+      before do
+        expect(File)
+          .to receive(:file?)
+          .with("#{app_root}/#{path}")
+          .and_return(false)
 
-      expect(File)
-        .to receive(:file?)
-        .with(file)
-        .and_return(true)
+        expect(Dir)
+          .to receive(:glob)
+          .with("#{app_root}/#{path}")
+          .and_return([file_in_path, dir_in_path])
 
-      expect(File)
-        .to receive(:file?)
-        .with(dir)
-        .and_return(false)
+        expect(File)
+          .to receive(:file?)
+          .with(file_in_path)
+          .and_return(true)
+
+        expect(File)
+          .to receive(:file?)
+          .with(dir_in_path)
+          .and_return(false)
+      end
+      it { expect(subject.send(:files_from_path, path)).to eq [file_in_path] }
     end
 
-    it { expect(subject.send(:files_from_path, path)).to eq [file] }
+    context 'path is a file' do
+      let(:path) { rand.to_s }
+      before do
+        expect(File)
+          .to receive(:file?)
+          .with("#{app_root}/#{path}")
+          .and_return(true)
+      end
+      it { expect(subject.send(:files_from_path, path)).to eq ["#{app_root}/#{path}"] }
+    end
+  end
+
+  describe '#sanitize' do
+    let(:file) { rand.to_s }
+    let(:app_root) { PolishGeeks::DevTools.app_root }
+    let(:path) { "#{app_root}/#{file}" }
+
+    it { expect(subject.send(:sanitize, "#{app_root}/#{path}")).to eq file }
   end
 end
