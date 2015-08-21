@@ -60,9 +60,11 @@ module PolishGeeks
         # @return [Array<String>] list of default excluded files
         def default_excludes
           excluded_files = []
+
           DEFAULT_PATHS_TO_EXCLUDE.each do |path|
             excluded_files << files_from_path("#{path}/**/{*,.*}")
           end
+
           excluded_files
         end
 

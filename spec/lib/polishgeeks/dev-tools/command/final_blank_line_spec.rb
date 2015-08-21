@@ -4,7 +4,9 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
   subject { described_class.new }
 
   describe '#execute' do
-    let(:files_to_analyze) { [rand.to_s, rand.to_s] }
+    let(:not_empty_file) { rand.to_s }
+    let(:empty_file) { rand.to_s }
+    let(:files_to_analyze) { [not_empty_file, empty_file] }
 
     before do
       expect(subject)
@@ -13,18 +15,21 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
 
       expect(File)
         .to receive(:size)
-        .exactly(files_to_analyze.size).times
-        .and_return(2)
+        .with(not_empty_file)
+        .and_return(1)
+
+      expect(File)
+        .to receive(:size)
+        .with(empty_file)
+        .and_return(0)
     end
 
     context 'when all files have blank final line' do
       before do
-        files_to_analyze.each do |content|
-          expect(IO)
-            .to receive(:readlines)
-            .with(content)
-            .and_return([rand.to_s + "\n"])
-        end
+        expect(IO)
+          .to receive(:readlines)
+          .with(not_empty_file)
+          .and_return([rand.to_s + "\n"])
         subject.execute
       end
 
@@ -36,17 +41,15 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
 
     context 'when exist files without blank final line' do
       before do
-        files_to_analyze.each do |content|
-          expect(IO)
-            .to receive(:readlines)
-            .with(content)
-            .and_return([rand.to_s + 'end'])
-        end
+        expect(IO)
+          .to receive(:readlines)
+          .with(not_empty_file)
+          .and_return([rand.to_s + 'end'])
         subject.execute
       end
 
       it 'should set appropriate variables' do
-        expect(subject.output).to eq files_to_analyze
+        expect(subject.output).to eq [not_empty_file]
         expect(subject.counter).to eq(files_to_analyze.count)
       end
     end
@@ -62,7 +65,7 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
       it { expect(subject.valid?).to eq true }
     end
 
-    context 'when output have some values' do
+    context 'when output have some files' do
       let(:output) { ['file_name'] }
       it { expect(subject.valid?).to eq false }
     end
@@ -144,10 +147,9 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
     context 'final_blank_line_ignored is set' do
       let(:file_path) { rand.to_s }
       let(:directory_path) { rand.to_s }
+      let(:file_in_directory) { rand.to_s }
       let(:paths) { [file_path, directory_path] }
       let(:config) { double(final_blank_line_ignored: paths) }
-      let(:expected_file_in_directory_path) { rand.to_s }
-      let(:expected_files) { [file_path, expected_file_in_directory_path] }
 
       before do
         expect(PolishGeeks::DevTools)
@@ -167,10 +169,10 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
         expect(subject)
           .to receive(:files_from_path)
           .with(directory_path)
-          .and_return(expected_file_in_directory_path)
+          .and_return(file_in_directory)
       end
 
-      it { expect(subject.send(:config_excludes)).to eq expected_files }
+      it { expect(subject.send(:config_excludes)).to eq [file_path, file_in_directory] }
     end
 
     context 'final_blank_line_ignored is not set' do
@@ -186,20 +188,26 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
 
   describe '#files_from_path' do
     let(:path) { rand.to_s }
-    let(:files) { [rand.to_s, rand.to_s] }
+    let(:file) { rand.to_s }
+    let(:dir) { rand.to_s }
 
     before do
       expect(Dir)
         .to receive(:glob)
         .with(path)
-        .and_return(files)
+        .and_return([file, dir])
 
       expect(File)
         .to receive(:file?)
+        .with(file)
         .and_return(true)
-        .exactly(files.size).times
+
+      expect(File)
+        .to receive(:file?)
+        .with(dir)
+        .and_return(false)
     end
 
-    it { expect(subject.send(:files_from_path, path)).to eq files }
+    it { expect(subject.send(:files_from_path, path)).to eq [file] }
   end
 end

@@ -70,13 +70,10 @@ determine, which you can use in your project:
 
 Some validators might accept additional config settings - please refer to this table for a description on how to use them:
 
-| Option                        | Validator             | Description                                              |
-|-------------------------------|-----------------------|----------------------------------------------------------|
-| rspec_files_structure_ignored | rspec_files_structure | You can provide an array of files that should be ignored |
-| final_blank_line_ignored      | final_blank_line      | You can provide an array of files (ex. lib/file.rb) or   |
-|                               |                       | path (ex. lib/**/*) should be ignored.                   |
-|                               |                       | If you want ignore hidden file (ex .gitignore),          |
-|                               |                       | you should use {*,.*} expression (ex lib/**/{*,.*})      |
+| Option                        | Validator             | Description                                                                                         |
+|-------------------------------|-----------------------|-----------------------------------------------------------------------------------------------------|
+| rspec_files_structure_ignored | rspec_files_structure | You can provide an array of files that should be ignored                                            |
+| final_blank_line_ignored      | final_blank_line      | You can provide an array of files (ex. lib/file.rb) or paths (ex. lib/\*\*/\*) that should be ignored |
 
 ## Usage in any Rails/Ruby application
 
