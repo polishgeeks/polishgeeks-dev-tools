@@ -95,7 +95,7 @@ GEM
       mongoid (~> 4.0.0)
       rake
       rspec (~> 3.1)
-    moped (2.0.6)
+    moped (2.0.7)
       bson (~> 3.0)
       connection_pool (~> 2.0)
       optionable (~> 0.2.0)
