@@ -4,58 +4,48 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
   subject { described_class.new }
 
   describe '#execute' do
-    let(:not_empty_file) { rand.to_s }
-    let(:empty_file) { rand.to_s }
-    let(:files_to_analyze) { [not_empty_file, empty_file] }
+    let(:files) { [rand.to_s, rand.to_s] }
 
     before do
       expect(subject)
         .to receive(:files_to_analyze)
-        .and_return(files_to_analyze)
-
-      expect(File)
-        .to receive(:size)
-        .with(not_empty_file)
-        .and_return(1)
-
-      expect(File)
-        .to receive(:size)
-        .with(empty_file)
-        .and_return(0)
+        .and_return(files)
     end
 
-    context 'when all files have blank final line' do
+    context 'when all files are valid' do
       before do
-        expect(IO)
-          .to receive(:readlines)
-          .with(not_empty_file)
-          .and_return([rand.to_s + "\n"])
+        expect(subject)
+          .to receive(:file_valid?)
+          .exactly(files.count).times
+          .and_return true
         subject.execute
       end
 
       it 'should set appropriate variables' do
         expect(subject.output).to eq []
-        expect(subject.counter).to eq(files_to_analyze.count)
+        expect(subject.counter).to eq(files.count)
       end
     end
 
-    context 'when exist files without blank final line' do
+    context 'when exist not valid file' do
       before do
-        expect(IO)
-          .to receive(:readlines)
-          .with(not_empty_file)
-          .and_return([rand.to_s + 'end'])
-
         expect(subject)
-          .to receive(:sanitize)
-          .with(not_empty_file)
-          .and_return(not_empty_file)
+          .to receive(:file_valid?)
+          .exactly(files.count).times
+          .and_return false
+
+        files.each do |file|
+          expect(subject)
+            .to receive(:sanitize)
+            .with(file)
+            .and_return(file)
+        end
         subject.execute
       end
 
       it 'should set appropriate variables' do
-        expect(subject.output).to eq [not_empty_file]
-        expect(subject.counter).to eq(files_to_analyze.count)
+        expect(subject.output).to eq files
+        expect(subject.counter).to eq(files.count)
       end
     end
   end
@@ -229,5 +219,51 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
     let(:path) { "#{app_root}/#{file}" }
 
     it { expect(subject.send(:sanitize, "#{app_root}/#{path}")).to eq file }
+  end
+
+  describe '#file_valid?' do
+    let(:file) { rand.to_s }
+
+    context 'file is not empty' do
+      before do
+        expect(File)
+          .to receive(:size)
+          .with(file)
+          .and_return(1)
+      end
+
+      context 'file has final blank line' do
+        before do
+          expect(IO)
+            .to receive(:readlines)
+            .with(file)
+            .and_return([rand.to_s + "\n"])
+        end
+
+        it { expect(subject.send(:file_valid?, file)).to eq true }
+      end
+
+      context 'file does not have final blank line' do
+        before do
+          expect(IO)
+            .to receive(:readlines)
+            .with(file)
+            .and_return([rand.to_s + 'end'])
+        end
+
+        it { expect(subject.send(:file_valid?, file)).to eq false }
+      end
+    end
+
+    context 'file is empty' do
+      before do
+        expect(File)
+          .to receive(:size?)
+          .with(file)
+          .and_return(0)
+
+        it { expect(subject.send(:file_valid?, file)).to eq true }
+      end
+    end
   end
 end

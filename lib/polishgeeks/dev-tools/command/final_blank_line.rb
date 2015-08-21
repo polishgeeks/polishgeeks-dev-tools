@@ -9,7 +9,11 @@ module PolishGeeks
 
         # Default paths which we want to exclude from analyse
         DEFAULT_PATHS_TO_EXCLUDE = %w(
-          coverage tmp log vendor public
+          coverage
+          tmp
+          log
+          vendor
+          public
           app/assets/images
           app/assets/fonts
         )
@@ -21,7 +25,7 @@ module PolishGeeks
 
           files_to_analyze.each do |file|
             @counter += 1
-            @output << sanitize(file) if File.size(file) > 0 && IO.readlines(file).last[-1] != "\n"
+            @output << sanitize(file) unless file_valid?(file)
           end
         end
 
@@ -98,6 +102,13 @@ module PolishGeeks
         #   sanitize(file) #=> lib/lib.rb
         def sanitize(file)
           file.gsub("#{PolishGeeks::DevTools.app_root}/", '')
+        end
+
+        # @param [String] file name which we want validate
+        # @return [Boolean] true if file is empty or has final blank line.
+        #   Otherwise return false.
+        def file_valid?(file)
+          File.size(file) == 0 || IO.readlines(file).last[-1] == "\n"
         end
       end
     end
