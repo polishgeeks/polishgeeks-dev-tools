@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    polishgeeks-dev-tools (1.0.0)
+    polishgeeks-dev-tools (1.0.1)
       brakeman
       faker
       haml-lint

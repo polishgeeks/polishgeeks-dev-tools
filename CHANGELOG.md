@@ -1,4 +1,4 @@
-# # PolishGeeks Dev Tools Changelog
+# PolishGeeks Dev Tools Changelog
 
 ## 1.0.1
 
