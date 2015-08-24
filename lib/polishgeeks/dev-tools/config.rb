@@ -21,8 +21,14 @@ module PolishGeeks
       end
 
       attr_accessor :simplecov_threshold
-      attr_accessor :rspec_files_structure_ignored
-      attr_accessor :expires_in_files_ignored
+
+      %i(
+        rspec_files_structure
+        expires_in_files
+        final_blank_line
+      ).each do |attr|
+        attr_accessor "#{attr}_ignored"
+      end
 
       # Available commands
       # All commands will be executed in this order (first rubocop, then rspec, etc)
@@ -31,6 +37,7 @@ module PolishGeeks
         expires_in
         brakeman
         rubocop
+        final_blank_line
         haml_lint
         allowed_extensions
         yml_parser

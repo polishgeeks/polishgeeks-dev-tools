@@ -50,6 +50,7 @@ determine, which you can use in your project:
 |-----------------------|-----------|---------------------------------------------------------------------------------------|
 | brakeman              | Rails     | A static analysis security vulnerability scanner for Ruby on Rails                    |
 | rubocop               | -         | Used to check Ruby syntax according to our styling                                    |
+| final_blank_line      | -         | Check if all files have final blank line                                              |
 | expires_in            | -         | Checks if there are typos like expire_in, etc that might brake app caching            |
 | haml_lint             | -         | User to check HAML syntax in the app views                                            |
 | yard                  | -         | YARD documentation standards checking                                                 |
@@ -69,9 +70,10 @@ determine, which you can use in your project:
 
 Some validators might accept additional config settings - please refer to this table for a description on how to use them:
 
-| Option                        | Validator             | Description                                              |
-|-------------------------------|-----------------------|----------------------------------------------------------|
-| rspec_files_structure_ignored | rspec_files_structure | You can provide an array of files that should be ignored |
+| Option                        | Validator             | Description                                                                                         |
+|-------------------------------|-----------------------|-----------------------------------------------------------------------------------------------------|
+| rspec_files_structure_ignored | rspec_files_structure | You can provide an array of files that should be ignored                                            |
+| final_blank_line_ignored      | final_blank_line      | You can provide an array of files (ex. lib/file.rb) or paths (ex. lib/\*\*/\*) that should be ignored |
 
 ## Usage in any Rails/Ruby application
 
