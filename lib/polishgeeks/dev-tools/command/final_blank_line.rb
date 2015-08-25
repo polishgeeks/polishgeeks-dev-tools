@@ -11,6 +11,7 @@ module PolishGeeks
         DEFAULT_PATHS_TO_EXCLUDE = %w(
           coverage
           tmp
+          doc
           log
           vendor
           public
