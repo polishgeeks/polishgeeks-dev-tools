@@ -90,8 +90,6 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
 
   describe '#files_to_analyze' do
     let(:files) { [rand.to_s, rand.to_s] }
-    let(:excludes) { [files[0]] }
-    let(:expected) { [files[1]] }
 
     before do
       expect(subject)
@@ -100,42 +98,38 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
         .and_return(files)
 
       expect(subject)
+        .to receive(:remove_excludes)
+        .with(files)
+        .and_return(files)
+    end
+
+    it { expect(subject.send(:files_to_analyze)).to eq files }
+  end
+
+  describe '#remove_excludes' do
+    let(:files) { %w(lib/file.txt exclude.txt file.rb) }
+    let(:excludes) { %w(lib exclude.txt) }
+
+    before do
+      expect(subject)
         .to receive(:excludes)
         .and_return(excludes)
     end
 
-    it { expect(subject.send(:files_to_analyze)).to eq expected }
+    it { expect(subject.send(:remove_excludes, files)).to eq ['file.rb'] }
   end
 
   describe '#excludes' do
-    let(:defaults) { [rand.to_s, rand.to_s] }
     let(:configs) { [rand.to_s] }
-    let(:expected) { (defaults + configs).flatten }
+    let(:expected) { (configs + described_class::DEFAULT_PATHS_TO_EXCLUDE).flatten }
 
     before do
-      expect(subject)
-        .to receive(:default_excludes)
-        .and_return(defaults)
-
       expect(subject)
         .to receive(:config_excludes)
         .and_return(configs)
     end
 
     it { expect(subject.send(:excludes)).to eq expected }
-  end
-
-  describe '#default_excludes' do
-    before do
-      described_class::DEFAULT_PATHS_TO_EXCLUDE.each do |path|
-        expect(subject)
-          .to receive(:files_from_path)
-          .with("#{path}/**/{*,.*}")
-          .and_return(path)
-      end
-    end
-
-    it { expect(subject.send(:default_excludes)).to eq described_class::DEFAULT_PATHS_TO_EXCLUDE }
   end
 
   describe '#config_excludes' do
@@ -147,13 +141,6 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
         expect(PolishGeeks::DevTools)
           .to receive(:config)
           .and_return config
-
-        paths.each do |path|
-          expect(subject)
-            .to receive(:files_from_path)
-            .with("#{path}")
-            .and_return(path)
-        end
       end
 
       it { expect(subject.send(:config_excludes)).to eq paths }

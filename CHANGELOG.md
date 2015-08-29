@@ -1,5 +1,9 @@
 # PolishGeeks Dev Tools Changelog
 
+## 1.1.2
+
+- Ignore .DS_Store files in FinalBlankLine validator
+
 ## 1.1.1
 
 - Ignore doc directory in FinalBlankLine validator

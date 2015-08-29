@@ -73,7 +73,7 @@ Some validators might accept additional config settings - please refer to this t
 | Option                        | Validator             | Description                                                                                         |
 |-------------------------------|-----------------------|-----------------------------------------------------------------------------------------------------|
 | rspec_files_structure_ignored | rspec_files_structure | You can provide an array of files that should be ignored                                            |
-| final_blank_line_ignored      | final_blank_line      | You can provide an array of files (ex. lib/file.rb) or paths (ex. lib/\*\*/\*) that should be ignored |
+| final_blank_line_ignored      | final_blank_line      | You can provide an array of files or directories that should be ignored                             |
 
 ## Usage in any Rails/Ruby application
 
