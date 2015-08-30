@@ -58,7 +58,7 @@ module PolishGeeks
         end
 
         # @param [Array<String>] files list which we want analyse
-        # @return [Array<String>] array without excluded files/directories
+        # @return [Array<String>] array without excluded files
         def remove_excludes(files)
           excluded_paths = excludes
           files.delete_if do |file|

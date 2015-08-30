@@ -121,7 +121,7 @@ RSpec.describe PolishGeeks::DevTools::Command::FinalBlankLine do
 
   describe '#excludes' do
     let(:configs) { [rand.to_s] }
-    let(:expected) { (configs + described_class::DEFAULT_PATHS_TO_EXCLUDE).flatten }
+    let(:expected) { configs + described_class::DEFAULT_PATHS_TO_EXCLUDE }
 
     before do
       expect(subject)
