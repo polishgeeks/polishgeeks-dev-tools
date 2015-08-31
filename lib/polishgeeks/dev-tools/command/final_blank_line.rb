@@ -17,6 +17,7 @@ module PolishGeeks
           public
           app/assets/images
           app/assets/fonts
+          .DS_Store
         )
 
         # Executes this command and set output and counter variables
@@ -49,40 +50,33 @@ module PolishGeeks
         private
 
         # @return [Array<String>] array with files to analyze
+        # @note method take all not excluded files, also with hidden files
         def files_to_analyze
           # expression {*,.*} is needed because glob method don't take unix-like hidden files
-          files_from_path('**/{*,.*}') - excludes
+          files = files_from_path('**/{*,.*}')
+          remove_excludes files
         end
 
-        # @return [Array<String>] list of files that
+        # @param [Array<String>] files list which we want analyse
+        # @return [Array<String>] array without excluded files
+        def remove_excludes(files)
+          excluded_paths = excludes
+          files.delete_if do |file|
+            excluded_paths.any? { |exclude| file =~ /#{exclude}/ }
+          end
+        end
+
+        # @return [Array<String>] list of files/directories that
         #   should be excluded from checking
+        # @note excluded files/directories are defined in DEFAULT_PATHS_TO_EXCLUDE
+        #   and in configuration file
         def excludes
-          (default_excludes + config_excludes).flatten
+          config_excludes + DEFAULT_PATHS_TO_EXCLUDE
         end
 
-        # @return [Array<String>] list of default excluded files
-        #   defined in DEFAULT_PATHS_TO_EXCLUDE
-        def default_excludes
-          excluded_files = []
-
-          DEFAULT_PATHS_TO_EXCLUDE.each do |path|
-            excluded_files << files_from_path("#{path}/**/{*,.*}")
-          end
-
-          excluded_files
-        end
-
-        # @return [Array<String>] list of excluded files from config file
+        # @return [Array<String>] list of excluded files/directories from config file
         def config_excludes
-          excluded_files = []
-          config_paths = DevTools.config.final_blank_line_ignored
-          return [] unless config_paths
-
-          config_paths.each do |path|
-            excluded_files << files_from_path(path)
-          end
-
-          excluded_files
+          DevTools.config.final_blank_line_ignored || []
         end
 
         # @param [String] path from which we want take files
