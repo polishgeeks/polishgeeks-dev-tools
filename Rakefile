@@ -12,6 +12,7 @@ task :check do
     )
     config.empty_method_ignored = %w(
       empty_method_spec.rb
+      file_parser_spec.rb
     )
   end
 

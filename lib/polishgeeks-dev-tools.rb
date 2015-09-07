@@ -36,8 +36,13 @@ module PolishGeeks
 end
 
 require 'polishgeeks/dev-tools/command/base'
+require 'polishgeeks/dev-tools/command/empty_method'
+require 'polishgeeks/dev-tools/command/empty_method/string_refinements'
 
 commands_path = File.dirname(__FILE__) + '/polishgeeks/dev-tools/command/*.rb'
+Dir[commands_path].each { |file| require file }
+
+commands_path = File.dirname(__FILE__) + '/polishgeeks/dev-tools/command/**/*.rb'
 Dir[commands_path].each { |file| require file }
 
 load 'polishgeeks/dev-tools/tasks/dev-tools.rake'
