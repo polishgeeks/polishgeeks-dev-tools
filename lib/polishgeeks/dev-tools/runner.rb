@@ -14,7 +14,7 @@ module PolishGeeks
         Config::COMMANDS.each do |command|
           next unless DevTools.config.public_send(:"#{command}?")
 
-          klass = command.to_s.gsub(/(?<=_|^)(\w)/) { |el| el.upcase }.gsub(/(?:_)(\w)/, '\1')
+          klass = command.to_s.gsub(/(?<=_|^)(\w)/, &:upcase).gsub(/(?:_)(\w)/, '\1')
           cmd = Object.const_get("PolishGeeks::DevTools::Command::#{klass}").new
           cmd.stored_output = output
           cmd.execute
