@@ -51,6 +51,7 @@ determine, which you can use in your project:
 | brakeman              | Rails     | A static analysis security vulnerability scanner for Ruby on Rails                    |
 | rubocop               | -         | Used to check Ruby syntax according to our styling                                    |
 | final_blank_line      | -         | Check if all files have final blank line                                              |
+| empty_method          | -         | Check if some files have empty methods                                                 |
 | expires_in            | -         | Checks if there are typos like expire_in, etc that might brake app caching            |
 | haml_lint             | -         | User to check HAML syntax in the app views                                            |
 | yard                  | -         | YARD documentation standards checking                                                 |
@@ -74,6 +75,7 @@ Some validators might accept additional config settings - please refer to this t
 |-------------------------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
 | rspec_files_structure_ignored | rspec_files_structure | You can provide an array of files that should be ignored                                                    |
 | final_blank_line_ignored      | final_blank_line      | You can provide an array of files (ex. lib/file.rb) or directories (ex. lib/command) that should be ignored |
+| empty_method_ignored          | empty_method          | You can provide an array of files (ex. lib/file.rb) or directories (ex. lib/command) that should be ignored |
 
 ## Usage in any Rails/Ruby application
 

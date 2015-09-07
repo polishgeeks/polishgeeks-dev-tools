@@ -1,5 +1,8 @@
 # PolishGeeks Dev Tools Changelog
 
+## 1.1.3
+- Added EmptyMethod command which checks if some files have empty methods
+
 ## 1.1.2
 
 - Ignore .DS_Store files in FinalBlankLine validator.

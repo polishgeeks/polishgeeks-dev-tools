@@ -10,6 +10,10 @@ task :check do
     config.expires_in_files_ignored = %w(
       lib/polishgeeks/dev-tools/command/expires_in.rb
     )
+    config.empty_method_ignored = %w(
+      empty_method_spec.rb
+      file_parser_spec.rb
+    )
   end
 
   PolishGeeks::DevTools::Runner.new.execute(
