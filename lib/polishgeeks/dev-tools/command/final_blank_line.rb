@@ -18,6 +18,7 @@ module PolishGeeks
           app/assets/images
           app/assets/fonts
           .DS_Store
+          .gem
         )
 
         # Executes this command and set output and counter variables
