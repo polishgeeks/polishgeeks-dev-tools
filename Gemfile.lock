@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    polishgeeks-dev-tools (1.1.3)
+    polishgeeks-dev-tools (1.2.0)
       brakeman
       faker
       haml-lint
@@ -49,7 +49,7 @@ GEM
       sass (~> 3.0)
       slim (>= 1.3.6, < 4.0)
       terminal-table (~> 1.4.5)
-    bson (3.2.1)
+    bson (3.2.4)
     builder (3.2.2)
     coderay (1.1.0)
     coercible (1.0.0)

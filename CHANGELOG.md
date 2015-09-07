@@ -1,6 +1,6 @@
 # PolishGeeks Dev Tools Changelog
 
-## 1.1.3
+## 1.2.0
 - Added EmptyMethod command which checks if some files have empty methods
 
 ## 1.1.2
