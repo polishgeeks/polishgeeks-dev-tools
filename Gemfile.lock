@@ -144,7 +144,7 @@ GEM
       parser (>= 2.2.0, < 3.0)
       reek (= 1.6.5)
       virtus (~> 1.0)
-    sass (3.4.18)
+    sass (3.4.19)
     sexp_processor (4.6.0)
     shoulda (3.5.0)
       shoulda-context (~> 1.0, >= 1.0.1)
