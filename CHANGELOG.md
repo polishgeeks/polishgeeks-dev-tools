@@ -1,5 +1,8 @@
 # PolishGeeks Dev Tools Changelog
 
+## 1.2.1
+- Extracted all errors to PolishGeeks::DevTools::Errors namespace
+
 ## 1.2.0
 - Added EmptyMethod command which checks if some files have empty methods
 

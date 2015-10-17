@@ -5,10 +5,6 @@ module PolishGeeks
       # Base class for all the commands
       # @abstract Subclass and use
       class Base
-        # Raised when we specify a framework in which a given command can be executed
-        # and it is not present (not detected)
-        class MissingFramework < StandardError; end
-
         attr_reader :output
         # stored_output [PolishGeeks::DevTools::OutputStorer] storer with results of previous
         #   commands (they might use output from previous/other commands)
@@ -40,14 +36,14 @@ module PolishGeeks
 
         # @raise [NotImplementedError] this should be implemented in a subclass
         def execute
-          fail NotImplementedError
+          fail Errors::NotImplementedError
         end
 
         # @raise [NotImplementedError] this should be implemented in a subclass
         #   if it is a validator type (or no implementation required when
         #   it is a validator)
         def valid?
-          fail NotImplementedError
+          fail Errors::NotImplementedError
         end
 
         # @return [String] what message should be printed when error occures
@@ -65,7 +61,7 @@ module PolishGeeks
           return unless self.class.framework
           return if PolishGeeks::DevTools.config.public_send(:"#{self.class.framework}?")
 
-          fail MissingFramework, self.class.framework
+          fail Errors::MissingFramework, self.class.framework
         end
       end
     end
