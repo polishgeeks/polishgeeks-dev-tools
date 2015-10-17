@@ -4,11 +4,13 @@ RSpec.describe PolishGeeks::DevTools::Command::Base do
   subject { described_class.new }
 
   describe '#execute' do
-    it { expect { subject.execute }. to raise_error(NotImplementedError) }
+    let(:error) { PolishGeeks::DevTools::Errors::NotImplementedError }
+    it { expect { subject.execute }. to raise_error(error) }
   end
 
   describe '#valid?' do
-    it { expect { subject.valid? }. to raise_error(NotImplementedError) }
+    let(:error) { PolishGeeks::DevTools::Errors::NotImplementedError }
+    it { expect { subject.valid? }. to raise_error(error) }
   end
 
   describe '#error_message' do
@@ -62,7 +64,7 @@ RSpec.describe PolishGeeks::DevTools::Command::Base do
         end
 
         it 'should raise exception' do
-          error = described_class::MissingFramework
+          error = PolishGeeks::DevTools::Errors::MissingFramework
           expect { subject.send(:ensure_framework_if_required) }.to raise_error(error, 'rails')
         end
       end
@@ -90,7 +92,7 @@ RSpec.describe PolishGeeks::DevTools::Command::Base do
         end
 
         it 'should raise exception' do
-          error = described_class::MissingFramework
+          error = PolishGeeks::DevTools::Errors::MissingFramework
           expect { subject.send(:ensure_framework_if_required) }.to raise_error(error, 'sinatra')
         end
       end
