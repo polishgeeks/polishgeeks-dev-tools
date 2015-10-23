@@ -43,7 +43,7 @@ RSpec.describe PolishGeeks::DevTools::Logger do
 
       it 'should raise RequirementsError' do
         expect { subject.log(tmp) }
-          .to raise_error PolishGeeks::DevTools::Logger::RequirementsError
+          .to raise_error PolishGeeks::DevTools::Errors::RequirementsError
       end
     end
   end
@@ -71,7 +71,7 @@ RSpec.describe PolishGeeks::DevTools::Logger do
       it 'should display "OK" text' do
         expect(subject)
           .to receive(:printf)
-          .with('%-40s %2s', 'Rubocop ', "\e[32mOK\e[0m\n")
+          .with('%-50s %2s', 'Rubocop ', "\e[32mOK\e[0m\n")
         subject.send(:info, task)
       end
     end
@@ -98,7 +98,7 @@ RSpec.describe PolishGeeks::DevTools::Logger do
       it 'should display "OK" text' do
         expect(subject)
           .to receive(:printf)
-          .with('%-40s %2s', 'Rubocop ', "\e[32mGENERATED\e[0m\n")
+          .with('%-50s %2s', 'Rubocop ', "\e[32mGENERATED\e[0m\n")
         subject.send(:info, task)
       end
     end
@@ -121,7 +121,7 @@ RSpec.describe PolishGeeks::DevTools::Logger do
 
       it 'should raise UnknownTaskType' do
         expect { subject.send(:info, tmp) }
-          .to raise_error PolishGeeks::DevTools::Logger::UnknownTaskType
+          .to raise_error PolishGeeks::DevTools::Errors::UnknownTaskType
       end
     end
   end

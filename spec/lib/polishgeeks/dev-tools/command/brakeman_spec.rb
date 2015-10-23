@@ -1,16 +1,17 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Command::Brakeman do
-  subject { described_class.new }
-  let(:config) { double(rails?: true) }
+  subject { described_class }
 
-  before do
-    expect(PolishGeeks::DevTools)
-      .to receive(:config)
-      .and_return(config)
-
-    subject
+  describe '#validators' do
+    it 'should work only when we have Rails framework' do
+      expect(subject.validators).to eq [PolishGeeks::DevTools::Validators::Rails]
+    end
   end
+end
+
+RSpec.describe PolishGeeks::DevTools::Command::Brakeman do
+  subject { described_class.new }
 
   describe '#execute' do
     context 'when we run brakeman' do

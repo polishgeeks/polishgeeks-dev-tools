@@ -2,6 +2,7 @@
 
 ## 1.2.1
 - Extracted all errors to PolishGeeks::DevTools::Errors namespace
+- Add support for validators
 
 ## 1.2.0
 - Added EmptyMethod command which checks if some files have empty methods

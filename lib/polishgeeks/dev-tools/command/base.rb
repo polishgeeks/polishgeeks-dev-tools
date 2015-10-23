@@ -5,6 +5,7 @@ module PolishGeeks
       # Base class for all the commands
       # @abstract Subclass and use
       class Base
+        # Output string that we get after executing this command
         attr_reader :output
         # stored_output [PolishGeeks::DevTools::OutputStorer] storer with results of previous
         #   commands (they might use output from previous/other commands)
@@ -17,7 +18,7 @@ module PolishGeeks
 
         class << self
           attr_accessor :type
-          attr_accessor :framework
+          attr_accessor :validators
 
           TYPES.each do |type|
             # @return [Boolean] if it is a given type command
@@ -25,13 +26,6 @@ module PolishGeeks
               self.type == type
             end
           end
-        end
-
-        # When we will try to use a given command, we need to check if it requires
-        # a given framework (Rails, Sinatra), if so, then we need to check if it is
-        # present, because without it a given command cannot run
-        def initialize
-          ensure_framework_if_required
         end
 
         # @raise [NotImplementedError] this should be implemented in a subclass
@@ -52,16 +46,16 @@ module PolishGeeks
           output
         end
 
-        private
-
-        # Checks if a framework is required for a given command, and if so, it wont
-        # allow to execute this command if it is not present
-        # @raise [PolishGeeks::DevTools::Command::Base::MissingFramework] if req framework missing
-        def ensure_framework_if_required
-          return unless self.class.framework
-          return if PolishGeeks::DevTools.config.public_send(:"#{self.class.framework}?")
-
-          fail Errors::MissingFramework, self.class.framework
+        # Runs validators if any to check if all requirements of this command
+        # are met in order to execute it properly
+        # @raise [PolishGeeks::DevTools::Errors::InvalidValidatorClassError] when invalid
+        #   validator class name is defined
+        # @raise [PolishGeeks::DevTools::Errors::PreCommandValidationError] when validator
+        #   conditions are not met
+        def ensure_executable!
+          (self.class.validators || []).each do |validator_class|
+            validator_class.new(stored_output).validate!
+          end
         end
       end
     end

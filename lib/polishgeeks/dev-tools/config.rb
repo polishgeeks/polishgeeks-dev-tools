@@ -48,7 +48,6 @@ module PolishGeeks
         tasks_files_names
         rspec
         simplecov
-        coverage
         yard
         examples_comparator
         rubycritic
@@ -77,23 +76,8 @@ module PolishGeeks
       def self.setup(&block)
         self.config = new
 
-        config.detect_framework
-
         block.call(config)
         config.freeze
-      end
-
-      # Detects if we use Rails, Sinatra or nothing
-      # We need to set it because some of the commands might work only for Rails
-      # or Sinatra (like brakeman for example - only Rails)
-      def detect_framework
-        define_singleton_method :rails? do
-          !defined?(Rails).nil?
-        end
-
-        define_singleton_method :sinatra? do
-          !defined?(App).nil?
-        end
       end
     end
   end

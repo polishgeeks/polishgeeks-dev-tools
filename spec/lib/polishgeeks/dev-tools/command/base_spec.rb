@@ -25,105 +25,31 @@ RSpec.describe PolishGeeks::DevTools::Command::Base do
     end
   end
 
-  describe '#new' do
-    it 'should execute ensure_framework_if_required' do
-      expect_any_instance_of(described_class)
-        .to receive(:ensure_framework_if_required)
-        .once
+  describe '#ensure_executable!' do
+    context 'when there are validators' do
+      let(:validator_class) { PolishGeeks::DevTools::Validators::Base }
 
-      described_class.new
-    end
-  end
+      before do
+        expect(described_class)
+          .to receive(:validators)
+          .and_return([validator_class])
 
-  describe '#ensure_framework_if_required' do
-    context 'when there is no framework required' do
-      before { described_class.framework = nil }
-
-      it { expect { subject.send(:ensure_framework_if_required) }.to_not raise_error }
-    end
-
-    context 'when there rails is required' do
-      before { described_class.framework = :rails }
-
-      context 'and it is included' do
-        before do
-          expect(PolishGeeks::DevTools)
-            .to receive(:config)
-            .and_return(double(rails?: true))
-            .exactly(2).times
-        end
-
-        it { expect { subject.send(:ensure_framework_if_required) }.to_not raise_error }
+        expect_any_instance_of(validator_class)
+          .to receive(:valid?)
+          .and_return(true)
       end
 
-      context 'and it is not included' do
-        before do
-          expect(PolishGeeks::DevTools)
-            .to receive(:config)
-            .and_return(double(rails?: false))
-        end
-
-        it 'should raise exception' do
-          error = PolishGeeks::DevTools::Errors::MissingFramework
-          expect { subject.send(:ensure_framework_if_required) }.to raise_error(error, 'rails')
-        end
-      end
+      it { expect { subject.ensure_executable! }.not_to raise_error }
     end
 
-    context 'when there sinatra is required' do
-      before { described_class.framework = :sinatra }
-
-      context 'and it is included' do
-        before do
-          expect(PolishGeeks::DevTools)
-            .to receive(:config)
-            .and_return(double(sinatra?: true))
-            .exactly(2).times
-        end
-
-        it { expect { subject.send(:ensure_framework_if_required) }.to_not raise_error }
+    context 'when we dont require any validators' do
+      before do
+        expect(described_class)
+          .to receive(:validators)
+          .and_return([])
       end
 
-      context 'and it is not included' do
-        before do
-          expect(PolishGeeks::DevTools)
-            .to receive(:config)
-            .and_return(double(sinatra?: false))
-        end
-
-        it 'should raise exception' do
-          error = PolishGeeks::DevTools::Errors::MissingFramework
-          expect { subject.send(:ensure_framework_if_required) }.to raise_error(error, 'sinatra')
-        end
-      end
-    end
-  end
-
-  describe 'class type definer' do
-    subject { described_class.dup }
-
-    context 'when it is generator' do
-      before { subject.type = :generator }
-
-      describe '.generator?' do
-        it { expect(subject.generator?).to eq true }
-      end
-
-      describe '.validator?' do
-        it { expect(subject.validator?).to eq false }
-      end
-    end
-
-    context 'when it is validator' do
-      before { subject.type = :validator }
-
-      describe '.generator?' do
-        it { expect(subject.generator?).to eq false }
-      end
-
-      describe '.validator?' do
-        it { expect(subject.validator?).to eq true }
-      end
+      it { expect { subject.ensure_executable! }.not_to raise_error }
     end
   end
 end

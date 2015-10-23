@@ -46,24 +46,6 @@ RSpec.describe PolishGeeks::DevTools::Config do
     it { subject.setup(&block) }
   end
 
-  describe '#detect_framework' do
-    before do
-      subject. detect_framework
-    end
-
-    describe '#rails?' do
-      context 'when Rails is not defined' do
-        it { expect(subject.rails?).to eq false }
-      end
-    end
-
-    describe '#sinatra?' do
-      context 'when Sinatra is not defined' do
-        it { expect(subject.sinatra?).to eq false }
-      end
-    end
-  end
-
   describe '#initialize' do
     described_class::COMMANDS.each do |attribute|
       it "should have #{attribute} command turned on by default" do
