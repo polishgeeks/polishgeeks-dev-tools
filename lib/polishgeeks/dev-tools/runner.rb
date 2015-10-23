@@ -17,6 +17,7 @@ module PolishGeeks
           klass = command.to_s.gsub(/(?<=_|^)(\w)/, &:upcase).gsub(/(?:_)(\w)/, '\1')
           cmd = Object.const_get("PolishGeeks::DevTools::Command::#{klass}").new
           cmd.stored_output = output
+          cmd.validation!
           cmd.execute
           output.public_send(:"#{command}=", cmd.output)
           logger.log(cmd)

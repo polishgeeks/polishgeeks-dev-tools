@@ -36,6 +36,9 @@ RSpec.describe PolishGeeks::DevTools::Runner do
           .with(output_storer)
 
         expect(instance)
+          .to receive(:validation!)
+
+        expect(instance)
           .to receive(:execute)
 
         expect(instance)

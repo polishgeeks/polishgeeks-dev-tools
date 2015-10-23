@@ -35,6 +35,9 @@ module PolishGeeks
   end
 end
 
+validators_path = File.dirname(__FILE__) + '/polishgeeks/dev-tools/validators/*.rb'
+Dir[validators_path].each { |file| require file }
+
 require 'polishgeeks/dev-tools/command/base'
 require 'polishgeeks/dev-tools/command/empty_method'
 require 'polishgeeks/dev-tools/command/empty_method/string_refinements'

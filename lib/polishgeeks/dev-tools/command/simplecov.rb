@@ -1,30 +1,51 @@
 module PolishGeeks
   module DevTools
     module Command
-      # Command wrapper for Simplecov statistics
-      # It informs us if Simplecov coverage stats were generated
+      # Command wrapper for Simple code coverage analysing
+      # It informs us if we didn't reach a proper code coverage level
       class Simplecov < Base
         self.type = :validator
 
-        # Regexp used to match code coverage from Simplecov generated output
-        MATCH_REGEXP = /\(\d+.\d+\%\) covered/
+        # Regexp used to match float number from coverage
+        NUMBER_REGEXP = /(\d+[.]\d+)/
+
+        # @return [Float] code coverage level
+        def to_f
+          output[*NUMBER_REGEXP].to_f
+        end
 
         # Executes this command
         # @return [String] command output
-        # @note Since this command wrapper is using external output
-        #   information (from Rspec), it doesn't execute any shell tasks
         def execute
-          @output = stored_output.rspec
+          @output = stored_output.rspec[*Validators::Simplecov::MATCH_REGEXP]
         end
 
-        # @return [Boolean] true if Simplecov coverage was generated
+        # @return [Boolean] true if code coverage level is higher or equal to expected
         def valid?
-          output[MATCH_REGEXP].length > 0
+          to_f >= threshold
         end
 
         # @return [String] default label for this command
         def label
-          "Simplecov #{output[MATCH_REGEXP]}"
+          "SimpleCov covered #{to_f}%, required #{threshold}%"
+        end
+
+        # @return [String] message that should be printed when code coverage level is not met
+        def error_message
+          'SimpleCov coverage level needs to be ' \
+            "#{threshold}%#{threshold == limit ? '' : ' or more'}, was #{to_f}%"
+        end
+
+        private
+
+        # @return [Float] desired threshold
+        def threshold
+          DevTools.config.simplecov_threshold.to_f
+        end
+
+        # @return [Float] maximum threshold value
+        def limit
+          100.0
         end
       end
     end
