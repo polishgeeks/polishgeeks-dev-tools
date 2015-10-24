@@ -10,16 +10,16 @@
 
 %w(
   validators/base
-  command/base
-  command/empty_method
-  command/empty_method/string_refinements
+  commands/base
+  commands/empty_method
+  commands/empty_method/string_refinements
 ).each { |lib| require "polishgeeks/dev-tools/#{lib}" }
 
 %w(
   *.rb
   validators/*.rb
-  command/*.rb
-  command/**/*.rb
+  commands/*.rb
+  commands/**/*.rb
 ).each do |path|
   base_path = File.dirname(__FILE__) + "/polishgeeks/dev-tools/#{path}"
   Dir[base_path].each { |file| require file }

@@ -22,7 +22,7 @@ RSpec.describe PolishGeeks::DevTools::Runner do
         config.public_send(:"#{command}=", true)
 
         klass_name = command.to_s.gsub(/(?<=_|^)(\w)/, &:upcase).gsub(/(?:_)(\w)/, '\1')
-        klass = Object.const_get("PolishGeeks::DevTools::Command::#{klass_name}")
+        klass = Object.const_get("PolishGeeks::DevTools::Commands::#{klass_name}")
 
         instance = double
         output = double
