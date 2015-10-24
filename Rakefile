@@ -8,7 +8,7 @@ task :check do
     config.brakeman = false
     config.haml_lint = false
     config.expires_in_files_ignored = %w(
-      lib/polishgeeks/dev-tools/command/expires_in.rb
+      lib/polishgeeks/dev-tools/commands/expires_in.rb
     )
     config.empty_method_ignored = %w(
       empty_method_spec.rb

@@ -38,14 +38,14 @@ end
 validators_path = File.dirname(__FILE__) + '/polishgeeks/dev-tools/validators/*.rb'
 Dir[validators_path].each { |file| require file }
 
-require 'polishgeeks/dev-tools/command/base'
-require 'polishgeeks/dev-tools/command/empty_method'
-require 'polishgeeks/dev-tools/command/empty_method/string_refinements'
+require 'polishgeeks/dev-tools/commands/base'
+require 'polishgeeks/dev-tools/commands/empty_method'
+require 'polishgeeks/dev-tools/commands/empty_method/string_refinements'
 
-commands_path = File.dirname(__FILE__) + '/polishgeeks/dev-tools/command/*.rb'
+commands_path = File.dirname(__FILE__) + '/polishgeeks/dev-tools/commands/*.rb'
 Dir[commands_path].each { |file| require file }
 
-commands_path = File.dirname(__FILE__) + '/polishgeeks/dev-tools/command/**/*.rb'
+commands_path = File.dirname(__FILE__) + '/polishgeeks/dev-tools/commands/**/*.rb'
 Dir[commands_path].each { |file| require file }
 
 load 'polishgeeks/dev-tools/tasks/dev-tools.rake'

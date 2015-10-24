@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe PolishGeeks::DevTools::Logger do
   subject { described_class.new }
 
-  let(:task) { PolishGeeks::DevTools::Command::Rubocop.new }
+  let(:task) { PolishGeeks::DevTools::Commands::Rubocop.new }
   let(:tmp) { double }
 
   describe '#log' do
