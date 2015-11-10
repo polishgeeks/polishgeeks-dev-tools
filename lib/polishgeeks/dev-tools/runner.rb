@@ -15,8 +15,9 @@ module PolishGeeks
           next unless DevTools.config.public_send(:"#{command}?")
 
           klass = command.to_s.gsub(/(?<=_|^)(\w)/, &:upcase).gsub(/(?:_)(\w)/, '\1')
-          cmd = Object.const_get("PolishGeeks::DevTools::Command::#{klass}").new
+          cmd = Object.const_get("PolishGeeks::DevTools::Commands::#{klass}").new
           cmd.stored_output = output
+          cmd.ensure_executable!
           cmd.execute
           output.public_send(:"#{command}=", cmd.output)
           logger.log(cmd)

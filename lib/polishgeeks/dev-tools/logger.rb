@@ -5,13 +5,8 @@ module PolishGeeks
       # Regexp used to get only the class name without module names
       CLASS_NAME_REGEXP = /^.*::/
 
-      # Raised when it is a type of task that we don't recognize
-      class UnknownTaskType < StandardError; end
-      # Raised when any of tasks fail
-      class RequirementsError < StandardError; end
-
       # Method will print appropriate output with colors and comments
-      # @param [PolishGeeks::DevTools::Command::Base] task that was executed
+      # @param [PolishGeeks::DevTools::Commands::Base] task that was executed
       # @raise [PolishGeeks::DevTools::Logger::RequirementsError] raised when task
       #   has failed
       # @example Log output of a current_task
@@ -21,7 +16,7 @@ module PolishGeeks
           info(task)
         else
           fatal(task)
-          fail RequirementsError
+          fail Errors::RequirementsError
         end
       end
 
@@ -29,20 +24,20 @@ module PolishGeeks
 
       # Will print message when task didn't fail while running
       # @note Handles also generators that never fail
-      # @param [PolishGeeks::DevTools::Command::Base] task that was executed
-      # @raise [PolishGeeks::DevTools::Logger::UnknownTaskType] raised when task type is
+      # @param [PolishGeeks::DevTools::Commands::Base] task that was executed
+      # @raise [PolishGeeks::DevTools::Errors::UnknownTaskType] raised when task type is
       #   not supported (we don't know how to handle it)
       def info(task)
         msg = 'GENERATED' if task.class.generator?
         msg = 'OK' if task.class.validator?
 
-        fail UnknownTaskType unless msg
+        fail Errors::UnknownTaskType unless msg
 
-        printf('%-40s %2s', "#{label(task)} ", "\e[32m#{msg}\e[0m\n")
+        printf('%-50s %2s', "#{label(task)} ", "\e[32m#{msg}\e[0m\n")
       end
 
       # Will print message when task did fail while running
-      # @param [PolishGeeks::DevTools::Command::Base] task that was executed
+      # @param [PolishGeeks::DevTools::Commands::Base] task that was executed
       def fatal(task)
         printf('%-30s %20s', "#{label(task)} ", "\e[31mFAILURE\e[0m\n\n")
         puts task.error_message + "\n"
@@ -50,7 +45,7 @@ module PolishGeeks
 
       # Generates a label describing a given task
       # @note Will use a task class name if task doesn't respond to label method
-      # @param [PolishGeeks::DevTools::Command::Base] task that was executed
+      # @param [PolishGeeks::DevTools::Commands::Base] task that was executed
       # @return [String] label describing task
       # @example Get label for a current_task task
       #   label(current_task) #=> 'Rubocop'

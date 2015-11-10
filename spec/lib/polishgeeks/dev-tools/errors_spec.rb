@@ -7,12 +7,6 @@ RSpec.describe PolishGeeks::DevTools::Errors do
     specify { expect(subject).to be < StandardError }
   end
 
-  describe 'MissingFramework' do
-    subject { described_class::MissingFramework }
-
-    specify { expect(subject).to be < described_class::BaseError }
-  end
-
   describe 'NotImplementedError' do
     subject { described_class::NotImplementedError }
 

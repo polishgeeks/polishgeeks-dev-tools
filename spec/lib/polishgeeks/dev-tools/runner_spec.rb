@@ -22,7 +22,7 @@ RSpec.describe PolishGeeks::DevTools::Runner do
         config.public_send(:"#{command}=", true)
 
         klass_name = command.to_s.gsub(/(?<=_|^)(\w)/, &:upcase).gsub(/(?:_)(\w)/, '\1')
-        klass = Object.const_get("PolishGeeks::DevTools::Command::#{klass_name}")
+        klass = Object.const_get("PolishGeeks::DevTools::Commands::#{klass_name}")
 
         instance = double
         output = double
@@ -34,6 +34,9 @@ RSpec.describe PolishGeeks::DevTools::Runner do
         expect(instance)
           .to receive(:stored_output=)
           .with(output_storer)
+
+        expect(instance)
+          .to receive(:ensure_executable!)
 
         expect(instance)
           .to receive(:execute)
