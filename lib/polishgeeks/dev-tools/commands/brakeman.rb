@@ -5,7 +5,9 @@ module PolishGeeks
       # @see https://github.com/presidentbeef/brakeman
       class Brakeman < Base
         self.type = :validator
-        self.validators = %w( Rails )
+        self.validators = [
+          Validators::Rails
+        ]
 
         # Regexps to get some stat info from brakeman output
         REGEXPS = {

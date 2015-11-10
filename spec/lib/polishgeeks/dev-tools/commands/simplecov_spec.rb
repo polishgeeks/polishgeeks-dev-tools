@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::Simplecov do
+  subject { described_class }
+
+  describe '#validators' do
+    it 'should work only when we have Simplecov' do
+      expect(subject.validators).to eq [PolishGeeks::DevTools::Validators::Simplecov]
+    end
+  end
+end
+
+RSpec.describe PolishGeeks::DevTools::Commands::Simplecov do
   subject { described_class.new }
 
   let(:label) { '(95.00%) covered' }

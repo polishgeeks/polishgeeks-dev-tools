@@ -12,7 +12,7 @@ module PolishGeeks
         # This should be implemented in a subclass
         # @return [Boolean] if validation check is valid or not
         def valid?
-          true
+          fail Errors::NotImplementedError
         end
 
         # @raise [PreCommandValidationError] when valid? return false

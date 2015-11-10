@@ -5,11 +5,6 @@ module PolishGeeks
       # Regexp used to get only the class name without module names
       CLASS_NAME_REGEXP = /^.*::/
 
-      # Raised when it is a type of task that we don't recognize
-      class UnknownTaskType < StandardError; end
-      # Raised when any of tasks fail
-      class RequirementsError < StandardError; end
-
       # Method will print appropriate output with colors and comments
       # @param [PolishGeeks::DevTools::Commands::Base] task that was executed
       # @raise [PolishGeeks::DevTools::Logger::RequirementsError] raised when task
@@ -21,7 +16,7 @@ module PolishGeeks
           info(task)
         else
           fatal(task)
-          fail RequirementsError
+          fail Errors::RequirementsError
         end
       end
 
@@ -30,13 +25,13 @@ module PolishGeeks
       # Will print message when task didn't fail while running
       # @note Handles also generators that never fail
       # @param [PolishGeeks::DevTools::Commands::Base] task that was executed
-      # @raise [PolishGeeks::DevTools::Logger::UnknownTaskType] raised when task type is
+      # @raise [PolishGeeks::DevTools::Errors::UnknownTaskType] raised when task type is
       #   not supported (we don't know how to handle it)
       def info(task)
         msg = 'GENERATED' if task.class.generator?
         msg = 'OK' if task.class.validator?
 
-        fail UnknownTaskType unless msg
+        fail Errors::UnknownTaskType unless msg
 
         printf('%-40s %2s', "#{label(task)} ", "\e[32m#{msg}\e[0m\n")
       end

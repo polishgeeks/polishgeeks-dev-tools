@@ -5,6 +5,9 @@ module PolishGeeks
       # It informs us if we didn't reach a proper code coverage level
       class Simplecov < Base
         self.type = :validator
+        self.validators = [
+          Validators::Simplecov
+        ]
 
         # Regexp used to match float number from coverage
         NUMBER_REGEXP = /(\d+[.]\d+)/
