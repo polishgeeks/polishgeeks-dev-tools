@@ -9,16 +9,21 @@ RSpec.describe PolishGeeks::DevTools::Validators::Base do
   end
 
   describe '#valid?' do
-    it { expect(subject.valid?).to be true }
+    it do
+      expect { subject.valid? }.to raise_error(PolishGeeks::DevTools::Errors::NotImplementedError)
+    end
   end
 
   describe '#validate!' do
     context 'valid? true' do
+      before { expect(subject).to receive(:valid?) { true } }
+
       it { expect { subject.validate! }.not_to raise_error }
     end
 
     context 'valid? false' do
       before { expect(subject).to receive(:valid?) { false } }
+
       it do
         expect { subject.validate! }.to raise_error(
           PolishGeeks::DevTools::Errors::PreCommandValidationError

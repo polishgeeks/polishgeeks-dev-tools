@@ -1,13 +1,29 @@
-require 'yaml'
-require 'yard'
-require 'pry'
-require 'fileutils'
-require 'timecop'
-require 'faker'
-require 'ostruct'
+%w(
+  yaml
+  yard
+  pry
+  fileutils
+  timecop
+  faker
+  ostruct
+).each { |lib| require lib }
 
-base_path = File.dirname(__FILE__) + '/polishgeeks/dev-tools/*.rb'
-Dir[base_path].each { |file| require file }
+%w(
+  validators/base
+  commands/base
+  commands/empty_method
+  commands/empty_method/string_refinements
+).each { |lib| require "polishgeeks/dev-tools/#{lib}" }
+
+%w(
+  *.rb
+  validators/*.rb
+  commands/*.rb
+  commands/**/*.rb
+).each do |path|
+  base_path = File.dirname(__FILE__) + "/polishgeeks/dev-tools/#{path}"
+  Dir[base_path].each { |file| require file }
+end
 
 module PolishGeeks
   module DevTools
@@ -34,18 +50,5 @@ module PolishGeeks
     end
   end
 end
-
-validators_path = File.dirname(__FILE__) + '/polishgeeks/dev-tools/validators/*.rb'
-Dir[validators_path].each { |file| require file }
-
-require 'polishgeeks/dev-tools/commands/base'
-require 'polishgeeks/dev-tools/commands/empty_method'
-require 'polishgeeks/dev-tools/commands/empty_method/string_refinements'
-
-commands_path = File.dirname(__FILE__) + '/polishgeeks/dev-tools/commands/*.rb'
-Dir[commands_path].each { |file| require file }
-
-commands_path = File.dirname(__FILE__) + '/polishgeeks/dev-tools/commands/**/*.rb'
-Dir[commands_path].each { |file| require file }
 
 load 'polishgeeks/dev-tools/tasks/dev-tools.rake'

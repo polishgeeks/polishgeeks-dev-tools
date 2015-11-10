@@ -25,52 +25,31 @@ RSpec.describe PolishGeeks::DevTools::Commands::Base do
     end
   end
 
-  describe '#new' do
-    before { expect_any_instance_of(described_class).to receive(:prepare_validators) }
+  describe '#ensure_executable!' do
+    context 'when there are validators' do
+      let(:validator_class) { PolishGeeks::DevTools::Validators::Base }
 
-    it { described_class.new }
-  end
+      before do
+        expect(described_class)
+          .to receive(:validators)
+          .and_return([validator_class])
 
-  describe 'class type definer' do
-    subject { described_class.dup }
-
-    context 'when it is generator' do
-      before { subject.type = :generator }
-
-      describe '.generator?' do
-        it { expect(subject.generator?).to eq true }
+        expect_any_instance_of(validator_class)
+          .to receive(:valid?)
+          .and_return(true)
       end
 
-      describe '.validator?' do
-        it { expect(subject.validator?).to eq false }
-      end
+      it { expect { subject.ensure_executable! }.not_to raise_error }
     end
 
-    context 'when it is validator' do
-      before { subject.type = :validator }
-
-      describe '.generator?' do
-        it { expect(subject.generator?).to eq false }
+    context 'when we dont require any validators' do
+      before do
+        expect(described_class)
+          .to receive(:validators)
+          .and_return([])
       end
 
-      describe '.validator?' do
-        it { expect(subject.validator?).to eq true }
-      end
-    end
-  end
-
-  describe '#validation!' do
-    context 'when valid validator' do
-      it { expect { subject.validation! }.not_to raise_error }
-    end
-
-    context 'when invalid validator' do
-      before { subject.class.validators = ['Invalid'] }
-      it do
-        expect { subject.validation! }.to raise_error(
-          PolishGeeks::DevTools::Errors::InvalidValidatorClassError
-        )
-      end
+      it { expect { subject.ensure_executable! }.not_to raise_error }
     end
   end
 end

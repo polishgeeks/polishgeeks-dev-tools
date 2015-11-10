@@ -10,13 +10,16 @@ module PolishGeeks
       class NotImplementedError < BaseError; end
 
       # Raised when we want to run an command for which pre validation does not pass
-      class PreCommandValidationError < StandardError; end
-
-      # Raised when invalid validator class name passed
-      class InvalidValidatorClassError < StandardError; end
+      class PreCommandValidationError < BaseError; end
 
       # Raised when validators are defined with an unsupported type
-      class InvalidValidatorsTypeError < StandardError; end
+      class InvalidValidatorsTypeError < BaseError; end
+
+      # Raised when it is a type of task that we don't recognize
+      class UnknownTaskType < BaseError; end
+
+      # Raised when any of tasks fail
+      class RequirementsError < BaseError; end
     end
   end
 end
