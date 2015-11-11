@@ -1,5 +1,8 @@
 # PolishGeeks Dev Tools Changelog
 
+## 1.2.2
+- Bump rubocop dependency to 0.35.1
+
 ## 1.2.1
 - Extracted all errors to PolishGeeks::DevTools::Errors namespace
 - Add support for validators
