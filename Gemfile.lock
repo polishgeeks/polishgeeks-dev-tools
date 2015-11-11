@@ -3,6 +3,7 @@ PATH
   specs:
     polishgeeks-dev-tools (1.2.1)
       brakeman
+      bundler-audit
       faker
       haml-lint
       mongoid-rspec
@@ -52,6 +53,9 @@ GEM
       terminal-table (~> 1.4)
     bson (3.2.6)
     builder (3.2.2)
+    bundler-audit (0.4.0)
+      bundler (~> 1.2)
+      thor (~> 0.18)
     coderay (1.1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -169,6 +173,7 @@ GEM
     sysexits (1.2.0)
     temple (0.7.6)
     terminal-table (1.5.2)
+    thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.1)
     timecop (0.8.0)

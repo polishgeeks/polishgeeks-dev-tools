@@ -51,7 +51,7 @@ determine, which you can use in your project:
 | brakeman              | Rails     | A static analysis security vulnerability scanner for Ruby on Rails                    |
 | rubocop               | -         | Used to check Ruby syntax according to our styling                                    |
 | final_blank_line      | -         | Check if all files have final blank line                                              |
-| empty_method          | -         | Check if some files have empty methods                                                 |
+| empty_method          | -         | Check if some files have empty methods                                                |
 | expires_in            | -         | Checks if there are typos like expire_in, etc that might brake app caching            |
 | haml_lint             | -         | User to check HAML syntax in the app views                                            |
 | yard                  | -         | YARD documentation standards checking                                                 |
@@ -66,6 +66,7 @@ determine, which you can use in your project:
 | rubycritic            | -         | Generates a RubyCritic for given project                                              |
 | allowed_extensions    | -         | Checks that all the files in ./config directory have an allowed extension             |
 | yml_parser            | -         | Checks that parameters of all yaml files in ./config directory have some value        |
+| bundler_audit         | -         | Checks for vulnerable versions of gems in Gemfile.lock                                |
 
 ## Config options
 

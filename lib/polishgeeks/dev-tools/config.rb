@@ -35,6 +35,7 @@ module PolishGeeks
       # All commands will be executed in this order (first rubocop, then rspec, etc)
       COMMANDS = %i(
         readme
+        bundler_audit
         expires_in
         brakeman
         rubocop
