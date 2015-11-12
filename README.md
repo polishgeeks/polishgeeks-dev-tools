@@ -49,6 +49,7 @@ determine, which you can use in your project:
 | Option                | Framework | Description                                                                           |
 |-----------------------|-----------|---------------------------------------------------------------------------------------|
 | brakeman              | Rails     | A static analysis security vulnerability scanner for Ruby on Rails                    |
+| required_files        | -         | Check if required files are present and not empty                                     |
 | rubocop               | -         | Used to check Ruby syntax according to our styling                                    |
 | final_blank_line      | -         | Check if all files have final blank line                                              |
 | empty_method          | -         | Check if some files have empty methods                                                |
@@ -74,6 +75,7 @@ Some validators might accept additional config settings - please refer to this t
 
 | Option                        | Validator             | Description                                                                                                 |
 |-------------------------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
+| required_files_include        | required_files        | You can provide an array of files that should be included in the check                                      |
 | rspec_files_structure_ignored | rspec_files_structure | You can provide an array of files that should be ignored                                                    |
 | final_blank_line_ignored      | final_blank_line      | You can provide an array of files (ex. lib/file.rb) or directories (ex. lib/command) that should be ignored |
 | empty_method_ignored          | empty_method          | You can provide an array of files (ex. lib/file.rb) or directories (ex. lib/command) that should be ignored |

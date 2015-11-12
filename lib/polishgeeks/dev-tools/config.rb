@@ -23,18 +23,19 @@ module PolishGeeks
       attr_accessor :simplecov_threshold
 
       %i(
-        rspec_files_structure
-        expires_in_files
-        final_blank_line
-        empty_method
+        required_files_include
+        rspec_files_structure_ignored
+        expires_in_files_ignored
+        final_blank_line_ignored
+        empty_method_ignored
       ).each do |attr|
-        attr_accessor "#{attr}_ignored"
+        attr_accessor attr
       end
 
       # Available commands
       # All commands will be executed in this order (first rubocop, then rspec, etc)
       COMMANDS = %i(
-        readme
+        required_files
         bundler_audit
         expires_in
         brakeman
