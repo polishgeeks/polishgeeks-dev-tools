@@ -1,7 +1,7 @@
 module PolishGeeks
   module DevTools
     module Commands
-      class EmptyMethod
+      class EmptyMethods
         # Parse file and search whether it contain empty methods
         class FileParser
           attr_reader :empty_methods

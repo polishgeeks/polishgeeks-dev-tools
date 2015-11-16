@@ -10,8 +10,8 @@ task :check do
     config.expires_in_files_ignored = %w(
       lib/polishgeeks/dev-tools/commands/expires_in.rb
     )
-    config.empty_method_ignored = %w(
-      empty_method_spec.rb
+    config.empty_methods_ignored = %w(
+      empty_methods_spec.rb
       file_parser_spec.rb
     )
   end

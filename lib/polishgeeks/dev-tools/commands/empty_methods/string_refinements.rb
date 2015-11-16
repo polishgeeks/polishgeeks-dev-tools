@@ -1,7 +1,7 @@
 module PolishGeeks
   module DevTools
     module Commands
-      class EmptyMethod
+      class EmptyMethods
         # Adds ability to check strings on specific regex matching
         module StringRefinements
           # Regex to determine commented or empty string

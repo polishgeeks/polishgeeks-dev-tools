@@ -11,8 +11,8 @@
 %w(
   validators/base
   commands/base
-  commands/empty_method
-  commands/empty_method/string_refinements
+  commands/empty_methods
+  commands/empty_methods/string_refinements
 ).each { |lib| require "polishgeeks/dev-tools/#{lib}" }
 
 %w(

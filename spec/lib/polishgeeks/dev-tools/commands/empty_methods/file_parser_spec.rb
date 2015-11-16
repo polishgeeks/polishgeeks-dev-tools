@@ -1,4 +1,4 @@
-RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethod::FileParser do
+RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
   let(:file) { Tempfile.new('foo') }
   subject { described_class.new(file) }
 

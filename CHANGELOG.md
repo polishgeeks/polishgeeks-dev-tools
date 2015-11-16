@@ -28,6 +28,23 @@ You can now add extra files for validation
   end
 ```
 
+- #26: Rename empty_method to empty_methods validator
+
+If you had empty_method validator turned off like this and had files ignored
+```ruby
+  PolishGeeks::DevTools.setup do |config|
+    config.empty_method = false
+    config.empty_method_ignored = %w(REVIEW.md)
+  end
+```
+Now you need to change that to
+```ruby
+  PolishGeeks::DevTools.setup do |config|
+    config.empty_methods = false
+    config.empty_methods_ignored = %w(REVIEW.md)
+  end
+```
+
 ## 1.2.1
 - Extracted all errors to PolishGeeks::DevTools::Errors namespace
 - Add support for validators

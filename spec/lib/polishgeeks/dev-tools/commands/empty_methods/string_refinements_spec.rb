@@ -1,4 +1,4 @@
-RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethod::StringRefinements do
+RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::StringRefinements do
   using described_class
 
   describe '#defines_method?' do

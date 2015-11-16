@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'tempfile'
 
-RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethod do
+RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods do
   subject { described_class.new }
   describe '#execute' do
     let(:file) { [rand.to_s] }
@@ -129,9 +129,9 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethod do
   end
 
   describe '#config_excludes' do
-    context 'empty_method_ignored is set' do
+    context 'empty_methods_ignored is set' do
       let(:paths) { ["#{rand}.rb", "#{rand}.rb"] }
-      let(:config) { double(empty_method_ignored: paths) }
+      let(:config) { double(empty_methods_ignored: paths) }
 
       before do
         expect(PolishGeeks::DevTools)
@@ -142,8 +142,8 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethod do
       it { expect(subject.send(:config_excludes)).to eq paths }
     end
 
-    context 'empty_method_ignored is not set' do
-      let(:config) { double(empty_method_ignored: nil) }
+    context 'empty_methods_ignored is not set' do
+      let(:config) { double(empty_methods_ignored: nil) }
 
       before do
         expect(PolishGeeks::DevTools)

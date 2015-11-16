@@ -2,7 +2,7 @@ module PolishGeeks
   module DevTools
     module Commands
       # Validator used to check if all '.rb' files don't have empty methods
-      class EmptyMethod < Base
+      class EmptyMethods < Base
         self.type = :validator
 
         attr_reader :counter
@@ -76,7 +76,7 @@ module PolishGeeks
 
         # @return [Array<String>] list of excluded files/directories from config file
         def config_excludes
-          DevTools.config.empty_method_ignored || []
+          DevTools.config.empty_methods_ignored || []
         end
 
         # @param [String] file name that we want to sanitize

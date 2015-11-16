@@ -27,7 +27,7 @@ module PolishGeeks
         rspec_files_structure_ignored
         expires_in_files_ignored
         final_blank_line_ignored
-        empty_method_ignored
+        empty_methods_ignored
       ).each do |attr|
         attr_accessor attr
       end
@@ -41,7 +41,7 @@ module PolishGeeks
         brakeman
         rubocop
         final_blank_line
-        empty_method
+        empty_methods
         haml_lint
         allowed_extensions
         yml_parser
