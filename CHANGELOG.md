@@ -4,6 +4,7 @@
 - Bump rubocop dependency to 0.35.1
 - Bump rubycritic dependency to 2.1.0
 - Bump rspec dependency to 3.4.0
+- Bump activemodel dependency to 4.2.5
 
 ## 1.2.1
 - Extracted all errors to PolishGeeks::DevTools::Errors namespace
