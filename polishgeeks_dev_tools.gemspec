@@ -1,7 +1,7 @@
-$:.push File.expand_path("../lib", __FILE__)
+$LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 require 'rake'
-require 'polishgeeks/dev-tools/version'
+require 'polish_geeks/dev_tools/version'
 
 Gem::Specification.new do |s|
   s.name        = 'polishgeeks-dev-tools'
@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Maciej Mensfeld']
   s.email       = ['maciej@mensfeld.pl']
   s.homepage    = ''
-  s.summary     = %q(Set of tools used when developing Ruby based apps)
-  s.description = %q(Set of tools used when developing Ruby based apps)
+  s.summary     = 'Set of tools used when developing Ruby based apps'
+  s.description = 'Set of tools used when developing Ruby based apps'
 
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'shoulda'
   s.add_dependency 'rspec'
   s.add_dependency 'rubocop'
+  s.add_dependency 'rubocop-rspec'
   s.add_dependency 'timecop'
   s.add_dependency 'brakeman'
   s.add_dependency 'haml-lint'

@@ -51,6 +51,7 @@ determine, which you can use in your project:
 | brakeman              | Rails     | A static analysis security vulnerability scanner for Ruby on Rails                    |
 | required_files        | -         | Check if required files are present and not empty                                     |
 | rubocop               | -         | Used to check Ruby syntax according to our styling                                    |
+| rubocop_rspec         | -         | Used to check RSpec syntax according to our styling                                   |
 | final_blank_line      | -         | Check if all files have final blank line                                              |
 | empty_methods         | -         | Check if some files have empty methods                                                |
 | expires_in            | -         | Checks if there are typos like expire_in, etc that might brake app caching            |

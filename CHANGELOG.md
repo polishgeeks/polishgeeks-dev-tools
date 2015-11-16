@@ -45,6 +45,8 @@ Now you need to change that to
   end
 ```
 
+- #12: Add rubocop-rspec which checks add code style checking for your RSpec files
+
 ## 1.2.1
 - Extracted all errors to PolishGeeks::DevTools::Errors namespace
 - Add support for validators
