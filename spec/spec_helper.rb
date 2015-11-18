@@ -13,7 +13,7 @@ SimpleCov.start do
   add_filter '/doc/'
   add_filter '/spec/'
   add_filter '/config/'
-  add_filter '/lib/polishgeeks/dev-tools/tasks'
+  add_filter '/lib/polish_geeks/dev_tools/tasks'
   merge_timeout 600
 end
 

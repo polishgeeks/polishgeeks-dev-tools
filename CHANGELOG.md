@@ -1,10 +1,51 @@
 # PolishGeeks Dev Tools Changelog
 
-## 1.2.2
+## 1.3.0
 - Bump rubocop dependency to 0.35.1
-- Bump rubycritic dependency to 2.1.0
+- #17: Bump rubycritic dependency to 2.1.0
 - Bump rspec dependency to 3.4.0
 - Bump activemodel dependency to 4.2.5
+- #18: Add bundler-audit which checks for vulnerable versions of gems
+- #21: Replace readme validator with required files validators, which allows us to
+  define what files you want to require in your project
+
+If you had readme validator turned off like this
+```ruby
+  PolishGeeks::DevTools.setup do |config|
+    config.readme = false
+  end
+```
+Now you need to change that to
+```ruby
+  PolishGeeks::DevTools.setup do |config|
+    config.required_files = false
+  end
+```
+You can now add extra files for validation
+```ruby
+  PolishGeeks::DevTools.setup do |config|
+    config.required_files_include = %w(REVIEW.md)
+  end
+```
+
+- #26: Rename empty_method to empty_methods validator
+
+If you had empty_method validator turned off like this and had files ignored
+```ruby
+  PolishGeeks::DevTools.setup do |config|
+    config.empty_method = false
+    config.empty_method_ignored = %w(REVIEW.md)
+  end
+```
+Now you need to change that to
+```ruby
+  PolishGeeks::DevTools.setup do |config|
+    config.empty_methods = false
+    config.empty_methods_ignored = %w(REVIEW.md)
+  end
+```
+
+- #12: Add rubocop-rspec which checks add code style checking for your RSpec files
 
 ## 1.2.1
 - Extracted all errors to PolishGeeks::DevTools::Errors namespace

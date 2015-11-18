@@ -49,9 +49,11 @@ determine, which you can use in your project:
 | Option                | Framework | Description                                                                           |
 |-----------------------|-----------|---------------------------------------------------------------------------------------|
 | brakeman              | Rails     | A static analysis security vulnerability scanner for Ruby on Rails                    |
+| required_files        | -         | Check if required files are present and not empty                                     |
 | rubocop               | -         | Used to check Ruby syntax according to our styling                                    |
+| rubocop_rspec         | -         | Used to check RSpec syntax according to our styling                                   |
 | final_blank_line      | -         | Check if all files have final blank line                                              |
-| empty_method          | -         | Check if some files have empty methods                                                 |
+| empty_methods         | -         | Check if some files have empty methods                                                |
 | expires_in            | -         | Checks if there are typos like expire_in, etc that might brake app caching            |
 | haml_lint             | -         | User to check HAML syntax in the app views                                            |
 | yard                  | -         | YARD documentation standards checking                                                 |
@@ -66,6 +68,7 @@ determine, which you can use in your project:
 | rubycritic            | -         | Generates a RubyCritic for given project                                              |
 | allowed_extensions    | -         | Checks that all the files in ./config directory have an allowed extension             |
 | yml_parser            | -         | Checks that parameters of all yaml files in ./config directory have some value        |
+| bundler_audit         | -         | Checks for vulnerable versions of gems in Gemfile.lock                                |
 
 ## Config options
 
@@ -73,9 +76,10 @@ Some validators might accept additional config settings - please refer to this t
 
 | Option                        | Validator             | Description                                                                                                 |
 |-------------------------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
+| required_files_include        | required_files        | You can provide an array of files that should be included in the check                                      |
 | rspec_files_structure_ignored | rspec_files_structure | You can provide an array of files that should be ignored                                                    |
 | final_blank_line_ignored      | final_blank_line      | You can provide an array of files (ex. lib/file.rb) or directories (ex. lib/command) that should be ignored |
-| empty_method_ignored          | empty_method          | You can provide an array of files (ex. lib/file.rb) or directories (ex. lib/command) that should be ignored |
+| empty_methods_ignored         | empty_methods         | You can provide an array of files (ex. lib/file.rb) or directories (ex. lib/command) that should be ignored |
 
 ## Usage in any Rails/Ruby application
 
