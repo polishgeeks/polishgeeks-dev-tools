@@ -1,6 +1,6 @@
 # PolishGeeks Dev Tools Changelog
 
-## 1.3.0
+## 1.3.0 (unreleased)
 - Bump rubocop dependency to 0.35.1
 - #17: Bump rubycritic dependency to 2.1.0
 - Bump rspec dependency to 3.4.0
