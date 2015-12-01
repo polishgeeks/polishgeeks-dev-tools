@@ -17,6 +17,7 @@ module PolishGeeks
         TYPES = %i( validator generator )
 
         class << self
+          attr_accessor :config_name
           attr_accessor :type
           attr_accessor :validators
 
@@ -58,6 +59,16 @@ module PolishGeeks
           end
         end
 
+        # @return [Boolean] if there is a config present
+        def config?
+          app_config? || local_config?
+        end
+
+        # @return [String] path to config file
+        def config
+          app_config? ? app_config : local_config
+        end
+
         private
 
         # @param [String] path from which we want take files
@@ -68,6 +79,26 @@ module PolishGeeks
           return [full_path] if File.file?(full_path)
 
           Dir.glob(full_path).select { |f| File.file? f }
+        end
+
+        # @return [Boolean] if there is a config present locally
+        def local_config?
+          !self.class.config_name.nil? && File.exist?(local_config)
+        end
+
+        # @return [String] path to local config file
+        def local_config
+          File.join(DevTools.gem_root, 'config', self.class.config_name)
+        end
+
+        # @return [Boolean] if there is a config present in the application
+        def app_config?
+          !self.class.config_name.nil? && File.exist?(app_config)
+        end
+
+        # @return [String] path to application config file
+        def app_config
+          File.join(DevTools.app_root, self.class.config_name)
         end
       end
     end
