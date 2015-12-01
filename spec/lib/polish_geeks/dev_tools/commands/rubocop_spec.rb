@@ -5,6 +5,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rubocop do
 
   describe '#execute' do
     let(:path) { '/' }
+
     before do
       expect(ENV)
         .to receive(:[])
@@ -14,40 +15,35 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rubocop do
     end
 
     context 'when app config exists' do
-      before do
-        expect(File)
-          .to receive(:exist?)
-          .and_return(true)
-        expect_any_instance_of(PolishGeeks::DevTools::Shell)
-          .to receive(:execute)
-          .with("bundle exec rubocop -c #{path}.rubocop.yml #{PolishGeeks::DevTools.app_root}")
+      let(:cmd) do
+        "bundle exec rubocop #{PolishGeeks::DevTools.app_root} " \
+        "-c #{subject.send(:app_config)}"
       end
 
-      it 'executes the command' do
-        subject.execute
+      before do
+        allow(subject).to receive(:app_config?) { true }
+        expect_any_instance_of(PolishGeeks::DevTools::Shell)
+          .to receive(:execute).with(cmd)
       end
+
+      it { subject.execute }
     end
 
     context 'when app config does not exist' do
       let(:path) { Dir.pwd }
-      let(:app_root) { PolishGeeks::DevTools.app_root }
-      let(:cmd_expected) { "bundle exec rubocop -c #{path}/config/rubocop.yml #{app_root}" }
+      let(:cmd) do
+        "bundle exec rubocop #{PolishGeeks::DevTools.app_root} " \
+        "-c #{subject.send(:local_config)}"
+      end
 
       before do
-        expect(PolishGeeks::DevTools)
-          .to receive(:gem_root)
-          .and_return(path)
-        expect(File)
-          .to receive(:exist?)
-          .and_return(false)
+        allow(PolishGeeks::DevTools).to receive(:gem_root).and_return(path)
+        allow(subject).to receive(:app_config?) { false }
         expect_any_instance_of(PolishGeeks::DevTools::Shell)
-          .to receive(:execute)
-          .with(cmd_expected)
+          .to receive(:execute).with(cmd)
       end
 
-      it 'executes the command' do
-        subject.execute
-      end
+      it { subject.execute }
     end
   end
 
