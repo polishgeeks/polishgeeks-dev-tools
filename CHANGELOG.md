@@ -3,7 +3,7 @@
 ## 1.3.0 (unreleased)
 - Bump simplecov dependency to 0.11.0
 - Bump rubocop dependency to 0.35.1
-- #17: Bump rubycritic dependency to 2.1.0
+- #17: Bump rubycritic dependency to 2.3.0
 - Bump rspec dependency to 3.4.0
 - Bump activemodel dependency to 4.2.5
 - #18: Add bundler-audit which checks for vulnerable versions of gems
