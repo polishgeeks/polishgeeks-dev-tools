@@ -4,6 +4,7 @@ module PolishGeeks
       # A static analysis security vulnerability scanner for Ruby on Rails applications
       # @see https://github.com/presidentbeef/brakeman
       class Brakeman < Base
+        self.config_name = '.brakeman.yml'
         self.type = :validator
         self.validators = [
           Validators::Rails
@@ -21,7 +22,9 @@ module PolishGeeks
         # Executes this command
         # @return [String] command output
         def execute
-          @output = Shell.new.execute('bundle exec brakeman -q')
+          cmd = ['bundle exec brakeman -q']
+          cmd << "-c #{config}" if config?
+          @output = Shell.new.execute(cmd.join(' '))
         end
 
         # @return [Boolean] true if we didn't have any vulnerabilities detected
