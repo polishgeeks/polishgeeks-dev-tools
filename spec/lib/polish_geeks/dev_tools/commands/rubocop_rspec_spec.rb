@@ -5,6 +5,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::RubocopRspec do
 
   describe '#execute' do
     let(:path) { '/' }
+
     before do
       expect(ENV)
         .to receive(:[])
@@ -14,47 +15,39 @@ RSpec.describe PolishGeeks::DevTools::Commands::RubocopRspec do
     end
 
     context 'when app config exists' do
-      let(:cmd_expected) do
-        "bundle exec rubocop -c #{path}.rubocop.yml #{PolishGeeks::DevTools.app_root} " \
-        '--require rubocop-rspec'
+      let(:cmd) do
+        "bundle exec rubocop #{PolishGeeks::DevTools.app_root} " \
+        "-c #{subject.class.config_manager.path} --require rubocop-rspec"
       end
 
       before do
-        expect(File)
-          .to receive(:exist?)
-          .and_return(true)
+        allow(subject.class.config_manager).to receive(:application?) { true }
+        allow(subject.class.config_manager).to receive(:application_path) { path }
         expect_any_instance_of(PolishGeeks::DevTools::Shell)
           .to receive(:execute)
-          .with(cmd_expected)
+          .with(cmd)
       end
 
-      it 'executes the command' do
-        subject.execute
-      end
+      it { subject.execute }
     end
 
     context 'when app config does not exist' do
       let(:path) { Dir.pwd }
-      let(:cmd_expected) do
-        "bundle exec rubocop -c #{path}/config/rubocop.yml #{PolishGeeks::DevTools.app_root} " \
-        '--require rubocop-rspec'
+      let(:cmd) do
+        "bundle exec rubocop #{PolishGeeks::DevTools.app_root} " \
+        "-c #{subject.class.config_manager.path} --require rubocop-rspec"
       end
 
       before do
-        expect(PolishGeeks::DevTools)
-          .to receive(:gem_root)
-          .and_return(path)
-        expect(File)
-          .to receive(:exist?)
-          .and_return(false)
+        allow(PolishGeeks::DevTools).to receive(:gem_root).and_return(path)
+        allow(subject.class.config_manager).to receive(:application?) { false }
+        allow(subject.class.config_manager).to receive(:local_path) { path }
         expect_any_instance_of(PolishGeeks::DevTools::Shell)
           .to receive(:execute)
-          .with(cmd_expected)
+          .with(cmd)
       end
 
-      it 'executes the command' do
-        subject.execute
-      end
+      it { subject.execute }
     end
   end
 

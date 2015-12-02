@@ -4,6 +4,7 @@ module PolishGeeks
       # Command wrapper for Rubocop validation
       # It informs us if code is formatted in a proper way
       class RubocopRspec < Base
+        self.config_manager = ConfigManager.new('rubocop.yml')
         self.type = :validator
         self.validators = [
           Validators::Rubocop
@@ -17,14 +18,10 @@ module PolishGeeks
         # Executes this command
         # @return [String] command output
         def execute
-          loc_config = File.join(DevTools.gem_root, 'config', 'rubocop.yml')
-          app_config = File.join(DevTools.app_root, '.rubocop.yml')
-
-          config = File.exist?(app_config) ? app_config : loc_config
-          cmd = "bundle exec rubocop -c #{config} #{PolishGeeks::DevTools.app_root} " \
-            '--require rubocop-rspec'
-
-          @output = Shell.new.execute(cmd)
+          cmd = ["bundle exec rubocop #{PolishGeeks::DevTools.app_root}"]
+          cmd << "-c #{self.class.config_manager.path}" if self.class.config_manager.present?
+          cmd << '--require rubocop-rspec'
+          @output = Shell.new.execute(cmd.join(' '))
         end
 
         # @return [Boolean] true if there were no Rubocop offenses detected

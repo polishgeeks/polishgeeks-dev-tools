@@ -17,6 +17,9 @@ module PolishGeeks
         TYPES = %i( validator generator )
 
         class << self
+          # ConfigManager instance can be provided, which allows us to find a
+          # config file for a command
+          attr_accessor :config_manager
           attr_accessor :type
           attr_accessor :validators
 
