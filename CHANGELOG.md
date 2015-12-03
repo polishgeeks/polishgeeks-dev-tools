@@ -6,6 +6,7 @@
 - #17: Bump rubycritic dependency to 2.3.0
 - Bump rspec dependency to 3.4.1
 - Bump activemodel dependency to 4.2.5
+- #30: Allow to pass config file to brakeman
 - #18: Add bundler-audit which checks for vulnerable versions of gems
 - #21: Replace readme validator with required files validators, which allows us to
   define what files you want to require in your project
@@ -47,6 +48,15 @@ Now you need to change that to
 ```
 
 - #12: Add rubocop-rspec which checks add code style checking for your RSpec files
+
+- #33: Add an option to disallow pending specs
+
+If you want to allow pending specs then
+```ruby
+  PolishGeeks::DevTools.setup do |config|
+    config.rspec_disallow_pending = false
+  end
+```
 
 ## 1.2.1
 - Extracted all errors to PolishGeeks::DevTools::Errors namespace

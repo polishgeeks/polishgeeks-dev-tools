@@ -23,7 +23,7 @@ AllCops:
     - !ruby/regexp /polishgeeks-[^\/]{2,}\.rb/
   Include:
     - '**/Rakefile'
-    - config.ru
+    - '**/config.ru'
     - lib/tasks/**/*.rake
     - lib/tasks/**/*.rb
     - lib/capistrano/**/*.rb

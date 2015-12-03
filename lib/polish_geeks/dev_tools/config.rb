@@ -20,7 +20,7 @@ module PolishGeeks
         end
       end
 
-      attr_accessor :simplecov_threshold
+      attr_accessor :simplecov_threshold, :rspec_disallow_pending
 
       %i(
         required_files_include
@@ -73,6 +73,7 @@ module PolishGeeks
         end
 
         self.simplecov_threshold = 100
+        self.rspec_disallow_pending = true
       end
 
       # Configurating method
