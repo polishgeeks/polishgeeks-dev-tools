@@ -46,29 +46,30 @@ end
 Some options might be available only for given framework (Ruby on Rails, Sinatra, etc). Please refer to this table to
 determine, which you can use in your project:
 
-| Option                | Framework | Description                                                                           |
-|-----------------------|-----------|---------------------------------------------------------------------------------------|
-| brakeman              | Rails     | A static analysis security vulnerability scanner for Ruby on Rails                    |
-| required_files        | -         | Check if required files are present and not empty                                     |
-| rubocop               | -         | Used to check Ruby syntax according to our styling                                    |
-| rubocop_rspec         | -         | Used to check RSpec syntax according to our styling                                   |
-| final_blank_line      | -         | Check if all files have final blank line                                              |
-| empty_methods         | -         | Check if some files have empty methods                                                |
-| expires_in            | -         | Checks if there are typos like expire_in, etc that might brake app caching            |
-| haml_lint             | -         | User to check HAML syntax in the app views                                            |
-| yard                  | -         | YARD documentation standards checking                                                 |
-| rspec_files_names     | -         | Checks if all the rspec files have proper sufix (_spec.rb)                            |
-| rspec_files_structure | -         | Checks if we have corresponding _spec.rb files for each app/ lib ruby file            |
-| tasks_files_names     | -         | Checks if all the tasks for Capistrano and Rake files have proper extensions          |
-| rspec                 | -         | Specs framework                                                                       |
-| coverage              | -         | Specs code coverage generator                                                         |
-| simplecov             | -         | Simplecov code coverage threshold checking                                            |
-| simplecov_threshold   | -         | Threshold level for code coverage                                                     |
-| examples_comparator   | -         | Compares yml *.example files with non-examples and checks if they have same structure |
-| rubycritic            | -         | Generates a RubyCritic for given project                                              |
-| allowed_extensions    | -         | Checks that all the files in ./config directory have an allowed extension             |
-| yml_parser            | -         | Checks that parameters of all yaml files in ./config directory have some value        |
-| bundler_audit         | -         | Checks for vulnerable versions of gems in Gemfile.lock                                |
+| Option                 | Framework | Description                                                                           |
+|------------------------|-----------|---------------------------------------------------------------------------------------|
+| brakeman               | Rails     | A static analysis security vulnerability scanner for Ruby on Rails                    |
+| required_files         | -         | Check if required files are present and not empty                                     |
+| rubocop                | -         | Used to check Ruby syntax according to our styling                                    |
+| rubocop_rspec          | -         | Used to check RSpec syntax according to our styling                                   |
+| final_blank_line       | -         | Check if all files have final blank line                                              |
+| empty_methods          | -         | Check if some files have empty methods                                                |
+| expires_in             | -         | Checks if there are typos like expire_in, etc that might brake app caching            |
+| haml_lint              | -         | User to check HAML syntax in the app views                                            |
+| yard                   | -         | YARD documentation standards checking                                                 |
+| rspec_files_names      | -         | Checks if all the rspec files have proper sufix (_spec.rb)                            |
+| rspec_files_structure  | -         | Checks if we have corresponding _spec.rb files for each app/ lib ruby file            |
+| tasks_files_names      | -         | Checks if all the tasks for Capistrano and Rake files have proper extensions          |
+| rspec                  | -         | Specs framework                                                                       |
+| rspec_disallow_pending | -         | Disallow pending tests in specs                                                       |
+| coverage               | -         | Specs code coverage generator                                                         |
+| simplecov              | -         | Simplecov code coverage threshold checking                                            |
+| simplecov_threshold    | -         | Threshold level for code coverage                                                     |
+| examples_comparator    | -         | Compares yml *.example files with non-examples and checks if they have same structure |
+| rubycritic             | -         | Generates a RubyCritic for given project                                              |
+| allowed_extensions     | -         | Checks that all the files in ./config directory have an allowed extension             |
+| yml_parser             | -         | Checks that parameters of all yaml files in ./config directory have some value        |
+| bundler_audit          | -         | Checks for vulnerable versions of gems in Gemfile.lock                                |
 
 ## Config options
 
