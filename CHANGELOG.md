@@ -2,7 +2,7 @@
 
 ## 1.3.0 (unreleased)
 - Bump brakeman dependency to 3.1.3
-- Bump simplecov dependency to 0.11.0
+- Bump simplecov dependency to 0.11.1
 - Bump rubocop dependency to 0.35.1
 - #17: Bump rubycritic dependency to 2.3.0
 - Bump rspec dependency to 3.4.1
