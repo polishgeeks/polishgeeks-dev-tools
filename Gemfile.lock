@@ -158,7 +158,7 @@ GEM
       reek (= 3.7.1)
       virtus (~> 1.0)
     safe_yaml (1.0.4)
-    sass (3.4.19)
+    sass (3.4.20)
     sexp_processor (4.6.0)
     shoulda (3.5.0)
       shoulda-context (~> 1.0, >= 1.0.1)
