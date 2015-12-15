@@ -62,7 +62,6 @@ determine, which you can use in your project:
 | tasks_files_names      | -         | Checks if all the tasks for Capistrano and Rake files have proper extensions          |
 | rspec                  | -         | Specs framework                                                                       |
 | rspec_disallow_pending | -         | Disallow pending tests in specs                                                       |
-| coverage               | -         | Specs code coverage generator                                                         |
 | simplecov              | -         | Simplecov code coverage threshold checking                                            |
 | simplecov_threshold    | -         | Threshold level for code coverage                                                     |
 | examples_comparator    | -         | Compares yml *.example files with non-examples and checks if they have same structure |
