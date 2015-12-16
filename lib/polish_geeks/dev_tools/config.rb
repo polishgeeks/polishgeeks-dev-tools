@@ -54,6 +54,7 @@ module PolishGeeks
         yard
         examples_comparator
         rubycritic
+        gemfile
       )
 
       COMMANDS.each do |attr_name|

@@ -14,6 +14,7 @@
 - #18: Add bundler-audit which checks for vulnerable versions of gems
 - #21: Replace readme validator with required files validators, which allows us to
   define what files you want to require in your project
+- #35: Added gemfile validator which checks if Gemfile contains gems from local path
 
 If you had readme validator turned off like this
 ```ruby
