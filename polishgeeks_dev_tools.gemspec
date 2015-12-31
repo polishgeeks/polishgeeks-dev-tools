@@ -1,6 +1,5 @@
 $LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
-require 'rake'
 require 'polish_geeks/dev_tools/version'
 
 Gem::Specification.new do |s|

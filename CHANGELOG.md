@@ -1,6 +1,7 @@
 # PolishGeeks Dev Tools Changelog
 
 ## 1.3.0 (unreleased)
+- Move to ruby 2.3.0 by default
 - Bump to ruby 2.2.4 and 2.1.8
 - Bump sass dependency to 3.4.20
 - Bump mongo dependency to 2.2.1
