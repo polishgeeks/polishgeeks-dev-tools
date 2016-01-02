@@ -8,7 +8,7 @@
 - Bump brakeman dependency to 3.1.4
 - Bump simplecov dependency to 0.11.1
 - Bump rubocop dependency to 0.35.1
-- #17: Bump rubycritic dependency to 2.4.0
+- #17: Bump rubycritic dependency to 2.4.1
 - Bump rspec dependency to 3.4.1
 - Bump activemodel dependency to 4.2.5
 - #30: Allow to pass config file to brakeman
