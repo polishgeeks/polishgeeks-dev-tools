@@ -3,7 +3,7 @@
 ## 1.3.0 (unreleased)
 - Move to ruby 2.3.0 by default
 - Bump to ruby 2.2.4 and 2.1.8
-- Bump sass dependency to 3.4.20
+- Bump sass dependency to 3.4.21
 - Bump mongo dependency to 2.2.1
 - Bump brakeman dependency to 3.1.4
 - Bump simplecov dependency to 0.11.1
