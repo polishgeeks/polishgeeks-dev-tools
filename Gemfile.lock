@@ -117,7 +117,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rainbow (2.0.0)
-    rake (10.4.2)
+    rake (10.5.0)
     reek (3.8.1)
       codeclimate-engine-rb (~> 0.1.0)
       parser (~> 2.2, >= 2.2.2.5)
