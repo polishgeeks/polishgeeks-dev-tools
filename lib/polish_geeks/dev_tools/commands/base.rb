@@ -5,6 +5,8 @@ module PolishGeeks
       # Base class for all the commands
       # @abstract Subclass and use
       class Base
+        include PolishGeeks::DevTools::Helpers::FileHelper
+
         # Output string that we get after executing this command
         attr_reader :output
         # stored_output [PolishGeeks::DevTools::OutputStorer] storer with results of previous
@@ -59,18 +61,6 @@ module PolishGeeks
           (self.class.validators || []).each do |validator_class|
             validator_class.new(stored_output).validate!
           end
-        end
-
-        private
-
-        # @param [String] path from which we want take files
-        # @return [Array<String>] list of files in path with app prefix path
-        # @note if path is a file return array with file path with app prefix path
-        def files_from_path(path)
-          full_path = "#{::PolishGeeks::DevTools.app_root}/#{path}"
-          return [full_path] if File.file?(full_path)
-
-          Dir.glob(full_path).select { |f| File.file? f }
         end
       end
     end

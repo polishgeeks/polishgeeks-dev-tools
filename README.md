@@ -69,6 +69,7 @@ determine, which you can use in your project:
 | rubycritic             | -         | Generates a RubyCritic for given project                                              |
 | allowed_extensions     | -         | Checks that all the files in ./config directory have an allowed extension             |
 | yml_parser             | -         | Checks that parameters of all yaml files in ./config directory have some value        |
+| git_conflicts          | -         | Checks if there are files with git conflict marker                                    |
 | bundler_audit          | -         | Checks for vulnerable versions of gems in Gemfile.lock                                |
 | gemfile                | -         | Checks if Gemfile contains gems from local path                                       |
 

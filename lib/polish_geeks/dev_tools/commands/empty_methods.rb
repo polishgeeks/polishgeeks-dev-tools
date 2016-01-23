@@ -78,16 +78,6 @@ module PolishGeeks
         def config_excludes
           DevTools.config.empty_methods_ignored || []
         end
-
-        # @param [String] file name that we want to sanitize
-        # @return [String] sanitized file name
-        # @example
-        #   file = /home/something/app/lib/lib.rb,
-        #   where /home/something/app/ is a app root path, then
-        #   sanitize(file) #=> lib/lib.rb
-        def sanitize(file)
-          file.gsub("#{PolishGeeks::DevTools.app_root}/", '')
-        end
       end
     end
   end

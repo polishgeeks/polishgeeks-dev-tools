@@ -14,6 +14,7 @@
 - #21: Replace readme validator with required files validators, which allows us to
   define what files you want to require in your project
 - #35: Added gemfile validator which checks if Gemfile contains gems from local path
+- #36: Added git conflicts validator which checks if there are files with git conflict marker
 
 If you had readme validator turned off like this
 ```ruby
