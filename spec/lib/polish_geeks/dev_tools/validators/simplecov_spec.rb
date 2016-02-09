@@ -21,7 +21,7 @@ RSpec.describe PolishGeeks::DevTools::Validators::Simplecov do
       context 'when SimpleCov defined' do
         before { allow(Object).to receive(:const_defined?) { true } }
         it do
-          expect(subject).to_not receive(:output)
+          expect(subject).not_to receive(:output)
           expect(subject.valid?).to be true
         end
       end

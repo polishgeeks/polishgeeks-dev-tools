@@ -16,7 +16,7 @@ module PolishGeeks
           info(task)
         else
           fatal(task)
-          fail Errors::RequirementsError
+          raise Errors::RequirementsError
         end
       end
 
@@ -31,7 +31,7 @@ module PolishGeeks
         msg = 'GENERATED' if task.class.generator?
         msg = 'OK' if task.class.validator?
 
-        fail Errors::UnknownTaskType unless msg
+        raise Errors::UnknownTaskType unless msg
 
         printf('%-50s %2s', "#{label(task)} ", "\e[32m#{msg}\e[0m\n")
       end

@@ -19,7 +19,7 @@ module PolishGeeks
           app/assets/fonts
           .DS_Store
           .gem
-        )
+        ).freeze
 
         # Executes this command and set output and counter variables
         def execute

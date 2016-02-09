@@ -4,13 +4,13 @@ RSpec.describe PolishGeeks::DevTools::Commands::Yard do
   subject { described_class.new }
 
   describe '#execute' do
+    let(:instance) { instance_double(PolishGeeks::DevTools::Shell) }
+
     context 'when we run yard' do
       before do
-        expect(subject)
-          .to receive(:options)
-          .and_return('--list-undoc')
-        expect_any_instance_of(PolishGeeks::DevTools::Shell)
-          .to receive(:execute)
+        expect(subject).to receive(:options) { '--list-undoc' }
+        allow(PolishGeeks::DevTools::Shell).to receive(:new) { instance }
+        expect(instance).to receive(:execute)
           .with('bundle exec yard stats --list-undoc')
       end
 

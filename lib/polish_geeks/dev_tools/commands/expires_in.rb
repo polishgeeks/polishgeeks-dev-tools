@@ -9,11 +9,11 @@ module PolishGeeks
         CHECKED_DIRS = %w(
           app
           lib
-        )
+        ).freeze
 
         # Regexp that we want to use to catch invalid things that occur
         # instead of expires_in
-        CHECKED_REGEXP = 'expire_in\|expir_in'
+        CHECKED_REGEXP = 'expire_in\|expir_in'.freeze
 
         # Executes this command
         def execute
@@ -23,10 +23,10 @@ module PolishGeeks
           end
 
           @output = results
-            .flatten
-            .map { |line| line.split(':').first }
-            .map { |line| line.gsub!(PolishGeeks::DevTools.app_root, '') }
-            .uniq
+                    .flatten
+                    .map { |line| line.split(':').first }
+                    .map { |line| line.gsub!(PolishGeeks::DevTools.app_root, '') }
+                    .uniq
 
           @output.delete_if do |line|
             excludes.any? { |exclude| line =~ /#{exclude}/ }

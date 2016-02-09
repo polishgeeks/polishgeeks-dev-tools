@@ -28,27 +28,19 @@ RSpec.describe PolishGeeks::DevTools::Commands::Base do
   describe '#ensure_executable!' do
     context 'when there are validators' do
       let(:validator_class) { PolishGeeks::DevTools::Validators::Base }
+      let(:instance) { instance_double(PolishGeeks::DevTools::Validators::Base) }
 
       before do
-        expect(described_class)
-          .to receive(:validators)
-          .and_return([validator_class])
-
-        expect_any_instance_of(validator_class)
-          .to receive(:valid?)
-          .and_return(true)
+        expect(described_class).to receive(:validators) { [validator_class] }
+        allow(validator_class).to receive(:new) { instance }
+        expect(instance).to receive(:validate!) { true }
       end
 
       it { expect { subject.ensure_executable! }.not_to raise_error }
     end
 
     context 'when we dont require any validators' do
-      before do
-        expect(described_class)
-          .to receive(:validators)
-          .and_return([])
-      end
-
+      before { expect(described_class).to receive(:validators) { [] } }
       it { expect { subject.ensure_executable! }.not_to raise_error }
     end
   end

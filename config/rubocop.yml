@@ -1,16 +1,5 @@
-AlignParameters:
-  Enabled: false
-ClassLength:
-  CountComments: false
-  Max: 200
-LineLength:
-  Max: 99
-MethodLength:
-  CountComments: false
-  Max: 15
-Metrics/AbcSize:
-  Max: 25
 AllCops:
+  TargetRubyVersion: 2.3
   Exclude:
     - bin/**/*
     - db/**/*
@@ -28,8 +17,19 @@ AllCops:
     - lib/tasks/**/*.rb
     - lib/capistrano/**/*.rb
     - lib/capistrano/**/*.cap
+AlignParameters:
+  Enabled: false
+ClassLength:
+  CountComments: false
+  Max: 200
+LineLength:
+  Max: 99
+MethodLength:
+  CountComments: false
+  Max: 15
+Metrics/AbcSize:
+  Max: 25
 Style/MultilineOperationIndentation:
   EnforcedStyle: indented
-  SupportedStyles:
-    - aligned
-    - indented
+
+inherit_from: rubocop_todo.yml

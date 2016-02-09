@@ -17,7 +17,7 @@ module PolishGeeks
           templates: /Template.* (\d+)/,
           errors: /Error.* (\d+)/,
           warnings: /Warning.* (\d+)/
-        }
+        }.freeze
 
         # Executes this command
         # @return [String] command output

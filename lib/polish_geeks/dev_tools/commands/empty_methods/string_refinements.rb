@@ -13,7 +13,7 @@ module PolishGeeks
           # Regex to determine end of method
           END_REGEX = /^\s*end(\.\w+(\s+|$)|\s*#.+|\s+|$)\s*/
           # Regex to determine begin of method definition through define_method
-          DEFINE_METHOD = '^\s*(define_method|define_singleton_method)'
+          DEFINE_METHOD = '^\s*(define_method|define_singleton_method)'.freeze
           # Regex to determine definition of method with do-end block
           DEFINE_METHOD_WITH_DO_END =
             /#{DEFINE_METHOD}(\s+|\().*do(\s*(\s*|.*\|\s*))(\s*|#.*)$/

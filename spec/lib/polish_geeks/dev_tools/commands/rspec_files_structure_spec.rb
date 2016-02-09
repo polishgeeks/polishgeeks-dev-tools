@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'tempfile'
 
 RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
   subject { described_class.new }
@@ -17,7 +18,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
         .and_return(analyzed_files_result)
 
       expect(subject)
-        .to receive(:rspec_files)
+        .to receive(:analyzed_rspec_files)
         .exactly(2).times
         .and_return(rspec_files_result)
 
@@ -47,35 +48,25 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
         .at_least(:once)
     end
 
-    it { expect(subject.send(:analyzed_files)).to_not be_empty }
+    it { expect(subject.send(:analyzed_files)).not_to be_empty }
 
     context 'when we gather files for analyze' do
-      let(:file) { double }
+      let(:file) { Tempfile.new }
       let(:files_collection) { [file] }
 
-      before do
-        expect(described_class::FILES_CHECKED)
-          .to receive(:map)
-          .and_return(files_collection)
-      end
+      before { expect(subject).to receive(:checked_files) { files_collection } }
 
       it 'flatten,s uniq and sanitize' do
-        expect(files_collection)
-          .to receive(:flatten!)
-
-        expect(files_collection)
-          .to receive(:uniq!)
-
-        expect(subject)
-          .to receive(:sanitize)
-          .with(file)
+        expect(files_collection).to receive(:flatten!)
+        expect(files_collection).to receive(:uniq!)
+        expect(subject).to receive(:sanitize).with(file)
 
         subject.send(:analyzed_files)
       end
     end
   end
 
-  describe '#rspec_files' do
+  describe '#analyzed_rspec_files' do
     let(:config) { double(rspec_files_structure_ignored: nil) }
 
     before do
@@ -85,17 +76,13 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
         .at_least(:once)
     end
 
-    it { expect(subject.send(:rspec_files)).to_not be_empty }
+    it { expect(subject.send(:analyzed_rspec_files)).not_to be_empty }
 
     context 'when we gather rspec files' do
       let(:file) { double }
       let(:files_collection) { [file] }
 
-      before do
-        expect(described_class::RSPEC_FILES)
-          .to receive(:map)
-          .and_return(files_collection)
-      end
+      before { expect(subject).to receive(:rspec_files) { files_collection } }
 
       it 'flatten,s uniq and sanitize' do
         expect(files_collection)
@@ -108,7 +95,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
           .to receive(:sanitize)
           .with(file)
 
-        subject.send(:rspec_files)
+        subject.send(:analyzed_rspec_files)
       end
     end
   end

@@ -4,10 +4,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rspec do
   subject { described_class.new }
 
   describe '#execute' do
+    let(:instance) { instance_double(PolishGeeks::DevTools::Shell) }
+
     context 'when we run rspec' do
       before do
-        expect_any_instance_of(PolishGeeks::DevTools::Shell)
-          .to receive(:execute)
+        allow(PolishGeeks::DevTools::Shell).to receive(:new) { instance }
+        expect(instance).to receive(:execute)
           .with('bundle exec rspec spec')
       end
 
