@@ -49,7 +49,7 @@ module PolishGeeks
         # @return [Boolean] true if pending specs count is zero or we allow
         # pending tests, false otherwise
         def disallow_pending_valid?
-          PolishGeeks::DevTools.config.rspec_disallow_pending == true ? pending_count.zero? : true
+          PolishGeeks::DevTools.config.rspec_disallow_pending? ? pending_count.zero? : true
         end
       end
     end
