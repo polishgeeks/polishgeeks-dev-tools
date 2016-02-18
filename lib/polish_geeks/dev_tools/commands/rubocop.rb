@@ -17,6 +17,7 @@ module PolishGeeks
         def execute
           cmd = ["bundle exec rubocop #{PolishGeeks::DevTools.app_root}"]
           cmd << "-c #{self.class.config_manager.path}" if self.class.config_manager.present?
+          cmd << '--require rubocop-rspec' if Config.config.rubocop_rspec?
           @output = Shell.new.execute(cmd.join(' '))
         end
 
@@ -27,7 +28,11 @@ module PolishGeeks
 
         # @return [String] default label for this command
         def label
-          "Rubocop (#{files_count} files, #{offenses_count} offenses)"
+          msg = []
+          msg << 'Rubocop'
+          msg << 'with RSpec' if Config.config.rubocop_rspec?
+          msg << "(#{files_count} files, #{offenses_count} offenses)"
+          msg.join(' ')
         end
 
         private

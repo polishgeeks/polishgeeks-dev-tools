@@ -2,6 +2,8 @@ require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::Rubocop do
   subject { described_class.new }
+  let(:config) { double }
+  before { allow(PolishGeeks::DevTools::Config).to receive(:config) { config } }
 
   describe '#execute' do
     let(:path) { '/' }
@@ -16,11 +18,13 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rubocop do
 
     context 'when app config exists' do
       let(:cmd) do
-        "bundle exec rubocop #{PolishGeeks::DevTools.app_root} " \
-        "-c #{subject.class.config_manager.path}"
+        "bundle exec rubocop #{PolishGeeks::DevTools.app_root}" \
+        " -c #{subject.class.config_manager.path}" \
+        ' --require rubocop-rspec'
       end
 
       before do
+        expect(config).to receive(:rubocop_rspec?) { true }
         allow(subject.class.config_manager).to receive(:application?) { true }
         allow(subject.class.config_manager).to receive(:application_path) { path }
         expect_any_instance_of(PolishGeeks::DevTools::Shell)
@@ -39,6 +43,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rubocop do
 
       before do
         allow(PolishGeeks::DevTools).to receive(:gem_root).and_return(path)
+        expect(config).to receive(:rubocop_rspec?) { false }
         allow(subject.class.config_manager).to receive(:application?) { false }
         allow(subject.class.config_manager).to receive(:local_path) { path }
         expect_any_instance_of(PolishGeeks::DevTools::Shell)
@@ -76,18 +81,19 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rubocop do
   end
 
   describe '#label' do
+    before do
+      expect(subject).to receive(:files_count) { 10 }
+      expect(subject).to receive(:offenses_count) { 5 }
+    end
+
     context 'when we run rubocop' do
-      before do
-        expect(subject)
-          .to receive(:files_count)
-          .and_return(10)
-        expect(subject)
-          .to receive(:offenses_count)
-          .and_return(5)
-      end
-      it 'returns the label' do
-        expect(subject.label).to eq 'Rubocop (10 files, 5 offenses)'
-      end
+      before { expect(config).to receive(:rubocop_rspec?) { false } }
+      it { expect(subject.label).to eq 'Rubocop (10 files, 5 offenses)' }
+    end
+
+    context 'when we run rubocop with rspec' do
+      before { expect(config).to receive(:rubocop_rspec?) { true } }
+      it { expect(subject.label).to eq 'Rubocop with RSpec (10 files, 5 offenses)' }
     end
   end
 

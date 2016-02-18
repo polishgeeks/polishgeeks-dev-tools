@@ -20,14 +20,13 @@ module PolishGeeks
         end
       end
 
-      attr_accessor :simplecov_threshold, :rspec_disallow_pending
-
       %i(
         required_files_include
         rspec_files_structure_ignored
         expires_in_files_ignored
         final_blank_line_ignored
         empty_methods_ignored
+        simplecov_threshold
       ).each do |attr|
         attr_accessor attr
       end
@@ -40,7 +39,6 @@ module PolishGeeks
         expires_in
         brakeman
         rubocop
-        rubocop_rspec
         final_blank_line
         empty_methods
         haml_lint
@@ -57,7 +55,13 @@ module PolishGeeks
         gemfile
       )
 
-      COMMANDS.each do |attr_name|
+      # Additional options for commands
+      COMMANDS_OPTIONS = %i(
+        rubocop_rspec
+        rspec_disallow_pending
+      )
+
+      (COMMANDS + COMMANDS_OPTIONS).each do |attr_name|
         attr_accessor attr_name
 
         # @return [Boolean] is given command enabled
@@ -69,12 +73,11 @@ module PolishGeeks
       # Initializes configuration and turn on by default
       # all the commands
       def initialize
-        COMMANDS.each do |attr_name|
+        (COMMANDS + COMMANDS_OPTIONS).each do |attr_name|
           public_send(:"#{attr_name}=", true)
         end
 
         self.simplecov_threshold = 100
-        self.rspec_disallow_pending = true
       end
 
       # Configurating method

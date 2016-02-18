@@ -33,10 +33,8 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rspec do
 
       context 'and disallow pending false' do
         before do
-          expect(PolishGeeks::DevTools::Config)
-            .to receive(:config) { config }
-          expect(config)
-            .to receive(:rspec_disallow_pending) { false }
+          expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
+          expect(config).to receive(:rspec_disallow_pending?) { false }
           subject.instance_variable_set(:@output, '0 failures, 2 pending')
         end
 
@@ -45,10 +43,8 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rspec do
 
       context 'and disallow pending true' do
         before do
-          expect(PolishGeeks::DevTools::Config)
-            .to receive(:config) { config }
-          expect(config)
-            .to receive(:rspec_disallow_pending) { true }
+          expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
+          expect(config).to receive(:rspec_disallow_pending?) { true }
         end
 
         context 'and there are pendings' do
