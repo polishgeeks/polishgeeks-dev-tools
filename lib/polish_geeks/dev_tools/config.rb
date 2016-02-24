@@ -35,24 +35,24 @@ module PolishGeeks
       # All commands will be executed in this order (first rubocop, then rspec, etc)
       COMMANDS = %i(
         required_files
-        bundler_audit
+        gemfile
         expires_in
-        brakeman
-        rubocop
-        final_blank_line
-        empty_methods
-        haml_lint
+        examples_comparator
         allowed_extensions
         yml_parser
+        final_blank_line
+        brakeman
+        rubocop
+        bundler_audit
+        empty_methods
+        haml_lint
         rspec_files_names
         rspec_files_structure
         tasks_files_names
         rspec
         simplecov
         yard
-        examples_comparator
         rubycritic
-        gemfile
       ).freeze
 
       # Additional options for commands
