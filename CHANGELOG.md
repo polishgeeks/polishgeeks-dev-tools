@@ -3,7 +3,7 @@
 ## 1.3.0 (unreleased)
 - Move to ruby 2.3.0 by default
 - Bump sass dependency to 3.4.21
-- Bump brakeman dependency to 3.1.5
+- Bump brakeman dependency to 3.2.1
 - Bump simplecov dependency to 0.11.2
 - Bump rspec dependency to 3.4.2
 - Bump activemodel dependency to 4.2.5.1
