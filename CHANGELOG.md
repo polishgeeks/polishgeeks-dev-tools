@@ -2,6 +2,7 @@
 
 ## 1.3.0 (unreleased)
 - Move to ruby 2.3.0 by default
+- Bump bundler-audit dependency to 0.5.0
 - Bump sass dependency to 3.4.21
 - Bump brakeman dependency to 3.2.1
 - Bump simplecov dependency to 0.11.2
