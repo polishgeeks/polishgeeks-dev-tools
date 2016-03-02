@@ -10,7 +10,7 @@
 - Bump activemodel dependency to 4.2.5.1
 - Reorganize how we run rubocop-rspec
 - #44: Bump rubocop dependency to 0.37.2
-- #17: Bump rubycritic dependency to 2.7.1
+- #17: Bump rubycritic dependency to 2.8.0
 - #30: Allow to pass config file to brakeman
 - #18: Add bundler-audit which checks for vulnerable versions of gems
 - #21: Replace readme validator with required files validators, which allows us to
