@@ -3,11 +3,9 @@
 ## 1.3.0 (unreleased)
 - Move to ruby 2.3.0 by default
 - Bump bundler-audit dependency to 0.5.0
-- Bump sass dependency to 3.4.21
 - Bump brakeman dependency to 3.2.1
 - Bump simplecov dependency to 0.11.2
 - Bump rspec dependency to 3.4.3
-- Bump activemodel dependency to 4.2.5.1
 - Reorganize how we run rubocop-rspec
 - #44: Bump rubocop dependency to 0.37.2
 - #17: Bump rubycritic dependency to 2.8.0
