@@ -7,7 +7,7 @@ module PolishGeeks
         MATCH_REGEXP = /\(\d+.\d+\%\) covered/
 
         def valid?
-          Object.const_defined?('SimpleCov') || (!output.nil? && output.length > 0)
+          Object.const_defined?('SimpleCov') || (!output.nil? && !output.empty?)
         end
 
         # Searches if we have SimpleCov hooked to rspec

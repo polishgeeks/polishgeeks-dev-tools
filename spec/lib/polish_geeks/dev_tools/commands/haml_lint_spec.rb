@@ -4,21 +4,18 @@ RSpec.describe PolishGeeks::DevTools::Commands::HamlLint do
   subject { described_class.new }
 
   describe '#execute' do
+    let(:instance) { instance_double(PolishGeeks::DevTools::Shell) }
     let(:path) { '/' }
+
     before do
-      expect(ENV)
-        .to receive(:[])
-        .with('BUNDLE_GEMFILE')
-        .and_return(path)
+      expect(ENV).to receive(:[]).with('BUNDLE_GEMFILE') { path }
+      allow(PolishGeeks::DevTools::Shell).to receive(:new) { instance }
     end
 
     context 'when app config exists' do
       before do
-        expect(File)
-          .to receive(:exist?)
-          .and_return(true)
-        expect_any_instance_of(PolishGeeks::DevTools::Shell)
-          .to receive(:execute)
+        expect(File).to receive(:exist?) { true }
+        expect(instance).to receive(:execute)
           .with("bundle exec haml-lint -c #{path}.haml-lint.yml app/views")
       end
 
@@ -30,14 +27,9 @@ RSpec.describe PolishGeeks::DevTools::Commands::HamlLint do
     context 'when app config does not exist' do
       let(:path) { Dir.pwd }
       before do
-        expect(PolishGeeks::DevTools)
-          .to receive(:gem_root)
-          .and_return(path)
-        expect(File)
-          .to receive(:exist?)
-          .and_return(false)
-        expect_any_instance_of(PolishGeeks::DevTools::Shell)
-          .to receive(:execute)
+        expect(PolishGeeks::DevTools).to receive(:gem_root) { path }
+        expect(File).to receive(:exist?) { false }
+        expect(instance).to receive(:execute)
           .with("bundle exec haml-lint -c #{path}/config/haml-lint.yml app/views")
       end
 

@@ -13,7 +13,7 @@ module PolishGeeks
         CHECKED_DIRS = %w(
           aggregators controllers helpers lib libs models decorators
           presenters services workers mailers requests polishgeeks*
-        )
+        ).freeze
 
         # Regexp used to check names in spec files
         CHECK_REGEXP = /(\_spec\.rb)$/

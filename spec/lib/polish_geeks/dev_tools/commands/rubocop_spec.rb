@@ -6,6 +6,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rubocop do
   before { allow(PolishGeeks::DevTools::Config).to receive(:config) { config } }
 
   describe '#execute' do
+    let(:instance) { instance_double(PolishGeeks::DevTools::Shell) }
     let(:path) { '/' }
 
     before do
@@ -14,6 +15,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rubocop do
         .with('BUNDLE_GEMFILE')
         .and_return(path)
         .at_least(:once)
+      allow(PolishGeeks::DevTools::Shell).to receive(:new) { instance }
     end
 
     context 'when app config exists' do
@@ -27,8 +29,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rubocop do
         expect(config).to receive(:rubocop_rspec?) { true }
         allow(subject.class.config_manager).to receive(:application?) { true }
         allow(subject.class.config_manager).to receive(:application_path) { path }
-        expect_any_instance_of(PolishGeeks::DevTools::Shell)
-          .to receive(:execute).with(cmd)
+        expect(instance).to receive(:execute).with(cmd)
       end
 
       it { subject.execute }
@@ -46,8 +47,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rubocop do
         expect(config).to receive(:rubocop_rspec?) { false }
         allow(subject.class.config_manager).to receive(:application?) { false }
         allow(subject.class.config_manager).to receive(:local_path) { path }
-        expect_any_instance_of(PolishGeeks::DevTools::Shell)
-          .to receive(:execute).with(cmd)
+        expect(instance).to receive(:execute).with(cmd)
       end
 
       it { subject.execute }

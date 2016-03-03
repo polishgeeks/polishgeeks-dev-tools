@@ -13,14 +13,8 @@ module PolishGeeks
 
           Dir[config_path].each do |example_file|
             dedicated_file = example_file.gsub('.example', '')
-
             header = compare_header(example_file, dedicated_file)
-
-            if same_key_structure?(example_file, dedicated_file)
-              @output << successful_compare(header)
-            else
-              @output << failed_compare(header)
-            end
+            @output << compare_output(header, example_file, dedicated_file)
           end
         end
 
@@ -56,6 +50,18 @@ module PolishGeeks
         # @return [String] success/failure (both) message header
         def compare_header(example_file, dedicated_file)
           "#{File.basename(example_file)} and #{File.basename(dedicated_file)}"
+        end
+
+        # @param [String] header output message
+        # @param [File] example_file which we compare with dedicated one
+        # @param [File] dedicated_file which is compared with example one
+        # @return [String] success/failure message for single file
+        def compare_output(header, example_file, dedicated_file)
+          if same_key_structure?(example_file, dedicated_file)
+            successful_compare(header)
+          else
+            failed_compare(header)
+          end
         end
 
         # @param [String] compare_header output message

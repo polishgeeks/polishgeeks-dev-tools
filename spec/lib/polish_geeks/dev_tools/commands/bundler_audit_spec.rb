@@ -4,9 +4,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::BundlerAudit do
   subject { described_class.new }
 
   describe '#execute' do
+    let(:instance) { instance_double(PolishGeeks::DevTools::Shell) }
+
     before do
-      expect_any_instance_of(PolishGeeks::DevTools::Shell)
-        .to receive(:execute).with('bundle-audit update 2>&1 > /dev/null; bundle-audit check')
+      allow(PolishGeeks::DevTools::Shell).to receive(:new) { instance }
+      expect(instance).to receive(:execute)
+        .with('bundle-audit update 2>&1 > /dev/null; bundle-audit check')
     end
 
     it { subject.execute }

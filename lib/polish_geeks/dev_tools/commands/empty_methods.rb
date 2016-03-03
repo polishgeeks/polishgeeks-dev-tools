@@ -17,7 +17,7 @@ module PolishGeeks
           public
           app/assets/images
           app/assets/fonts
-        )
+        ).freeze
 
         # Executes this command and set output and counter variables
         def execute

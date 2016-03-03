@@ -11,7 +11,7 @@ module PolishGeeks
           yml
           rb.example
           yml.example
-        )
+        ).freeze
 
         # Executes this command
         # @return [Array] command output array with list of
@@ -20,9 +20,9 @@ module PolishGeeks
           results = Dir[config_path]
 
           @output = results
-            .flatten
-            .map { |line| line.gsub!(PolishGeeks::DevTools.app_root + '/config/', '') }
-            .uniq
+                    .flatten
+                    .map { |line| line.gsub!(PolishGeeks::DevTools.app_root + '/config/', '') }
+                    .uniq
           @output.delete_if do |line|
             ALLOWED_EXTENSIONS.any? { |allow| line =~ /^.*\.#{allow}$/i }
           end

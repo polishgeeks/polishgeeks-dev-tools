@@ -16,10 +16,11 @@ RSpec.describe PolishGeeks::DevTools::Commands::Brakeman do
 
     describe '#execute' do
       context 'when we run brakeman' do
+        let(:instance) { instance_double(PolishGeeks::DevTools::Shell) }
+
         before do
-          expect_any_instance_of(PolishGeeks::DevTools::Shell)
-            .to receive(:execute)
-            .with('bundle exec brakeman -q')
+          allow(PolishGeeks::DevTools::Shell).to receive(:new) { instance }
+          expect(instance).to receive(:execute).with('bundle exec brakeman -q')
         end
 
         it 'executes the command' do

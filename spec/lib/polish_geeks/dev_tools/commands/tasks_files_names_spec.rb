@@ -69,11 +69,11 @@ RSpec.describe PolishGeeks::DevTools::Commands::TasksFilesNames do
     end
 
     it 'does not be empty' do
-      expect(subject.send(:files, dummy_type)).to_not be_empty
+      expect(subject.send(:files, dummy_type)).not_to be_empty
     end
 
     it 'does not contain directories' do
-      expect(subject.send(:files, dummy_type)).to_not include('command')
+      expect(subject.send(:files, dummy_type)).not_to include('command')
     end
   end
 
@@ -101,8 +101,8 @@ RSpec.describe PolishGeeks::DevTools::Commands::TasksFilesNames do
 
     it 'marks all inapropriate files' do
       subject.execute
-      expect(subject.output).to_not include('test.cap')
-      expect(subject.output).to_not include('test.rake')
+      expect(subject.output).not_to include('test.cap')
+      expect(subject.output).not_to include('test.rake')
     end
   end
 end

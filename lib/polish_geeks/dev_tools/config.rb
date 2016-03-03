@@ -53,13 +53,13 @@ module PolishGeeks
         examples_comparator
         rubycritic
         gemfile
-      )
+      ).freeze
 
       # Additional options for commands
       COMMANDS_OPTIONS = %i(
         rubocop_rspec
         rspec_disallow_pending
-      )
+      ).freeze
 
       (COMMANDS + COMMANDS_OPTIONS).each do |attr_name|
         attr_accessor attr_name

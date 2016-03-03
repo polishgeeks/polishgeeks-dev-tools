@@ -14,7 +14,7 @@ module PolishGeeks
         # Available command types. We have validators that check something
         # and that should have a 'valid?' method and that check for errors, etc
         # and generators that are executed to generate some stats, docs, etc
-        TYPES = %i( validator generator )
+        TYPES = %i( validator generator ).freeze
 
         class << self
           # ConfigManager instance can be provided, which allows us to find a
@@ -33,14 +33,14 @@ module PolishGeeks
 
         # @raise [NotImplementedError] this should be implemented in a subclass
         def execute
-          fail Errors::NotImplementedError
+          raise Errors::NotImplementedError
         end
 
         # @raise [NotImplementedError] this should be implemented in a subclass
         #   if it is a validator type (or no implementation required when
         #   it is a validator)
         def valid?
-          fail Errors::NotImplementedError
+          raise Errors::NotImplementedError
         end
 
         # @return [String] what message should be printed when error occures

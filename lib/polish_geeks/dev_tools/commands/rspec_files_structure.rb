@@ -13,20 +13,20 @@ module PolishGeeks
         FILES_CHECKED = %w(
           app/**/*.rb
           lib/**/*.rb
-        )
+        ).freeze
 
         # From where should we take spec files
         RSPEC_FILES = %w(
           spec/**/*_spec.rb
-        )
+        ).freeze
 
         # Executes this command
         # @return [Array<String>] empty array if all the files have corresponding
         #   rspec files, otherwise array will contain files that doesn't
         def execute
           @output = {
-            app: analyzed_files - rspec_files,
-            rspec: rspec_files - analyzed_files
+            app: analyzed_files - analyzed_rspec_files,
+            rspec: analyzed_rspec_files - analyzed_files
           }
         end
 
@@ -53,9 +53,7 @@ module PolishGeeks
         # @return [Array<String>] array with list of files that we want to compare with
         #   those from Rspec that should exist
         def analyzed_files
-          files = FILES_CHECKED.map do |dir|
-            Dir[File.join(DevTools.app_root, dir)]
-          end
+          files = checked_files
 
           files.flatten!
           files.uniq!
@@ -70,8 +68,8 @@ module PolishGeeks
         end
 
         # @return [Array<String>] rspec files that should correspond with analyzed_files
-        def rspec_files
-          files = RSPEC_FILES.map { |dir| Dir[File.join(DevTools.app_root, dir)] }
+        def analyzed_rspec_files
+          files = rspec_files
 
           files.flatten!
 
@@ -127,6 +125,21 @@ module PolishGeeks
         #   in the place where it is going to be used
         def excludes
           DevTools.config.rspec_files_structure_ignored || []
+        end
+
+        # @return [Array<String>] files that should be analyzed
+        def directory_files(dir)
+          Dir[File.join(DevTools.app_root, dir)]
+        end
+
+        # @return [Array<String>] array with list of files that we want to compare
+        def checked_files
+          FILES_CHECKED.map { |dir| directory_files(dir) }
+        end
+
+        # @return [Array<String>] array with list of files that we want to compare
+        def rspec_files
+          RSPEC_FILES.map { |dir| directory_files(dir) }
         end
       end
     end
