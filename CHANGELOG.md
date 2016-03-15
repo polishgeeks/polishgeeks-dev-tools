@@ -52,7 +52,6 @@ Now you need to change that to
 ```
 
 - #12: Add rubocop-rspec which checks add code style checking for your RSpec files
-
 - #33: Add an option to disallow pending specs
 
 If you want to allow pending specs then
