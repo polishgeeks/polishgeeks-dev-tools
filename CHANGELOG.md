@@ -5,7 +5,7 @@
 - Bump bundler-audit dependency to 0.5.0
 - Bump brakeman dependency to 3.2.1
 - Bump simplecov dependency to 0.11.2
-- Bump rspec dependency to 3.4.3
+- Bump rspec dependency to 3.4.4
 - Reorganize how we run rubocop-rspec
 - #44: Bump rubocop dependency to 0.37.2
 - #17: Bump rubycritic dependency to 2.8.0
