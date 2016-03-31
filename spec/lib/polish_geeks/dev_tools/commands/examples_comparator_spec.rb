@@ -4,7 +4,8 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
   subject { described_class.new }
 
   let(:example_file) { rand.to_s }
-  let(:dedicated_file) { rand.to_s }
+  let(:dedicated_file) { example_file }
+  let(:dedicated_file_present) { true }
 
   describe '#execute' do
     let(:config_path) { rand.to_s }
@@ -14,18 +15,25 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
         .to receive(:config_path)
         .and_return(config_path)
 
-      expect(subject)
-        .to receive(:same_key_structure?)
-        .and_return(compare_result)
-
       expect(Dir)
         .to receive(:[])
         .with(config_path)
         .and_return([example_file])
+
+      expect(File)
+        .to receive(:exist?)
+        .with(dedicated_file)
+        .and_return(dedicated_file_present)
     end
 
     context 'when compared files structure is the same' do
       let(:compare_result) { true }
+
+      before do
+        expect(subject)
+          .to receive(:same_key_structure?)
+          .and_return(compare_result)
+      end
 
       it 'puts a successful message into output' do
         subject.execute
@@ -37,9 +45,24 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
     context 'when compared files structure is not the same' do
       let(:compare_result) { false }
 
+      before do
+        expect(subject)
+          .to receive(:same_key_structure?)
+          .and_return(compare_result)
+      end
+
       it 'puts a failed message into output' do
         subject.execute
         expect(subject.output).to include 'failed'
+      end
+    end
+
+    context 'when dedicated file is not present' do
+      let(:dedicated_file_present) { false }
+
+      it 'puts a failed message into output' do
+        subject.execute
+        expect(subject.output).to include 'file is missing'
       end
     end
   end
