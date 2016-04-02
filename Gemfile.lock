@@ -146,7 +146,7 @@ GEM
       ruby_parser (~> 3.8)
       virtus (~> 1.0)
     safe_yaml (1.0.4)
-    sass (3.4.21)
+    sass (3.4.22)
     sexp_processor (4.7.0)
     shoulda (3.5.0)
       shoulda-context (~> 1.0, >= 1.0.1)
