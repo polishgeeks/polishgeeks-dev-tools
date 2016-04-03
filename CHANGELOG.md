@@ -7,7 +7,7 @@
 - Bump simplecov dependency to 0.11.2
 - Bump rspec dependency to 3.4.4
 - Reorganize how we run rubocop-rspec
-- #44: Bump rubocop dependency to 0.37.2
+- #44: Bump rubocop dependency to 0.39.0
 - #17: Bump rubycritic dependency to 2.8.0
 - #30: Allow to pass config file to brakeman
 - #18: Add bundler-audit which checks for vulnerable versions of gems
