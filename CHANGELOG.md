@@ -1,6 +1,9 @@
 # PolishGeeks Dev Tools Changelog
 
-## 1.3.0 (unreleased)
+## master (unreleased)
+
+## 1.3.0 (03/04/2016)
+
 - Move to ruby 2.3.0 by default
 - Bump bundler-audit dependency to 0.5.0
 - Bump brakeman dependency to 3.2.1
@@ -63,11 +66,13 @@ If you want to allow pending specs then
 ```
 
 ## 1.2.1
+
 - Extracted all errors to PolishGeeks::DevTools::Errors namespace
 - Add support for validators
 - Rename Command to Commands namespace
 
 ## 1.2.0
+
 - Added EmptyMethod command which checks if some files have empty methods
 
 ## 1.1.2
