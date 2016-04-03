@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    polishgeeks-dev-tools (1.3.0.pre.head)
+    polishgeeks-dev-tools (1.3.0)
       brakeman
       bundler-audit
       faker
