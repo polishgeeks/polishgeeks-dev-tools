@@ -28,7 +28,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'timecop'
   s.add_dependency 'brakeman'
   s.add_dependency 'haml-lint'
-  s.add_dependency 'mongoid-rspec'
 
   s.files         = `git ls-files -z`.split("\x0")
   s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
