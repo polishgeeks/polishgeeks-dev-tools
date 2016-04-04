@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+- Remove dependency for mongoid-rspec
+
 ## 1.3.0 (03/04/2016)
 
 - Move to ruby 2.3.0 by default
