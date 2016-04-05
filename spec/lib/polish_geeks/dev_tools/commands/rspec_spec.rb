@@ -18,6 +18,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rspec do
   end
 
   describe '#valid?' do
+    context 'when there is 1 failure' do
+      before { subject.instance_variable_set(:@output, '1 failure') }
+
+      it { expect(subject.valid?).to eq false }
+    end
+
     context 'when there are failures' do
       before { subject.instance_variable_set(:@output, '2 failures') }
 

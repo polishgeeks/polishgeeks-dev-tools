@@ -51,7 +51,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
     it { expect(subject.send(:analyzed_files)).not_to be_empty }
 
     context 'when we gather files for analyze' do
-      let(:file) { Tempfile.new }
+      let(:file) { Tempfile.new('tempfile') }
       let(:files_collection) { [file] }
 
       before { expect(subject).to receive(:checked_files) { files_collection } }

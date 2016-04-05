@@ -9,7 +9,7 @@ module PolishGeeks
         # Regexp used to match Rspec examples count
         EXAMPLES_REGEXP = /(\d+) examples/
         # Regexp used to match Rspec failures
-        FAILURES_REGEXP = /(\d+) failures/
+        FAILURES_REGEXP = /(\d+) failure/
         # Regexp used to match Rspec pendings
         PENDING_REGEXP = /(\d+) pending/
 

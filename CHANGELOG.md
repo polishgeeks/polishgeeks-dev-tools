@@ -3,6 +3,7 @@
 ## master (unreleased)
 
 - Remove dependency for mongoid-rspec
+- #54: Fix Command::Rspec to handle single test failure
 
 ## 1.3.0 (03/04/2016)
 
