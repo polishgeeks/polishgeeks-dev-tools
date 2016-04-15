@@ -4,6 +4,7 @@
 
 - Remove dependency for mongoid-rspec
 - #54: Fix Command::Rspec to handle single test failure
+- Bump rubycritic dependency to 2.9.0
 
 ## 1.3.0 (03/04/2016)
 
