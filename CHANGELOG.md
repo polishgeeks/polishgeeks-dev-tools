@@ -2,6 +2,8 @@
 
 ## master (unreleased)
 
+## 1.3.1 (15/04/2016)
+
 - Remove dependency for mongoid-rspec
 - #54: Fix Command::Rspec to handle single test failure
 - Bump rubycritic dependency to 2.9.0
