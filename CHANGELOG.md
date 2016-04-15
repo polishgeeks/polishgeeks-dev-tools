@@ -1,9 +1,10 @@
 # PolishGeeks Dev Tools Changelog
 
-## master (unreleased)
+## 1.3.1 (14/04/2016)
 
 - Remove dependency for mongoid-rspec
 - #54: Fix Command::Rspec to handle single test failure
+- #58: Fix haml-lint changed name to haml_lint
 
 ## 1.3.0 (03/04/2016)
 
