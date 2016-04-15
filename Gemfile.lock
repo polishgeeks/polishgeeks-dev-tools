@@ -5,7 +5,7 @@ PATH
       brakeman
       bundler-audit
       faker
-      haml-lint
+      haml_lint
       pry
       rspec
       rubocop
@@ -67,9 +67,10 @@ GEM
       sexp_processor (~> 4.4)
     haml (4.0.7)
       tilt
-    haml-lint (0.13.0)
+    haml_lint (0.17.1)
       haml (~> 4.0)
-      rubocop (>= 0.25.0)
+      rake (>= 10, < 12)
+      rubocop (>= 0.36.0)
       sysexits (~> 1.1)
     highline (1.7.8)
     i18n (0.7.0)
