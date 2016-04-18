@@ -61,7 +61,7 @@ module PolishGeeks
           if difference.empty?
             successful_compare(header)
           else
-            failed_compare(header)
+            failed_compare(header, difference)
           end
         end
 
@@ -74,8 +74,8 @@ module PolishGeeks
         # @param [String] compare_header output message
         # @return [String] failed message for single file
         def failed_compare(compare_header, details = '')
-          # TODO: format details properly
-          "\e[31m failed\e[0m - #{compare_header} - structure not equal#{details}\n"
+          "\e[31m failed\e[0m - #{compare_header}" \
+          " - structure not equal:\n\t#{details.to_yaml.gsub("\n", "\n\t")}\n"
         end
       end
     end
