@@ -32,6 +32,13 @@ RSpec.describe PolishGeeks::DevTools::Hash do
 
         it { expect(subject).to eq(a: { e: [nil, 1], b: { d: [nil, 1] } }) }
       end
+
+      context 'across 2 levels' do
+        let(:h1) { described_class.new.merge(a: { b: { c: 1, d: 1 }, e: 1 }) }
+        let(:h2) { described_class.new.merge(a: { b: nil }) }
+
+        it { expect(subject).to eq(a: { e: [1, nil], b: {:c=>[1, nil], :d=>[1, nil] }}) }
+      end
     end
 
     context 'when they have same structure but different data' do

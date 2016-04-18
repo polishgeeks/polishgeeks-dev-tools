@@ -10,7 +10,13 @@ module PolishGeeks
       def diff(other)
         diffs = {}
 
-        if different_keys_than?(other)
+        if other.nil?
+          diff_as_array = keys.each_with_object({}) do |key, result|
+            result[key] = [self[key], nil]
+          end
+
+          diffs.merge! diff_as_array
+        elsif different_keys_than?(other)
           different_keys = keys - other.keys | other.keys - keys
 
           diff_as_array = different_keys.each_with_object({}) do |key, result|
