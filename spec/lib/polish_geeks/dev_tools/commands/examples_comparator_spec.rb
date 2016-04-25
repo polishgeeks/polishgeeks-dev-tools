@@ -65,10 +65,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
 
   describe '#failed_compare' do
     let(:compare_header) { rand.to_s }
-    let(:expected) { "\e[31m failed\e[0m - #{compare_header} - structure not equal\n" }
+    let(:expected) do
+      "\e[31m failed\e[0m - #{compare_header} - structure not equal:\n\t--- ''"
+    end
 
     it 'is equal to expected message' do
-      expect(subject.send(:failed_compare, compare_header)).to eq expected
+      expect(subject.send(:failed_compare, compare_header).strip).to eq expected
     end
   end
 

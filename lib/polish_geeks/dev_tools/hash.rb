@@ -11,21 +11,11 @@ module PolishGeeks
         diffs = {}
 
         if other.nil?
-          diff_as_array = keys.each_with_object({}) do |key, result|
-            result[key] = [self[key], nil]
-          end
-
-          diffs.merge! diff_as_array
+          diffs.merge! diff_as_array(keys, {})
         elsif different_keys_than?(other)
           different_keys = keys - other.keys | other.keys - keys
-
-          diff_as_array = different_keys.each_with_object({}) do |key, result|
-            result[key] = [self[key], other[key]]
-          end
-
-          diffs.merge! diff_as_array
+          diffs.merge! diff_as_array(different_keys, other)
         end
-
         each_nested_hash_key do |inside_key|
           inner_hash = self.class.new.merge(self[inside_key])
           inner_diff = inner_hash.diff(other[inside_key])
@@ -36,6 +26,13 @@ module PolishGeeks
       end
 
       private
+
+      # Returns Hash where values represents differences with other hash
+      def diff_as_array(keys, other_hash)
+        keys.each_with_object({}) do |key, result|
+          result[key] = [self[key], other_hash[key]]
+        end
+      end
 
       # Yield all keys for which corresponding values are instances of Hash
       def each_nested_hash_key
