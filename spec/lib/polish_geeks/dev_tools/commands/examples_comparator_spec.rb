@@ -15,7 +15,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
         .and_return(config_path)
 
       expect(subject)
-        .to receive(:same_key_structure?)
+        .to receive(:keys_difference)
         .and_return(compare_result)
 
       expect(Dir)
@@ -25,7 +25,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
     end
 
     context 'when compared files structure is the same' do
-      let(:compare_result) { true }
+      let(:compare_result) { {} }
 
       it 'puts a successful message into output' do
         subject.execute
@@ -35,7 +35,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
     end
 
     context 'when compared files structure is not the same' do
-      let(:compare_result) { false }
+      let(:compare_result) { { unexpected: 'pair' } }
 
       it 'puts a failed message into output' do
         subject.execute
@@ -65,10 +65,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
 
   describe '#failed_compare' do
     let(:compare_header) { rand.to_s }
-    let(:expected) { "\e[31m failed\e[0m - #{compare_header} - structure not equal\n" }
+    let(:expected) do
+      "\e[31m failed\e[0m - #{compare_header} - structure not equal:\n\t--- ''"
+    end
 
     it 'is equal to expected message' do
-      expect(subject.send(:failed_compare, compare_header)).to eq expected
+      expect(subject.send(:failed_compare, compare_header).strip).to eq expected
     end
   end
 
@@ -80,7 +82,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
     end
   end
 
-  describe '#same_key_structure?' do
+  describe '#keys_difference' do
     let(:structure1) { double }
     let(:structure2) { double }
     let(:hash) { double }
@@ -106,16 +108,16 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
         .exactly(2).times
 
       expect(hash)
-        .to receive(:same_key_structure?)
+        .to receive(:diff)
         .and_return(result)
     end
 
     context 'when structure is the same' do
-      let(:result) { true }
+      let(:result) { {} }
 
       it '' do
         executed = subject.send(
-          :same_key_structure?,
+          :keys_difference,
           example_file,
           dedicated_file
         )
@@ -125,11 +127,11 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
     end
 
     context 'when structure is not the same' do
-      let(:result) { false }
+      let(:result) { { a: 1 } }
 
       it '' do
         executed = subject.send(
-          :same_key_structure?,
+          :keys_difference,
           example_file,
           dedicated_file
         )

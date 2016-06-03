@@ -1,23 +1,50 @@
 module PolishGeeks
   module DevTools
-    # Hash extensions required only by rake tasks in this rake file
-    # No need to add them to app itself
-    # We don't put it directly into hash, since it won't be used outside of
-    # this gem
+    #
+    # We don't put it directly into Hash, since it won't be used
+    # outside of this gem
+    #
     class Hash < ::Hash
-      # @param other [Hash] different hash that we want to compare with
-      # @return [Boolean] true if both hashes have same keys and same keys structure
-      def same_key_structure?(other)
-        return false unless keys == other.keys &&
-            keys.all? { |inside| inside.is_a?(Symbol) || inside.is_a?(String) }
+      # Compare hash with other Hash
+      #
+      def diff(other)
+        diffs = {}
 
-        keys.all? do |inside|
-          if self[inside].is_a?(::Hash)
-            self.class.new.merge(self[inside]).same_key_structure?(other[inside])
-          else
-            !other[inside].is_a?(::Hash)
-          end
+        if other.nil?
+          diffs.merge! diff_as_array(keys, {})
+        elsif different_keys_than?(other)
+          different_keys = keys - other.keys | other.keys - keys
+          diffs.merge! diff_as_array(different_keys, other)
         end
+        each_nested_hash_key do |inside_key|
+          inner_hash = self.class.new.merge(self[inside_key])
+          inner_diff = inner_hash.diff(other[inside_key])
+          diffs[inside_key] = inner_diff unless inner_diff.empty?
+        end
+
+        diffs
+      end
+
+      private
+
+      # Returns Hash where values represents differences with other hash
+      def diff_as_array(keys, other_hash)
+        keys.each_with_object({}) do |key, result|
+          result[key] = [self[key], other_hash[key]]
+        end
+      end
+
+      # Yield all keys for which corresponding values are instances of Hash
+      def each_nested_hash_key
+        keys.each do |inside|
+          yield(inside) if self[inside].is_a?(::Hash)
+        end
+      end
+
+      # Returns true if keys are different that in other hash
+      def different_keys_than?(other_hash)
+        !(keys == other_hash.keys &&
+          keys.all? { |inside| inside.is_a?(Symbol) || inside.is_a?(String) })
       end
     end
   end

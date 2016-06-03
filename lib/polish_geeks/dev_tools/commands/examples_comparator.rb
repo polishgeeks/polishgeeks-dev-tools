@@ -34,15 +34,15 @@ module PolishGeeks
 
         # @param [File] example_file which we compare with dedicated one
         # @param [File] dedicated_file which is compared with example one
-        # @return [Boolean] true if the key structure is the same in both files
-        #   otherwise false
-        def same_key_structure?(example_file, dedicated_file)
+        # @return [Hash] none empty hash if the key structure is different
+        #  in compared files, empty hash otherwise
+        def keys_difference(example_file, dedicated_file)
           yaml1 = PolishGeeks::DevTools::Hash.new
           yaml1.merge!(YAML.load_file(example_file))
           yaml2 = PolishGeeks::DevTools::Hash.new
           yaml2.merge!(YAML.load_file(dedicated_file))
 
-          yaml1.same_key_structure?(yaml2)
+          yaml1.diff(yaml2)
         end
 
         # @param [File] example_file which we compare with dedicated one
@@ -57,10 +57,11 @@ module PolishGeeks
         # @param [File] dedicated_file which is compared with example one
         # @return [String] success/failure message for single file
         def compare_output(header, example_file, dedicated_file)
-          if same_key_structure?(example_file, dedicated_file)
+          difference = keys_difference(example_file, dedicated_file)
+          if difference.empty?
             successful_compare(header)
           else
-            failed_compare(header)
+            failed_compare(header, difference)
           end
         end
 
@@ -72,8 +73,10 @@ module PolishGeeks
 
         # @param [String] compare_header output message
         # @return [String] failed message for single file
-        def failed_compare(compare_header)
-          "\e[31m failed\e[0m - #{compare_header} - structure not equal\n"
+        def failed_compare(compare_header, details = '')
+          structure_diff = details.to_yaml.gsub("\n", "\n\t")
+          "\e[31m failed\e[0m - #{compare_header}" \
+          " - structure not equal:\n\t#{structure_diff}\n"
         end
       end
     end
