@@ -55,7 +55,7 @@ determine, which you can use in your project:
 | rubocop_rspec          | -         | Used to check RSpec syntax according to our styling                                   |
 | final_blank_line       | -         | Check if all files have final blank line                                              |
 | empty_methods          | -         | Check if some files have empty methods                                                |
-| expires_in             | -         | Checks if there are typos like expire_in, etc that might brake app caching            |
+| expires_in             | -         | Checks if there are typos like expire_in, etc that might break app caching            |
 | haml_lint              | -         | User to check HAML syntax in the app views                                            |
 | yard                   | -         | YARD documentation standards checking                                                 |
 | rspec_files_names      | -         | Checks if all the rspec files have proper sufix (_spec.rb)                            |
