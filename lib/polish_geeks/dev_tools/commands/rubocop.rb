@@ -18,6 +18,7 @@ module PolishGeeks
           cmd = ["bundle exec rubocop #{PolishGeeks::DevTools.app_root}"]
           cmd << "-c #{self.class.config_manager.path}" if self.class.config_manager.present?
           cmd << '--require rubocop-rspec' if Config.config.rubocop_rspec?
+          cmd << '--display-cop-names'
           @output = Shell.new.execute(cmd.join(' '))
         end
 

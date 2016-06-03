@@ -22,7 +22,8 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rubocop do
       let(:cmd) do
         "bundle exec rubocop #{PolishGeeks::DevTools.app_root}" \
         " -c #{subject.class.config_manager.path}" \
-        ' --require rubocop-rspec'
+        ' --require rubocop-rspec' \
+        ' --display-cop-names'
       end
 
       before do
@@ -39,7 +40,8 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rubocop do
       let(:path) { Dir.pwd }
       let(:cmd) do
         "bundle exec rubocop #{PolishGeeks::DevTools.app_root} " \
-        "-c #{subject.class.config_manager.path}"
+        "-c #{subject.class.config_manager.path} " \
+        '--display-cop-names'
       end
 
       before do
