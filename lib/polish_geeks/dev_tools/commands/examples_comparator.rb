@@ -13,8 +13,12 @@ module PolishGeeks
 
           Dir[config_path].each do |example_file|
             dedicated_file = example_file.gsub('.example', '')
-            header = compare_header(example_file, dedicated_file)
-            @output << compare_output(header, example_file, dedicated_file)
+            if File.exist?(dedicated_file)
+              header = compare_header(example_file, dedicated_file)
+              @output << compare_output(header, example_file, dedicated_file)
+            else
+              @output << missing_file(dedicated_file)
+            end
           end
         end
 
@@ -74,6 +78,12 @@ module PolishGeeks
         # @return [String] failed message for single file
         def failed_compare(compare_header)
           "\e[31m failed\e[0m - #{compare_header} - structure not equal\n"
+        end
+
+        # @param [String] dedicated_file path to config file which is missing
+        # @return [String] failed message for missing file
+        def missing_file(dedicated_file)
+          "\e[31m failed\e[0m - #{File.basename(dedicated_file)} - file is missing\n"
         end
       end
     end
