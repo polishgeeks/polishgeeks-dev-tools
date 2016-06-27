@@ -39,13 +39,15 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
   end
 
   describe '#analyzed_files' do
-    let(:config) { double(rspec_files_structure_ignored: nil) }
+    let(:config) do
+      instance_double(
+        PolishGeeks::DevTools::Config,
+        rspec_files_structure_ignored: nil
+      )
+    end
 
     before do
-      expect(PolishGeeks::DevTools)
-        .to receive(:config)
-        .and_return(config)
-        .at_least(:once)
+      expect(PolishGeeks::DevTools::Config).to receive(:config).at_least(:once) { config }
     end
 
     it { expect(subject.send(:analyzed_files)).not_to be_empty }
@@ -67,13 +69,15 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
   end
 
   describe '#analyzed_rspec_files' do
-    let(:config) { double(rspec_files_structure_ignored: nil) }
+    let(:config) do
+      instance_double(
+        PolishGeeks::DevTools::Config,
+        rspec_files_structure_ignored: nil
+      )
+    end
 
     before do
-      expect(PolishGeeks::DevTools)
-        .to receive(:config)
-        .and_return(config)
-        .at_least(:once)
+      expect(PolishGeeks::DevTools::Config).to receive(:config).at_least(:once) { config }
     end
 
     it { expect(subject.send(:analyzed_rspec_files)).not_to be_empty }
@@ -120,12 +124,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
 
   describe '#label' do
     context 'when we run rspec_files_structure' do
-      let(:analyzed_files_result) { double(count: rand(1000)) }
+      let(:analyzed_files_result) do
+        OpenStruct.new(count: rand(1000))
+      end
 
       before do
-        expect(subject)
-          .to receive(:analyzed_files)
-          .and_return(analyzed_files_result)
+        expect(subject).to receive(:analyzed_files) { analyzed_files_result }
       end
 
       it 'returns the label' do
@@ -156,12 +160,15 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
 
   describe '#excludes' do
     context 'when rspec_files_structure_ignored is not set' do
-      let(:config) { double(rspec_files_structure_ignored: nil) }
+      let(:config) do
+        instance_double(
+          PolishGeeks::DevTools::Config,
+          rspec_files_structure_ignored: nil
+        )
+      end
 
       before do
-        expect(PolishGeeks::DevTools)
-          .to receive(:config)
-          .and_return(config)
+        expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
       it { expect(subject.send(:excludes)).to eq [] }
@@ -170,15 +177,14 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
     context 'when rspec_files_structure_ignored is set' do
       let(:rspec_files_structure_ignored) { rand }
       let(:config) do
-        double(
+        instance_double(
+          PolishGeeks::DevTools::Config,
           rspec_files_structure_ignored: rspec_files_structure_ignored
         )
       end
 
       before do
-        expect(PolishGeeks::DevTools)
-          .to receive(:config)
-          .and_return(config)
+        expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
       it { expect(subject.send(:excludes)).to eq rspec_files_structure_ignored }

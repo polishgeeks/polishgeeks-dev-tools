@@ -135,24 +135,32 @@ RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
   describe '#config_excludes' do
     context 'final_blank_line_ignored is set' do
       let(:paths) { [rand.to_s, rand.to_s] }
-      let(:config) { double(final_blank_line_ignored: paths) }
+      let(:config) do
+        instance_double(
+          PolishGeeks::DevTools::Config,
+          final_blank_line_ignored: paths
+        )
+      end
 
       before do
-        expect(PolishGeeks::DevTools)
-          .to receive(:config)
-          .and_return config
+        expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
       it { expect(subject.send(:config_excludes)).to eq paths }
     end
 
     context 'final_blank_line_ignored is not set' do
-      let(:config) { double(final_blank_line_ignored: nil) }
-      before do
-        expect(PolishGeeks::DevTools)
-          .to receive(:config)
-          .and_return config
+      let(:config) do
+        instance_double(
+          PolishGeeks::DevTools::Config,
+          final_blank_line_ignored: nil
+        )
       end
+
+      before do
+        expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
+      end
+
       it { expect(subject.send(:config_excludes)).to eq [] }
     end
   end

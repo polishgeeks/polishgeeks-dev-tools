@@ -32,4 +32,6 @@ Metrics/AbcSize:
 Style/MultilineOperationIndentation:
   EnforcedStyle: indented
 
-inherit_from: rubocop_todo.yml
+inherit_from:
+  - rubocop_rspec.yml
+  - rubocop_todo.yml
