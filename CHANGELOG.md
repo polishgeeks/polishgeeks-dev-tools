@@ -2,6 +2,10 @@
 
 ## master (unreleased)
 
+## 1.3.2 (27/06/2016)
+
+- Bump rubycritic dependency to 2.9.1
+
 ## 1.3.1 (15/04/2016)
 
 - Remove dependency for mongoid-rspec
