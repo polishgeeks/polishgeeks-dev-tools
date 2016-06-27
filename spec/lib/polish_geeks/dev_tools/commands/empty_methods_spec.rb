@@ -131,24 +131,30 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods do
   describe '#config_excludes' do
     context 'empty_methods_ignored is set' do
       let(:paths) { ["#{rand}.rb", "#{rand}.rb"] }
-      let(:config) { double(empty_methods_ignored: paths) }
-
-      before do
-        expect(PolishGeeks::DevTools)
-          .to receive(:config)
-          .and_return config
+      let(:config) do
+        instance_double(
+          PolishGeeks::DevTools::Config,
+          empty_methods_ignored: paths
+        )
       end
 
-      it { expect(subject.send(:config_excludes)).to eq paths }
+      before do
+        expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
+      end
+
+      it { expect(subject.send(:config_excludes)).to eq(paths) }
     end
 
     context 'empty_methods_ignored is not set' do
-      let(:config) { double(empty_methods_ignored: nil) }
+      let(:config) do
+        instance_double(
+          PolishGeeks::DevTools::Config,
+          empty_methods_ignored: nil
+        )
+      end
 
       before do
-        expect(PolishGeeks::DevTools)
-          .to receive(:config)
-          .and_return config
+        expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
       it { expect(subject.send(:config_excludes)).to eq [] }

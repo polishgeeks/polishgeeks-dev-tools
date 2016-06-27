@@ -136,28 +136,28 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
     context 'when structure is the same' do
       let(:result) { true }
 
-      it '' do
-        executed = subject.send(
-          :same_key_structure?,
-          example_file,
-          dedicated_file
-        )
-
-        expect(executed).to eq result
+      it do
+        expect(
+          subject.send(
+            :same_key_structure?,
+            example_file,
+            dedicated_file
+          )
+        ).to eq(result)
       end
     end
 
     context 'when structure is not the same' do
       let(:result) { false }
 
-      it '' do
-        executed = subject.send(
-          :same_key_structure?,
-          example_file,
-          dedicated_file
-        )
-
-        expect(executed).to eq result
+      it do
+        expect(
+          subject.send(
+            :same_key_structure?,
+            example_file,
+            dedicated_file
+          )
+        ).to eq(result)
       end
     end
   end

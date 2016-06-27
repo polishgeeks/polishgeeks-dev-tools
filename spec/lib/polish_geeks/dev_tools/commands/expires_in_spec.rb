@@ -20,9 +20,9 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExpiresIn do
       let(:file_name) { rand.to_s }
       let(:output) { [file_name] }
       let(:expected) { "Following files use expire_in instead of expires_in:\n\n#{file_name}\n" }
-      before do
-        subject.instance_variable_set('@output', output)
-      end
+
+      before { subject.instance_variable_set('@output', output) }
+
       it { expect(subject.error_message).to eq expected }
     end
   end
@@ -38,12 +38,15 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExpiresIn do
 
   describe '#excludes' do
     context 'when expire_files_ignored is not set' do
-      let(:config) { double(expires_in_files_ignored: nil) }
+      let(:config) do
+        instance_double(
+          PolishGeeks::DevTools::Config,
+          expires_in_files_ignored: nil
+        )
+      end
 
       before do
-        expect(PolishGeeks::DevTools)
-          .to receive(:config)
-          .and_return(config)
+        expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
       it { expect(subject.send(:excludes)).to eq [] }
@@ -52,15 +55,14 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExpiresIn do
     context 'when expire_files_ignored is set' do
       let(:expires_in_files_ignored) { rand }
       let(:config) do
-        double(
+        instance_double(
+          PolishGeeks::DevTools::Config,
           expires_in_files_ignored: expires_in_files_ignored
         )
       end
 
       before do
-        expect(PolishGeeks::DevTools)
-          .to receive(:config)
-          .and_return(config)
+        expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
       it { expect(subject.send(:excludes)).to eq expires_in_files_ignored }

@@ -7,9 +7,9 @@ RSpec.describe PolishGeeks::DevTools::Validators::Rubocop do
     context 'false' do
       context 'when Rubocop is enabled' do
         before do
-          expect(PolishGeeks::DevTools::Config)
-            .to receive(:config)
-            .and_return(double(rubocop: false))
+          expect(PolishGeeks::DevTools::Config).to receive(:config).and_return(
+            instance_double(PolishGeeks::DevTools::Config, rubocop: false)
+          )
         end
         it { expect(subject.valid?).to be false }
       end
@@ -18,9 +18,9 @@ RSpec.describe PolishGeeks::DevTools::Validators::Rubocop do
     context 'true' do
       context 'when Rubocop is disabled' do
         before do
-          expect(PolishGeeks::DevTools::Config)
-            .to receive(:config)
-            .and_return(double(rubocop: true))
+          expect(PolishGeeks::DevTools::Config).to receive(:config).and_return(
+            instance_double(PolishGeeks::DevTools::Config, rubocop: true)
+          )
         end
         it { expect(subject.valid?).to be true }
       end

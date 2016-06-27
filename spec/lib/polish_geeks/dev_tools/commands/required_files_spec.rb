@@ -9,15 +9,14 @@ RSpec.describe PolishGeeks::DevTools::Commands::RequiredFiles do
     context 'when required_files_include is set' do
       let(:required_files_include) { 'REVIEW.md' }
       let(:config) do
-        double(
+        instance_double(
+          PolishGeeks::DevTools::Config,
           required_files_include: [required_files_include]
         )
       end
 
       before do
-        expect(PolishGeeks::DevTools)
-          .to receive(:config)
-          .and_return(config)
+        expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
         subject.execute
       end
 

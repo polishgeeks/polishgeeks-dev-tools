@@ -6,6 +6,7 @@
 
 - Bump rubycritic dependency to 2.9.1
 - Bump brakeman dependency to 3.3.2
+- Bump rubocop-rspec dependency to 1.5.0
 
 ## 1.3.1 (15/04/2016)
 
