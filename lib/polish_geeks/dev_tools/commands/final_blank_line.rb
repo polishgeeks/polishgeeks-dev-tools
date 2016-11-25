@@ -80,16 +80,6 @@ module PolishGeeks
           DevTools.config.final_blank_line_ignored || []
         end
 
-        # @param [String] file name that we want to sanitize
-        # @return [String] sanitized file name
-        # @example
-        #   file = /home/something/app/lib/lib.rb,
-        #   where /home/something/app/ is a app root path, then
-        #   sanitize(file) #=> lib/lib.rb
-        def sanitize(file)
-          file.gsub("#{PolishGeeks::DevTools.app_root}/", '')
-        end
-
         # @param [String] file name which we want validate
         # @return [Boolean] true if file is empty or has final blank line.
         #   Otherwise return false.

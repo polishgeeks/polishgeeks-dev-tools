@@ -160,12 +160,4 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods do
       it { expect(subject.send(:config_excludes)).to eq [] }
     end
   end
-
-  describe '#sanitize' do
-    let(:file) { rand.to_s }
-    let(:app_root) { PolishGeeks::DevTools.app_root }
-    let(:path) { "#{app_root}/#{file}" }
-
-    it { expect(subject.send(:sanitize, "#{app_root}/#{path}")).to eq file }
-  end
 end

@@ -32,10 +32,11 @@ module PolishGeeks
       end
 
       # Available commands
-      # All commands will be executed in this order (first rubocop, then rspec, etc)
+      # All commands will be executed in this order (first required_files, then gemfile, etc)
       COMMANDS = %i(
         required_files
         gemfile
+        git_conflicts
         expires_in
         examples_comparator
         allowed_extensions

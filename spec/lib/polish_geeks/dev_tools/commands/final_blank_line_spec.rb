@@ -165,14 +165,6 @@ RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
     end
   end
 
-  describe '#sanitize' do
-    let(:file) { rand.to_s }
-    let(:app_root) { PolishGeeks::DevTools.app_root }
-    let(:path) { "#{app_root}/#{file}" }
-
-    it { expect(subject.send(:sanitize, "#{app_root}/#{path}")).to eq file }
-  end
-
   describe '#file_valid?' do
     let(:file) { rand.to_s }
 
