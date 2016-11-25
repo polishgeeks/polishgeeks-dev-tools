@@ -1,7 +1,6 @@
 %w(
   yaml
   yard
-  pry
   fileutils
   timecop
   faker

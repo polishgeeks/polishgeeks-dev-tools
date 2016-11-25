@@ -6,7 +6,6 @@ PATH
       bundler-audit
       faker
       haml_lint
-      pry
       rspec
       rubocop
       rubocop-rspec
@@ -35,9 +34,9 @@ GEM
     bundler-audit (0.5.0)
       bundler (~> 1.2)
       thor (~> 0.18)
+    byebug (9.0.6)
     codeclimate-engine-rb (0.4.0)
       virtus (~> 1.0)
-    coderay (1.1.1)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.0.2)
@@ -70,16 +69,11 @@ GEM
     json (2.0.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    method_source (0.8.2)
     minitest (5.9.1)
     parser (2.3.1.4)
       ast (~> 2.2)
     path_expander (1.0.0)
     powerpack (0.1.1)
-    pry (0.10.3)
-      coderay (~> 1.1.0)
-      method_source (~> 0.8.1)
-      slop (~> 3.4)
     public_suffix (2.0.4)
     rainbow (2.1.0)
     rake (11.3.0)
@@ -132,7 +126,6 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
-    slop (3.6.0)
     sysexits (1.2.0)
     thor (0.19.1)
     thread_safe (0.3.5)
@@ -153,6 +146,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
+  byebug
   polishgeeks-dev-tools!
   rake
 

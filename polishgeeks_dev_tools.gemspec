@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'bundler-audit'
   s.add_dependency 'simplecov'
   s.add_dependency 'rubycritic'
-  s.add_dependency 'pry'
   s.add_dependency 'yard'
   s.add_dependency 'faker'
   s.add_dependency 'shoulda'
