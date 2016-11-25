@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesNames do
-  subject { described_class.new }
+  subject(:rspec_files_names) { described_class.new }
 
   let(:config) { double }
 
@@ -27,43 +27,47 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesNames do
         .and_return(true)
         .exactly(described_class::CHECKED_DIRS.count).times
 
-      subject.execute
+      rspec_files_names.execute
     end
 
     context 'when we dont have invalid files' do
       let(:files) { ['test_spec.rb'] }
 
-      it 'sets appropriate variables' do
-        expect(subject.output).to eq []
-        expect(subject.counter).to eq(described_class::CHECKED_DIRS.count * files.count)
+      it { expect(rspec_files_names.output).to eq [] }
+      it do
+        expect(
+          rspec_files_names.counter
+        ).to eq(described_class::CHECKED_DIRS.count * files.count)
       end
     end
 
     context 'when we have invalid files' do
       let(:files) { ['test_spe.rb'] }
 
-      it 'sets appropriate variables' do
-        expect(subject.output).to eq(files * described_class::CHECKED_DIRS.count)
-        expect(subject.counter).to eq(described_class::CHECKED_DIRS.count * files.count)
+      it { expect(rspec_files_names.output).to eq(files * described_class::CHECKED_DIRS.count) }
+      it do
+        expect(
+          rspec_files_names.counter
+        ).to eq(described_class::CHECKED_DIRS.count * files.count)
       end
     end
   end
 
   describe '#valid?' do
     before do
-      subject.instance_variable_set('@output', output)
+      rspec_files_names.instance_variable_set('@output', output)
     end
 
     context 'when output is empty' do
       let(:output) { [] }
 
-      it { expect(subject.valid?).to eq true }
+      it { expect(rspec_files_names.valid?).to eq true }
     end
 
     context 'when output is not empty' do
       let(:output) { ['file_name'] }
 
-      it { expect(subject.valid?).to eq false }
+      it { expect(rspec_files_names.valid?).to eq false }
     end
   end
 
@@ -72,10 +76,10 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesNames do
     let(:expected) { "Rspec files names: #{counter} files checked" }
 
     before do
-      subject.instance_variable_set('@counter', counter)
+      rspec_files_names.instance_variable_set('@counter', counter)
     end
 
-    it { expect(subject.label).to eq expected }
+    it { expect(rspec_files_names.label).to eq expected }
   end
 
   describe '#error_message' do
@@ -83,9 +87,9 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesNames do
     let(:expected) { "Following files have invalid name: \n #{output.join("\n")}\n" }
 
     before do
-      subject.instance_variable_set('@output', output)
+      rspec_files_names.instance_variable_set('@output', output)
     end
 
-    it { expect(subject.error_message).to eq expected }
+    it { expect(rspec_files_names.error_message).to eq expected }
   end
 end

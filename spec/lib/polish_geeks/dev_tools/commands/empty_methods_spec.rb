@@ -2,63 +2,57 @@ require 'spec_helper'
 require 'tempfile'
 
 RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods do
-  subject { described_class.new }
+  subject(:empty_methods) { described_class.new }
   describe '#execute' do
     let(:file) { [rand.to_s] }
+    let(:empty_methods_output) { [] }
 
     before do
-      expect(subject)
+      expect(empty_methods)
         .to receive(:files_to_analyze)
         .and_return(file)
       allow(described_class::FileParser)
         .to receive_message_chain(:new, :find_empty_methods)
-        .and_return(empty_methods)
+        .and_return(empty_methods_output)
     end
 
     context 'when all files are valid' do
-      let(:empty_methods) { [] }
-      before do
-        subject.execute
-      end
+      before { empty_methods.execute }
 
-      it 'sets appropriate variables' do
-        expect(subject.output).to eq []
-        expect(subject.counter).to eq(file.count)
-      end
+      it { expect(empty_methods.output).to eq [] }
+      it { expect(empty_methods.counter).to eq(file.count) }
     end
 
     context 'when exist not valid file' do
-      let(:empty_methods) { [rand.to_s, rand.to_s] }
+      let(:empty_methods_output) { [rand.to_s, rand.to_s] }
       before do
-        expect(subject)
+        expect(empty_methods)
           .to receive(:sanitize)
           .with(file.first)
           .and_return(file.first)
-        subject.execute
+        empty_methods.execute
       end
 
-      it 'sets appropriate variables' do
-        expect(subject.output.first).to eq "#{file.first} lines #{empty_methods}"
-        expect(subject.counter).to eq(file.count)
-      end
+      it { expect(empty_methods.output.first).to eq "#{file.first} lines #{empty_methods_output}" }
+      it { expect(empty_methods.counter).to eq(file.count) }
     end
   end
 
   describe '#valid?' do
     before do
-      subject.instance_variable_set('@output', output)
+      empty_methods.instance_variable_set('@output', output)
     end
 
     context 'when output is empty' do
       let(:output) { [] }
 
-      it { expect(subject.valid?).to eq true }
+      it { expect(empty_methods.valid?).to eq true }
     end
 
     context 'when output have some files' do
       let(:output) { ['file_name'] }
 
-      it { expect(subject.valid?).to eq false }
+      it { expect(empty_methods.valid?).to eq false }
     end
   end
 
@@ -67,10 +61,10 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods do
     let(:expected) { "Empty methods: #{counter} files checked" }
 
     before do
-      subject.instance_variable_set('@counter', counter)
+      empty_methods.instance_variable_set('@counter', counter)
     end
 
-    it { expect(subject.label).to eq expected }
+    it { expect(empty_methods.label).to eq expected }
   end
 
   describe '#error_message' do
@@ -78,28 +72,28 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods do
     let(:expected) { "Following files contains blank methods: \n#{output.join("\n")}\n" }
 
     before do
-      subject.instance_variable_set('@output', output)
+      empty_methods.instance_variable_set('@output', output)
     end
 
-    it { expect(subject.error_message).to eq expected }
+    it { expect(empty_methods.error_message).to eq expected }
   end
 
   describe '#files_to_analyze' do
     let(:files) { [rand.to_s, rand.to_s] }
 
     before do
-      expect(subject)
+      expect(empty_methods)
         .to receive(:files_from_path)
         .with('**/*.rb')
         .and_return(files)
 
-      expect(subject)
+      expect(empty_methods)
         .to receive(:remove_excludes)
         .with(files)
         .and_return(files)
     end
 
-    it { expect(subject.send(:files_to_analyze)).to eq files }
+    it { expect(empty_methods.send(:files_to_analyze)).to eq files }
   end
 
   describe '#remove_excludes' do
@@ -107,12 +101,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods do
     let(:excludes) { %w(lib exclude.txt) }
 
     before do
-      expect(subject)
+      expect(empty_methods)
         .to receive(:excludes)
         .and_return(excludes)
     end
 
-    it { expect(subject.send(:remove_excludes, files)).to eq ['file.rb'] }
+    it { expect(empty_methods.send(:remove_excludes, files)).to eq ['file.rb'] }
   end
 
   describe '#excludes' do
@@ -120,12 +114,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods do
     let(:expected) { configs + described_class::DEFAULT_PATHS_TO_EXCLUDE }
 
     before do
-      expect(subject)
+      expect(empty_methods)
         .to receive(:config_excludes)
         .and_return(configs)
     end
 
-    it { expect(subject.send(:excludes)).to eq expected }
+    it { expect(empty_methods.send(:excludes)).to eq expected }
   end
 
   describe '#config_excludes' do
@@ -142,7 +136,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods do
         expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
-      it { expect(subject.send(:config_excludes)).to eq(paths) }
+      it { expect(empty_methods.send(:config_excludes)).to eq(paths) }
     end
 
     context 'empty_methods_ignored is not set' do
@@ -157,7 +151,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods do
         expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
-      it { expect(subject.send(:config_excludes)).to eq [] }
+      it { expect(empty_methods.send(:config_excludes)).to eq [] }
     end
   end
 
@@ -166,6 +160,6 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods do
     let(:app_root) { PolishGeeks::DevTools.app_root }
     let(:path) { "#{app_root}/#{file}" }
 
-    it { expect(subject.send(:sanitize, "#{app_root}/#{path}")).to eq file }
+    it { expect(empty_methods.send(:sanitize, "#{app_root}/#{path}")).to eq file }
   end
 end

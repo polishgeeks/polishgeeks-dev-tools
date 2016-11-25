@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Runner do
-  subject { described_class.new }
+  subject(:runner) { described_class.new }
 
   describe '#execute' do
     let(:logger) { double }
@@ -55,6 +55,6 @@ RSpec.describe PolishGeeks::DevTools::Runner do
       end
     end
 
-    it { subject.execute(logger) }
+    it { runner.execute(logger) }
   end
 end

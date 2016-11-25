@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::TasksFilesNames do
-  subject { described_class.new }
+  subject(:tasks_files_names) { described_class.new }
 
   let(:config) { double }
 
@@ -23,19 +23,19 @@ RSpec.describe PolishGeeks::DevTools::Commands::TasksFilesNames do
 
   describe '#valid?' do
     before do
-      subject.instance_variable_set('@output', output)
+      tasks_files_names.instance_variable_set('@output', output)
     end
 
     context 'when output is empty' do
       let(:output) { [] }
 
-      it { expect(subject.valid?).to eq true }
+      it { expect(tasks_files_names.valid?).to eq true }
     end
 
     context 'when output is not empty' do
       let(:output) { ['file_name'] }
 
-      it { expect(subject.valid?).to eq false }
+      it { expect(tasks_files_names.valid?).to eq false }
     end
   end
 
@@ -44,10 +44,10 @@ RSpec.describe PolishGeeks::DevTools::Commands::TasksFilesNames do
     let(:expected) { "Tasks files names: #{counter} files checked" }
 
     before do
-      subject.instance_variable_set('@counter', counter)
+      tasks_files_names.instance_variable_set('@counter', counter)
     end
 
-    it { expect(subject.label).to eq expected }
+    it { expect(tasks_files_names.label).to eq expected }
   end
 
   describe '#error_message' do
@@ -55,10 +55,10 @@ RSpec.describe PolishGeeks::DevTools::Commands::TasksFilesNames do
     let(:expected) { "Following files have invalid extensions: \n #{output.join("\n")}\n" }
 
     before do
-      subject.instance_variable_set('@output', output)
+      tasks_files_names.instance_variable_set('@output', output)
     end
 
-    it { expect(subject.error_message).to eq expected }
+    it { expect(tasks_files_names.error_message).to eq expected }
   end
 
   describe '#files' do
@@ -69,11 +69,11 @@ RSpec.describe PolishGeeks::DevTools::Commands::TasksFilesNames do
     end
 
     it 'does not be empty' do
-      expect(subject.send(:files, dummy_type)).not_to be_empty
+      expect(tasks_files_names.send(:files, dummy_type)).not_to be_empty
     end
 
     it 'does not contain directories' do
-      expect(subject.send(:files, dummy_type)).not_to include('command')
+      expect(tasks_files_names.send(:files, dummy_type)).not_to include('command')
     end
   end
 
@@ -82,27 +82,26 @@ RSpec.describe PolishGeeks::DevTools::Commands::TasksFilesNames do
     let(:example_rake_files) { %w(d e f test.rake) }
 
     before do
-      expect(subject)
+      expect(tasks_files_names)
         .to receive(:files)
         .with(described_class::CAP)
-        .and_return(example_cap_files)
+        .and_return(example_cap_files.dup)
 
-      expect(subject)
+      expect(tasks_files_names)
         .to receive(:files)
         .with(described_class::RAKE)
-        .and_return(example_rake_files)
+        .and_return(example_rake_files.dup)
+
+      tasks_files_names.execute
     end
 
     it 'sets counter' do
-      expected = example_cap_files.count + example_rake_files.count
-      subject.execute
-      expect(subject.counter).to eq expected
+      expect(
+        tasks_files_names.counter
+      ).to eq example_cap_files.count + example_rake_files.count
     end
 
-    it 'marks all inapropriate files' do
-      subject.execute
-      expect(subject.output).not_to include('test.cap')
-      expect(subject.output).not_to include('test.rake')
-    end
+    it { expect(tasks_files_names.output).not_to include('test.cap') }
+    it { expect(tasks_files_names.output).not_to include('test.rake') }
   end
 end

@@ -2,14 +2,14 @@ require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Errors do
   describe 'BaseError' do
-    subject { described_class::BaseError }
+    subject(:errors) { described_class::BaseError }
 
-    specify { expect(subject).to be < StandardError }
+    specify { expect(errors).to be < StandardError }
   end
 
   describe 'NotImplementedError' do
-    subject { described_class::NotImplementedError }
+    subject(:errors) { described_class::NotImplementedError }
 
-    specify { expect(subject).to be < described_class::BaseError }
+    specify { expect(errors).to be < described_class::BaseError }
   end
 end

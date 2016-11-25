@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
-  subject { described_class.new }
+  subject(:examples_comparator) { described_class.new }
 
   let(:example_file) { rand.to_s }
   let(:dedicated_file) { example_file }
@@ -11,7 +11,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
     let(:config_path) { rand.to_s }
 
     before do
-      expect(subject)
+      expect(examples_comparator)
         .to receive(:config_path)
         .and_return(config_path)
 
@@ -30,15 +30,15 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
       let(:compare_result) { true }
 
       before do
-        expect(subject)
+        expect(examples_comparator)
           .to receive(:same_key_structure?)
           .and_return(compare_result)
       end
 
       it 'puts a successful message into output' do
-        subject.execute
+        examples_comparator.execute
 
-        expect(subject.output).to include 'success'
+        expect(examples_comparator.output).to include 'success'
       end
     end
 
@@ -46,14 +46,14 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
       let(:compare_result) { false }
 
       before do
-        expect(subject)
+        expect(examples_comparator)
           .to receive(:same_key_structure?)
           .and_return(compare_result)
       end
 
       it 'puts a failed message into output' do
-        subject.execute
-        expect(subject.output).to include 'failed'
+        examples_comparator.execute
+        expect(examples_comparator.output).to include 'failed'
       end
     end
 
@@ -61,8 +61,8 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
       let(:dedicated_file_present) { false }
 
       it 'puts a failed message into output' do
-        subject.execute
-        expect(subject.output).to include 'file is missing'
+        examples_comparator.execute
+        expect(examples_comparator.output).to include 'file is missing'
       end
     end
   end
@@ -73,7 +73,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
     end
 
     it 'is equal to expected message' do
-      expect(subject.send(:config_path)).to eq expected
+      expect(examples_comparator.send(:config_path)).to eq expected
     end
   end
 
@@ -82,7 +82,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
     let(:expected) { "\e[32m success\e[0m - #{compare_header}\n" }
 
     it 'is equal to expected message' do
-      expect(subject.send(:successful_compare, compare_header)).to eq expected
+      expect(examples_comparator.send(:successful_compare, compare_header)).to eq expected
     end
   end
 
@@ -91,7 +91,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
     let(:expected) { "\e[31m failed\e[0m - #{compare_header} - structure not equal\n" }
 
     it 'is equal to expected message' do
-      expect(subject.send(:failed_compare, compare_header)).to eq expected
+      expect(examples_comparator.send(:failed_compare, compare_header)).to eq expected
     end
   end
 
@@ -99,7 +99,9 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
     let(:expected) { "#{File.basename(example_file)} and #{File.basename(dedicated_file)}" }
 
     it 'is equal to expected message' do
-      expect(subject.send(:compare_header, example_file, dedicated_file)).to eq expected
+      expect(
+        examples_comparator.send(:compare_header, example_file, dedicated_file)
+      ).to eq expected
     end
   end
 
@@ -138,7 +140,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
 
       it do
         expect(
-          subject.send(
+          examples_comparator.send(
             :same_key_structure?,
             example_file,
             dedicated_file
@@ -152,7 +154,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
 
       it do
         expect(
-          subject.send(
+          examples_comparator.send(
             :same_key_structure?,
             example_file,
             dedicated_file
@@ -165,22 +167,18 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExamplesComparator do
   describe '#valid?' do
     context 'when example files have the same structure' do
       before do
-        subject.instance_variable_set(:@output, 'OK')
+        examples_comparator.instance_variable_set(:@output, 'OK')
       end
 
-      it 'returns true' do
-        expect(subject.valid?).to eq true
-      end
+      it { expect(examples_comparator.valid?).to eq true }
     end
 
     context 'when example files do not have the same structure' do
       before do
-        subject.instance_variable_set(:@output, 'failed')
+        examples_comparator.instance_variable_set(:@output, 'failed')
       end
 
-      it 'returns false' do
-        expect(subject.valid?).to eq false
-      end
+      it { expect(examples_comparator.valid?).to eq false }
     end
   end
 

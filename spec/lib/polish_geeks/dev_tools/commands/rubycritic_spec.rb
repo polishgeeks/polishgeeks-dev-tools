@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::Rubycritic do
-  subject { described_class.new }
+  subject(:rubycritic) { described_class.new }
 
   describe '#execute' do
     let(:instance) { instance_double(PolishGeeks::DevTools::Shell) }
@@ -13,9 +13,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::Rubycritic do
           .with('bundle exec rubycritic ./app ./lib/')
       end
 
-      it 'executes the command' do
-        subject.execute
-      end
+      it { rubycritic.execute }
     end
   end
 

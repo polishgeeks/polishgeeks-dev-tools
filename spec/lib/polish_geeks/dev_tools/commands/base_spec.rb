@@ -1,27 +1,27 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::Base do
-  subject { described_class.new }
+  subject(:base) { described_class.new }
 
   describe '#execute' do
     let(:error) { PolishGeeks::DevTools::Errors::NotImplementedError }
-    it { expect { subject.execute }. to raise_error(error) }
+    it { expect { base.execute }. to raise_error(error) }
   end
 
   describe '#valid?' do
     let(:error) { PolishGeeks::DevTools::Errors::NotImplementedError }
-    it { expect { subject.valid? }. to raise_error(error) }
+    it { expect { base.valid? }. to raise_error(error) }
   end
 
   describe '#error_message' do
     let(:output) { rand.to_s }
 
     before do
-      subject.instance_variable_set('@output', output)
+      base.instance_variable_set('@output', output)
     end
 
     it 'by default should equal raw output' do
-      expect(subject.error_message).to eq output
+      expect(base.error_message).to eq output
     end
   end
 
@@ -36,12 +36,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::Base do
         expect(instance).to receive(:validate!) { true }
       end
 
-      it { expect { subject.ensure_executable! }.not_to raise_error }
+      it { expect { base.ensure_executable! }.not_to raise_error }
     end
 
     context 'when we dont require any validators' do
       before { expect(described_class).to receive(:validators) { [] } }
-      it { expect { subject.ensure_executable! }.not_to raise_error }
+      it { expect { base.ensure_executable! }.not_to raise_error }
     end
   end
 
@@ -73,7 +73,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::Base do
           .with(dir_in_path)
           .and_return(false)
       end
-      it { expect(subject.send(:files_from_path, path)).to eq [file_in_path] }
+      it { expect(base.send(:files_from_path, path)).to eq [file_in_path] }
     end
 
     context 'path is a file' do
@@ -84,7 +84,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::Base do
           .with("#{app_root}/#{path}")
           .and_return(true)
       end
-      it { expect(subject.send(:files_from_path, path)).to eq ["#{app_root}/#{path}"] }
+      it { expect(base.send(:files_from_path, path)).to eq ["#{app_root}/#{path}"] }
     end
   end
 end

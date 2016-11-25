@@ -1,54 +1,40 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::Yard do
-  subject { described_class.new }
+  subject(:yard) { described_class.new }
 
   describe '#execute' do
     let(:instance) { instance_double(PolishGeeks::DevTools::Shell) }
 
     context 'when we run yard' do
       before do
-        expect(subject).to receive(:options) { '--list-undoc' }
+        expect(yard).to receive(:options) { '--list-undoc' }
         allow(PolishGeeks::DevTools::Shell).to receive(:new) { instance }
         expect(instance).to receive(:execute)
           .with('bundle exec yard stats --list-undoc')
       end
 
-      it 'executes the command' do
-        subject.execute
-      end
+      it { yard.execute }
     end
   end
 
   describe '#valid?' do
     context 'when everything is documented and without warnings' do
-      before do
-        subject.instance_variable_set(:@output, 'OK')
-      end
+      before { yard.instance_variable_set(:@output, 'OK') }
 
-      it 'returns true' do
-        expect(subject.valid?).to eq true
-      end
+      it { expect(yard.valid?).to eq true }
     end
 
     context 'when something has some warnings' do
-      before do
-        subject.instance_variable_set(:@output, 'warn')
-      end
+      before { yard.instance_variable_set(:@output, 'warn') }
 
-      it 'returns false' do
-        expect(subject.valid?).to eq false
-      end
+      it { expect(yard.valid?).to eq false }
     end
 
     context 'when something is undocumented' do
-      before do
-        subject.instance_variable_set(:@output, 'undocumented objects')
-      end
+      before { yard.instance_variable_set(:@output, 'undocumented objects') }
 
-      it 'returns false' do
-        expect(subject.valid?).to eq false
-      end
+      it { expect(yard.valid?).to eq false }
     end
   end
 
@@ -71,7 +57,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::Yard do
       end
 
       it 'returns lines with options' do
-        expect(subject.send(:options)).to eq '--private --list-undoc'
+        expect(yard.send(:options)).to eq '--private --list-undoc'
       end
     end
   end

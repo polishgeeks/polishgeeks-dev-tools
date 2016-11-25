@@ -1,6 +1,6 @@
 RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
+  subject(:file_parser) { described_class.new(file) }
   let(:file) { Tempfile.new('foo') }
-  subject { described_class.new(file) }
 
   describe '#find_empty_methods' do
     context 'empty define_singleton_methods' do
@@ -20,7 +20,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to eq([2, 4, 5, 10]) }
+      it { expect(file_parser.find_empty_methods).to eq([2, 4, 5, 10]) }
     end
 
     context 'empty define_methods with comments' do
@@ -36,7 +36,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to eq([2, 4, 5]) }
+      it { expect(file_parser.find_empty_methods).to eq([2, 4, 5]) }
     end
 
     context 'empty define_methods' do
@@ -52,7 +52,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to eq([2, 4, 5]) }
+      it { expect(file_parser.find_empty_methods).to eq([2, 4, 5]) }
     end
 
     context 'singleton_methods and methods are defined' do
@@ -75,7 +75,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to be_empty }
+      it { expect(file_parser.find_empty_methods).to be_empty }
     end
 
     context 'empty one line method' do
@@ -84,7 +84,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to eq([1]) }
+      it { expect(file_parser.find_empty_methods).to eq([1]) }
     end
 
     context 'empty one line method with comment' do
@@ -93,7 +93,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to eq([1]) }
+      it { expect(file_parser.find_empty_methods).to eq([1]) }
     end
 
     context 'empty body method' do
@@ -103,7 +103,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to eq([1]) }
+      it { expect(file_parser.find_empty_methods).to eq([1]) }
     end
 
     context 'empty body method with comment' do
@@ -113,7 +113,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to eq([1]) }
+      it { expect(file_parser.find_empty_methods).to eq([1]) }
     end
 
     context 'empty method' do
@@ -126,7 +126,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to eq([1]) }
+      it { expect(file_parser.find_empty_methods).to eq([1]) }
     end
 
     context 'method with comments inside' do
@@ -140,7 +140,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to be_empty }
+      it { expect(file_parser.find_empty_methods).to be_empty }
     end
 
     context 'method which defines empty define_method inside' do
@@ -151,7 +151,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to eq([2]) }
+      it { expect(file_parser.find_empty_methods).to eq([2]) }
     end
 
     context 'method which defines empty define_singleton_method inside' do
@@ -164,7 +164,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to eq([2]) }
+      it { expect(file_parser.find_empty_methods).to eq([2]) }
     end
 
     context 'method which defines define_method inside' do
@@ -175,20 +175,20 @@ RSpec.describe PolishGeeks::DevTools::Commands::EmptyMethods::FileParser do
         file.read
       end
 
-      it { expect(subject.find_empty_methods).to be_empty }
+      it { expect(file_parser.find_empty_methods).to be_empty }
     end
   end
 
   describe '#method_has_no_lines?' do
-    it { expect(subject.send(:method_has_no_lines?, 2, 4)).to be_falsey }
-    it { expect(subject.send(:method_has_no_lines?, 2, 3)).to be_truthy }
+    it { expect(file_parser.send(:method_has_no_lines?, 2, 4)).to be_falsey }
+    it { expect(file_parser.send(:method_has_no_lines?, 2, 3)).to be_truthy }
   end
 
   describe '#add_empty_method' do
-    it { expect(subject.send(:add_empty_method, 2)).to eq [3] }
+    it { expect(file_parser.send(:add_empty_method, 2)).to eq [3] }
   end
 
   describe '#add_empty_method' do
-    it { expect(subject.send(:add_empty_method, 2)).to eq [3] }
+    it { expect(file_parser.send(:add_empty_method, 2)).to eq [3] }
   end
 end

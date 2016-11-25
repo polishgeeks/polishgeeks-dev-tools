@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::BundlerAudit do
-  subject { described_class.new }
+  subject(:bundler_audit) { described_class.new }
 
   describe '#execute' do
     let(:instance) { instance_double(PolishGeeks::DevTools::Shell) }
@@ -12,7 +12,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::BundlerAudit do
         .with('bundle-audit update 2>&1 > /dev/null; bundle-audit check')
     end
 
-    it { subject.execute }
+    it { bundler_audit.execute }
   end
 
   describe '#valid?' do
@@ -29,16 +29,16 @@ RSpec.describe PolishGeeks::DevTools::Commands::BundlerAudit do
 
           Unpatched versions found!
         EOS
-        subject.instance_variable_set('@output', output)
+        bundler_audit.instance_variable_set('@output', output)
       end
 
-      it { expect(subject.valid?).to eq false }
+      it { expect(bundler_audit.valid?).to eq false }
     end
 
     context 'when there are no vulnerabilities' do
-      before { subject.instance_variable_set('@output', 'No vulnerabilities found') }
+      before { bundler_audit.instance_variable_set('@output', 'No vulnerabilities found') }
 
-      it { expect(subject.valid?).to eq true }
+      it { expect(bundler_audit.valid?).to eq true }
     end
   end
 

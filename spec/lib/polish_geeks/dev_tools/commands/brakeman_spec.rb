@@ -2,17 +2,17 @@ require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::Brakeman do
   context 'class' do
-    subject { described_class }
+    subject(:brakeman) { described_class }
 
     describe '#validators' do
       it 'works only when we have Rails framework' do
-        expect(subject.validators).to eq [PolishGeeks::DevTools::Validators::Rails]
+        expect(brakeman.validators).to eq [PolishGeeks::DevTools::Validators::Rails]
       end
     end
   end
 
   context 'instance' do
-    subject { described_class.new }
+    subject(:brakeman) { described_class.new }
 
     describe '#execute' do
       context 'when we run brakeman' do
@@ -23,42 +23,36 @@ RSpec.describe PolishGeeks::DevTools::Commands::Brakeman do
           expect(instance).to receive(:execute).with('bundle exec brakeman -q')
         end
 
-        it 'executes the command' do
-          subject.execute
-        end
+        it { brakeman.execute }
       end
     end
 
     describe '#valid?' do
       context 'when warnings are equal 0' do
         before do
-          expect(subject)
+          expect(brakeman)
             .to receive(:warnings)
             .and_return(0)
         end
 
         context 'and errors are equal 0' do
           before do
-            expect(subject)
+            expect(brakeman)
               .to receive(:errors)
               .and_return(0)
           end
 
-          it 'returns true' do
-            expect(subject.valid?).to eq true
-          end
+          it { expect(brakeman.valid?).to eq true }
         end
 
         context 'and errors are not equal 0' do
           before do
-            expect(subject)
+            expect(brakeman)
               .to receive(:errors)
               .and_return(1)
           end
 
-          it 'returns true' do
-            expect(subject.valid?).to eq false
-          end
+          it { expect(brakeman.valid?).to eq false }
         end
       end
     end
@@ -69,14 +63,14 @@ RSpec.describe PolishGeeks::DevTools::Commands::Brakeman do
       let(:templates) { rand(1000) }
 
       before do
-        expect(subject).to receive(:models).and_return(models)
-        expect(subject).to receive(:controllers).and_return(controllers)
-        expect(subject).to receive(:templates).and_return(templates)
+        expect(brakeman).to receive(:models).and_return(models)
+        expect(brakeman).to receive(:controllers).and_return(controllers)
+        expect(brakeman).to receive(:templates).and_return(templates)
       end
 
       it 'uses details' do
         label = "Brakeman (#{controllers} con, #{models} mod, #{templates} temp)"
-        expect(subject.label).to eq label
+        expect(brakeman.label).to eq label
       end
     end
 
@@ -86,11 +80,11 @@ RSpec.describe PolishGeeks::DevTools::Commands::Brakeman do
           let(:amount) { rand(1000) }
 
           before do
-            subject.instance_variable_set(:@output, "#{name.to_s.capitalize} #{amount}")
+            brakeman.instance_variable_set(:@output, "#{name.to_s.capitalize} #{amount}")
           end
 
           it 'returns a proper value' do
-            expect(subject.send(name)).to eq amount
+            expect(brakeman.send(name)).to eq amount
           end
         end
       end

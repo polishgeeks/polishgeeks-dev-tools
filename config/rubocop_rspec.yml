@@ -1,2 +1,8 @@
 RSpec/ExampleLength:
   Max: 10
+RSpec/SubjectStub:
+  Enabled: false
+RSpec/NestedGroups:
+  MaxNesting: 4
+RSpec/MessageChain:
+  Enabled: false
