@@ -10,6 +10,7 @@
 - rubocop 0.45.0
 - rubocop-rspec 1.8.0
 - replace pry with byebug
+- [#63](https://github.com/polishgeeks/polishgeeks-dev-tools/issues/63) ignore vim swap files in FinalBlankLine validator
 
 ## 1.3.2 (27/06/2016)
 
