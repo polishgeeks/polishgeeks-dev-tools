@@ -24,7 +24,7 @@ module PolishGeeks
 
         # @return [Boolean] true if there were no Rubocop offenses detected
         def valid?
-          offenses_count == 0
+          offenses_count.zero?
         end
 
         # @return [String] default label for this command

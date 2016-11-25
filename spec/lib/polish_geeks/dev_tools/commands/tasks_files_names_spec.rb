@@ -64,7 +64,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::TasksFilesNames do
   describe '#files' do
     let(:dummy_type) do
       OpenStruct.new(
-        dirs: %w( lib )
+        dirs: %w(lib)
       )
     end
 
@@ -78,8 +78,8 @@ RSpec.describe PolishGeeks::DevTools::Commands::TasksFilesNames do
   end
 
   describe '#execute' do
-    let(:example_cap_files) { %w( a b c test.cap ) }
-    let(:example_rake_files) { %w( d e f test.rake ) }
+    let(:example_cap_files) { %w(a b c test.cap) }
+    let(:example_rake_files) { %w(d e f test.rake) }
 
     before do
       expect(subject)

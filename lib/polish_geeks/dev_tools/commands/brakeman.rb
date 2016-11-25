@@ -29,7 +29,7 @@ module PolishGeeks
 
         # @return [Boolean] true if we didn't have any vulnerabilities detected
         def valid?
-          warnings == 0 && errors == 0
+          warnings.zero? && errors.zero?
         end
 
         # @return [String] label with details bout brakeman scan

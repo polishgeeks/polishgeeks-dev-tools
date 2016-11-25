@@ -14,7 +14,7 @@ module PolishGeeks
         # Available command types. We have validators that check something
         # and that should have a 'valid?' method and that check for errors, etc
         # and generators that are executed to generate some stats, docs, etc
-        TYPES = %i( validator generator ).freeze
+        TYPES = %i(validator generator).freeze
 
         class << self
           # ConfigManager instance can be provided, which allows us to find a
@@ -23,10 +23,10 @@ module PolishGeeks
           attr_accessor :type
           attr_accessor :validators
 
-          TYPES.each do |type|
+          TYPES.each do |command_type|
             # @return [Boolean] if it is a given type command
-            define_method :"#{type}?" do
-              self.type == type
+            define_method :"#{command_type}?" do
+              type == command_type
             end
           end
         end

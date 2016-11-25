@@ -94,7 +94,7 @@ module PolishGeeks
         # @return [Boolean] true if file is empty or has final blank line.
         #   Otherwise return false.
         def file_valid?(file)
-          File.size(file) == 0 || IO.readlines(file).last[-1] == "\n"
+          File.size(file).zero? || IO.readlines(file).last[-1] == "\n"
         end
       end
     end
