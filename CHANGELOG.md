@@ -5,6 +5,7 @@
 - drop support for ruby 2.1.x
 - haml_lint 0.18.4
 - yard 0.9.5
+- rubycritic 3.1.0
 
 ## 1.3.2 (27/06/2016)
 
