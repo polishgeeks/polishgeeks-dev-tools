@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::HamlLint do
-  subject { described_class.new }
+  subject(:haml_lint) { described_class.new }
 
   describe '#execute' do
     let(:instance) { instance_double(PolishGeeks::DevTools::Shell) }
@@ -19,9 +19,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::HamlLint do
           .with("bundle exec haml-lint -c #{path}.haml-lint.yml app/views")
       end
 
-      it 'executes the command' do
-        subject.execute
-      end
+      it { haml_lint.execute }
     end
 
     context 'when app config does not exist' do
@@ -33,31 +31,25 @@ RSpec.describe PolishGeeks::DevTools::Commands::HamlLint do
           .with("bundle exec haml-lint -c #{path}/config/haml-lint.yml app/views")
       end
 
-      it 'executes the command' do
-        subject.execute
-      end
+      it { haml_lint.execute }
     end
   end
 
   describe '#valid?' do
     context 'when there are some issues' do
       before do
-        subject.instance_variable_set('@output', '[W] SpaceInsideHashAttributes')
+        haml_lint.instance_variable_set('@output', '[W] SpaceInsideHashAttributes')
       end
 
-      it 'is false' do
-        expect(subject.valid?).to eq false
-      end
+      it { expect(haml_lint.valid?).to eq false }
     end
 
     context 'when there are no issues' do
       before do
-        subject.instance_variable_set('@output', '')
+        haml_lint.instance_variable_set('@output', '')
       end
 
-      it 'is true' do
-        expect(subject.valid?).to eq true
-      end
+      it { expect(haml_lint.valid?).to eq true }
     end
   end
 

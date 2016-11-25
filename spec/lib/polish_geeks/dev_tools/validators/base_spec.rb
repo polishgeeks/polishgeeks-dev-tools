@@ -1,31 +1,31 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Validators::Base do
+  subject(:base) { described_class.new(output) }
   let(:output) { :output }
-  subject { described_class.new(output) }
 
   describe '#new' do
-    it { expect(subject.instance_variable_get(:@stored_output)).to eq output }
+    it { expect(base.instance_variable_get(:@stored_output)).to eq output }
   end
 
   describe '#valid?' do
     it do
-      expect { subject.valid? }.to raise_error(PolishGeeks::DevTools::Errors::NotImplementedError)
+      expect { base.valid? }.to raise_error(PolishGeeks::DevTools::Errors::NotImplementedError)
     end
   end
 
   describe '#validate!' do
     context 'valid? true' do
-      before { expect(subject).to receive(:valid?) { true } }
+      before { expect(base).to receive(:valid?) { true } }
 
-      it { expect { subject.validate! }.not_to raise_error }
+      it { expect { base.validate! }.not_to raise_error }
     end
 
     context 'valid? false' do
-      before { expect(subject).to receive(:valid?) { false } }
+      before { expect(base).to receive(:valid?) { false } }
 
       it do
-        expect { subject.validate! }.to raise_error(
+        expect { base.validate! }.to raise_error(
           PolishGeeks::DevTools::Errors::PreCommandValidationError
         )
       end

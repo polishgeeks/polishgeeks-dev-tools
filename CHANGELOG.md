@@ -8,6 +8,7 @@
 - rubycritic 3.1.0
 - brakeman 3.4.1
 - rubocop 0.45.0
+- rubocop-rspec 1.8.0
 
 ## 1.3.2 (27/06/2016)
 

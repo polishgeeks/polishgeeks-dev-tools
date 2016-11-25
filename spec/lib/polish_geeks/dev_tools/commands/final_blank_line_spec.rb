@@ -1,68 +1,64 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
-  subject { described_class.new }
+  subject(:final_blank_line) { described_class.new }
 
   describe '#execute' do
     let(:files) { [rand.to_s, rand.to_s] }
 
     before do
-      expect(subject)
+      expect(final_blank_line)
         .to receive(:files_to_analyze)
         .and_return(files)
     end
 
     context 'when all files are valid' do
       before do
-        expect(subject)
+        expect(final_blank_line)
           .to receive(:file_valid?)
           .exactly(files.count).times
           .and_return true
-        subject.execute
+        final_blank_line.execute
       end
 
-      it 'sets appropriate variables' do
-        expect(subject.output).to eq []
-        expect(subject.counter).to eq(files.count)
-      end
+      it { expect(final_blank_line.output).to eq [] }
+      it { expect(final_blank_line.counter).to eq(files.count) }
     end
 
     context 'when exist not valid file' do
       before do
-        expect(subject)
+        expect(final_blank_line)
           .to receive(:file_valid?)
           .exactly(files.count).times
           .and_return false
 
         files.each do |file|
-          expect(subject)
+          expect(final_blank_line)
             .to receive(:sanitize)
             .with(file)
             .and_return(file)
         end
-        subject.execute
+        final_blank_line.execute
       end
 
-      it 'sets appropriate variables' do
-        expect(subject.output).to eq files
-        expect(subject.counter).to eq(files.count)
-      end
+      it { expect(final_blank_line.output).to eq files }
+      it { expect(final_blank_line.counter).to eq(files.count) }
     end
   end
 
   describe '#valid?' do
     before do
-      subject.instance_variable_set('@output', output)
+      final_blank_line.instance_variable_set('@output', output)
     end
 
     context 'when output is empty' do
       let(:output) { [] }
-      it { expect(subject.valid?).to eq true }
+      it { expect(final_blank_line.valid?).to eq true }
     end
 
     context 'when output have some files' do
       let(:output) { ['file_name'] }
-      it { expect(subject.valid?).to eq false }
+      it { expect(final_blank_line.valid?).to eq false }
     end
   end
 
@@ -71,10 +67,10 @@ RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
     let(:expected) { "Final blank line: #{counter} files checked" }
 
     before do
-      subject.instance_variable_set('@counter', counter)
+      final_blank_line.instance_variable_set('@counter', counter)
     end
 
-    it { expect(subject.label).to eq expected }
+    it { expect(final_blank_line.label).to eq expected }
   end
 
   describe '#error_message' do
@@ -82,28 +78,28 @@ RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
     let(:expected) { "Following files don't have final blank line: \n#{output.join("\n")}\n" }
 
     before do
-      subject.instance_variable_set('@output', output)
+      final_blank_line.instance_variable_set('@output', output)
     end
 
-    it { expect(subject.error_message).to eq expected }
+    it { expect(final_blank_line.error_message).to eq expected }
   end
 
   describe '#files_to_analyze' do
     let(:files) { [rand.to_s, rand.to_s] }
 
     before do
-      expect(subject)
+      expect(final_blank_line)
         .to receive(:files_from_path)
         .with('**/{*,.*}')
         .and_return(files)
 
-      expect(subject)
+      expect(final_blank_line)
         .to receive(:remove_excludes)
         .with(files)
         .and_return(files)
     end
 
-    it { expect(subject.send(:files_to_analyze)).to eq files }
+    it { expect(final_blank_line.send(:files_to_analyze)).to eq files }
   end
 
   describe '#remove_excludes' do
@@ -111,12 +107,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
     let(:excludes) { %w(lib exclude.txt) }
 
     before do
-      expect(subject)
+      expect(final_blank_line)
         .to receive(:excludes)
         .and_return(excludes)
     end
 
-    it { expect(subject.send(:remove_excludes, files)).to eq ['file.rb'] }
+    it { expect(final_blank_line.send(:remove_excludes, files)).to eq ['file.rb'] }
   end
 
   describe '#excludes' do
@@ -124,12 +120,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
     let(:expected) { configs + described_class::DEFAULT_PATHS_TO_EXCLUDE }
 
     before do
-      expect(subject)
+      expect(final_blank_line)
         .to receive(:config_excludes)
         .and_return(configs)
     end
 
-    it { expect(subject.send(:excludes)).to eq expected }
+    it { expect(final_blank_line.send(:excludes)).to eq expected }
   end
 
   describe '#config_excludes' do
@@ -146,7 +142,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
         expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
-      it { expect(subject.send(:config_excludes)).to eq paths }
+      it { expect(final_blank_line.send(:config_excludes)).to eq paths }
     end
 
     context 'final_blank_line_ignored is not set' do
@@ -161,7 +157,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
         expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
-      it { expect(subject.send(:config_excludes)).to eq [] }
+      it { expect(final_blank_line.send(:config_excludes)).to eq [] }
     end
   end
 
@@ -170,7 +166,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
     let(:app_root) { PolishGeeks::DevTools.app_root }
     let(:path) { "#{app_root}/#{file}" }
 
-    it { expect(subject.send(:sanitize, "#{app_root}/#{path}")).to eq file }
+    it { expect(final_blank_line.send(:sanitize, "#{app_root}/#{path}")).to eq file }
   end
 
   describe '#file_valid?' do
@@ -192,7 +188,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
             .and_return([rand.to_s + "\n"])
         end
 
-        it { expect(subject.send(:file_valid?, file)).to eq true }
+        it { expect(final_blank_line.send(:file_valid?, file)).to eq true }
       end
 
       context 'file does not have final blank line' do
@@ -203,7 +199,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
             .and_return([rand.to_s + 'end'])
         end
 
-        it { expect(subject.send(:file_valid?, file)).to eq false }
+        it { expect(final_blank_line.send(:file_valid?, file)).to eq false }
       end
     end
 
@@ -214,7 +210,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::FinalBlankLine do
           .with(file)
           .and_return(0)
 
-        it { expect(subject.send(:file_valid?, file)).to eq true }
+        it { expect(final_blank_line.send(:file_valid?, file)).to eq true }
       end
     end
   end

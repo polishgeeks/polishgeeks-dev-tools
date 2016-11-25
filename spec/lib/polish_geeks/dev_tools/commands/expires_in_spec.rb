@@ -1,18 +1,16 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::ExpiresIn do
-  subject { described_class.new }
+  subject(:expires_in) { described_class.new }
 
   let(:config) { double }
 
   describe '#execute' do
-    it 'executes the command' do
-      subject.execute
-    end
+    it { expires_in.execute }
   end
 
   describe '#label' do
-    it { expect(subject.label).to eq 'Expires in' }
+    it { expect(expires_in.label).to eq 'Expires in' }
   end
 
   describe '#error_message' do
@@ -21,18 +19,18 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExpiresIn do
       let(:output) { [file_name] }
       let(:expected) { "Following files use expire_in instead of expires_in:\n\n#{file_name}\n" }
 
-      before { subject.instance_variable_set('@output', output) }
+      before { expires_in.instance_variable_set('@output', output) }
 
-      it { expect(subject.error_message).to eq expected }
+      it { expect(expires_in.error_message).to eq expected }
     end
   end
 
   describe '#valid?' do
     context 'when output is empty' do
       before do
-        subject.instance_variable_set('@output', '')
+        expires_in.instance_variable_set('@output', '')
       end
-      it { expect(subject.valid?).to eq true }
+      it { expect(expires_in.valid?).to eq true }
     end
   end
 
@@ -49,7 +47,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExpiresIn do
         expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
-      it { expect(subject.send(:excludes)).to eq [] }
+      it { expect(expires_in.send(:excludes)).to eq [] }
     end
 
     context 'when expire_files_ignored is set' do
@@ -65,7 +63,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::ExpiresIn do
         expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
-      it { expect(subject.send(:excludes)).to eq expires_in_files_ignored }
+      it { expect(expires_in.send(:excludes)).to eq expires_in_files_ignored }
     end
   end
 end

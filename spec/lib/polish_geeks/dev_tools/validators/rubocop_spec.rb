@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Validators::Rubocop do
-  subject { described_class.new(double) }
+  subject(:rubocop) { described_class.new(double) }
 
   describe '#valid?' do
     context 'false' do
@@ -11,7 +11,7 @@ RSpec.describe PolishGeeks::DevTools::Validators::Rubocop do
             instance_double(PolishGeeks::DevTools::Config, rubocop: false)
           )
         end
-        it { expect(subject.valid?).to be false }
+        it { expect(rubocop.valid?).to be false }
       end
     end
 
@@ -22,7 +22,7 @@ RSpec.describe PolishGeeks::DevTools::Validators::Rubocop do
             instance_double(PolishGeeks::DevTools::Config, rubocop: true)
           )
         end
-        it { expect(subject.valid?).to be true }
+        it { expect(rubocop.valid?).to be true }
       end
     end
   end

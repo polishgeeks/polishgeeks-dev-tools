@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Commands::AllowedExtensions do
-  subject { described_class.new }
+  subject(:allowed_extensions) { described_class.new }
 
   describe '#execute' do
     let(:file_name) { 'file.rb' }
@@ -9,22 +9,22 @@ RSpec.describe PolishGeeks::DevTools::Commands::AllowedExtensions do
 
     before do
       expect(Dir).to receive(:[]) { files }
-      subject.execute
+      allowed_extensions.execute
     end
 
     context 'when we dont have invalid files' do
-      it { expect(subject.output).to eq [] }
+      it { expect(allowed_extensions.output).to eq [] }
     end
 
     context 'when we have invalid files' do
       let(:file_name) { 'file.py' }
-      it { expect(subject.output).to eq [file_name] }
+      it { expect(allowed_extensions.output).to eq [file_name] }
     end
   end
 
   describe '#label' do
     let(:expected) { 'Allowed Extensions' }
-    it { expect(subject.label).to eq expected }
+    it { expect(allowed_extensions.label).to eq expected }
   end
 
   describe '#error_message' do
@@ -34,21 +34,21 @@ RSpec.describe PolishGeeks::DevTools::Commands::AllowedExtensions do
       "\n\n#{output.join("\n")}\n"
     end
 
-    before { subject.instance_variable_set('@output', output) }
-    it { expect(subject.error_message).to eq expected }
+    before { allowed_extensions.instance_variable_set('@output', output) }
+    it { expect(allowed_extensions.error_message).to eq expected }
   end
 
   describe do
-    before { subject.instance_variable_set('@output', output) }
+    before { allowed_extensions.instance_variable_set('@output', output) }
 
     context 'when output is empty' do
       let(:output) { '' }
-      it { expect(subject.valid?).to eq true }
+      it { expect(allowed_extensions.valid?).to eq true }
     end
 
     context 'when output is empty' do
       let(:output) { rand.to_s }
-      it { expect(subject.valid?).to eq false }
+      it { expect(allowed_extensions.valid?).to eq false }
     end
   end
 end

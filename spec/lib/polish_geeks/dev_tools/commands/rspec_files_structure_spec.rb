@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'tempfile'
 
 RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
-  subject { described_class.new }
+  subject(:rspec_files_structure) { described_class.new }
 
   describe '#execute' do
     let(:analyzed_files_result) { double }
@@ -12,12 +12,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
     let(:expected) { Hash(app: substract_result, rspec: substract_rspec_result) }
 
     before do
-      expect(subject)
+      expect(rspec_files_structure)
         .to receive(:analyzed_files)
         .twice
         .and_return(analyzed_files_result)
 
-      expect(subject)
+      expect(rspec_files_structure)
         .to receive(:analyzed_rspec_files)
         .exactly(2).times
         .and_return(rspec_files_result)
@@ -29,12 +29,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
       expect(rspec_files_result)
         .to receive(:-)
         .and_return(substract_rspec_result)
+
+      rspec_files_structure.execute
     end
 
-    it 'is subtraction' do
-      subject.execute
-
-      expect(subject.instance_variable_get(:@output)).to eq expected
+    it do
+      expect(rspec_files_structure.instance_variable_get(:@output)).to eq expected
     end
   end
 
@@ -50,20 +50,21 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
       expect(PolishGeeks::DevTools::Config).to receive(:config).at_least(:once) { config }
     end
 
-    it { expect(subject.send(:analyzed_files)).not_to be_empty }
+    it { expect(rspec_files_structure.send(:analyzed_files)).not_to be_empty }
 
     context 'when we gather files for analyze' do
       let(:file) { Tempfile.new('tempfile') }
       let(:files_collection) { [file] }
 
-      before { expect(subject).to receive(:checked_files) { files_collection } }
-
-      it 'flatten,s uniq and sanitize' do
+      before do
+        expect(rspec_files_structure).to receive(:checked_files) { files_collection }
         expect(files_collection).to receive(:flatten!)
         expect(files_collection).to receive(:uniq!)
-        expect(subject).to receive(:sanitize).with(file)
+        expect(rspec_files_structure).to receive(:sanitize).with(file)
+      end
 
-        subject.send(:analyzed_files)
+      it 'flatten,s uniq and sanitize' do
+        rspec_files_structure.send(:analyzed_files)
       end
     end
   end
@@ -80,45 +81,40 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
       expect(PolishGeeks::DevTools::Config).to receive(:config).at_least(:once) { config }
     end
 
-    it { expect(subject.send(:analyzed_rspec_files)).not_to be_empty }
+    it { expect(rspec_files_structure.send(:analyzed_rspec_files)).not_to be_empty }
 
     context 'when we gather rspec files' do
       let(:file) { double }
       let(:files_collection) { [file] }
 
-      before { expect(subject).to receive(:rspec_files) { files_collection } }
+      before do
+        expect(rspec_files_structure).to receive(:rspec_files) { files_collection }
+        expect(files_collection).to receive(:flatten!)
+        expect(files_collection).to receive(:uniq!)
+        expect(rspec_files_structure).to receive(:sanitize).with(file)
+      end
 
       it 'flatten,s uniq and sanitize' do
-        expect(files_collection)
-          .to receive(:flatten!)
-
-        expect(files_collection)
-          .to receive(:uniq!)
-
-        expect(subject)
-          .to receive(:sanitize)
-          .with(file)
-
-        subject.send(:analyzed_rspec_files)
+        rspec_files_structure.send(:analyzed_rspec_files)
       end
     end
   end
 
   describe '#valid?' do
     before do
-      subject.instance_variable_set('@output', output)
+      rspec_files_structure.instance_variable_set('@output', output)
     end
 
     context 'when output is empty' do
       let(:output) { Hash(app: [], rspec: []) }
 
-      it { expect(subject.valid?).to eq true }
+      it { expect(rspec_files_structure.valid?).to eq true }
     end
 
     context 'when output is not empty' do
       let(:output) { Hash(app: [double], rspec: [double]) }
 
-      it { expect(subject.valid?).to eq false }
+      it { expect(rspec_files_structure.valid?).to eq false }
     end
   end
 
@@ -129,12 +125,12 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
       end
 
       before do
-        expect(subject).to receive(:analyzed_files) { analyzed_files_result }
+        expect(rspec_files_structure).to receive(:analyzed_files) { analyzed_files_result }
       end
 
       it 'returns the label' do
         expected = "Rspec files structure (#{analyzed_files_result.count} checked)"
-        expect(subject.label).to eq expected
+        expect(rspec_files_structure.label).to eq expected
       end
     end
   end
@@ -144,16 +140,16 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
       let(:message) { rand.to_s }
       let(:expected) { message + message }
       before do
-        expect(subject)
+        expect(rspec_files_structure)
           .to receive(:files_error_message)
           .and_return(message)
-        expect(subject)
+        expect(rspec_files_structure)
           .to receive(:rspec_error_message)
           .and_return(message)
       end
 
       it 'returns the error message' do
-        expect(subject.error_message).to eq expected
+        expect(rspec_files_structure.error_message).to eq expected
       end
     end
   end
@@ -171,7 +167,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
         expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
-      it { expect(subject.send(:excludes)).to eq [] }
+      it { expect(rspec_files_structure.send(:excludes)).to eq [] }
     end
 
     context 'when rspec_files_structure_ignored is set' do
@@ -187,7 +183,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
         expect(PolishGeeks::DevTools::Config).to receive(:config) { config }
       end
 
-      it { expect(subject.send(:excludes)).to eq rspec_files_structure_ignored }
+      it { expect(rspec_files_structure.send(:excludes)).to eq rspec_files_structure_ignored }
     end
   end
 
@@ -198,7 +194,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
       let(:string) { "#{PolishGeeks::DevTools.app_root}/#{base}" }
 
       it ' should be removed' do
-        expect(subject.send(:sanitize, string)).to eq base
+        expect(rspec_files_structure.send(:sanitize, string)).to eq base
       end
     end
 
@@ -206,7 +202,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
       let(:string) { "#{base}_spec.rb" }
 
       it ' should be removed' do
-        expect(subject.send(:sanitize, string)).to eq "#{base}.rb"
+        expect(rspec_files_structure.send(:sanitize, string)).to eq "#{base}.rb"
       end
     end
 
@@ -214,7 +210,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
       let(:string) { "spec/#{base}" }
 
       it ' should be removed' do
-        expect(subject.send(:sanitize, string)).to eq base
+        expect(rspec_files_structure.send(:sanitize, string)).to eq base
       end
     end
 
@@ -222,7 +218,7 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
       let(:string) { "app/#{base}" }
 
       it ' should be removed' do
-        expect(subject.send(:sanitize, string)).to eq base
+        expect(rspec_files_structure.send(:sanitize, string)).to eq base
       end
     end
   end
@@ -231,11 +227,11 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
     let(:output) { Hash(app: ['test.rb'], rspec: ['test_rspec.rb']) }
 
     before do
-      subject.instance_variable_set(:@output, output)
+      rspec_files_structure.instance_variable_set(:@output, output)
     end
 
     it 'returns the error message' do
-      expect(subject.send(:files_error_message))
+      expect(rspec_files_structure.send(:files_error_message))
         .to eq "Following files don't have corresponding Rspec files:\n\ntest.rb\n"
     end
   end
@@ -244,11 +240,11 @@ RSpec.describe PolishGeeks::DevTools::Commands::RspecFilesStructure do
     let(:output) { Hash(app: ['test.rb'], rspec: ['test_rspec.rb']) }
 
     before do
-      subject.instance_variable_set(:@output, output)
+      rspec_files_structure.instance_variable_set(:@output, output)
     end
 
     it 'returns the error message' do
-      expect(subject.send(:rspec_error_message))
+      expect(rspec_files_structure.send(:rspec_error_message))
         .to eq "\n\nFollowing Rspec don't have corresponding files:\n\ntest_rspec_spec.rb\n"
     end
   end

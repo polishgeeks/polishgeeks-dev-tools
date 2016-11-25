@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe PolishGeeks::DevTools::Logger do
-  subject { described_class.new }
+  subject(:logger) { described_class.new }
 
   let(:task) { PolishGeeks::DevTools::Commands::Rubocop.new }
   let(:tmp) { double }
@@ -15,13 +15,13 @@ RSpec.describe PolishGeeks::DevTools::Logger do
         expect(tmp)
           .to receive(:generator?)
           .and_return(true)
-        expect(subject)
+        expect(logger)
           .to receive(:info)
           .with(task)
       end
 
       it 'returns some information' do
-        subject.log(task)
+        logger.log(task)
       end
     end
 
@@ -36,13 +36,13 @@ RSpec.describe PolishGeeks::DevTools::Logger do
         expect(tmp)
           .to receive(:valid?)
           .and_return(false)
-        expect(subject)
+        expect(logger)
           .to receive(:fatal)
           .with(tmp)
       end
 
       it 'raises RequirementsError' do
-        expect { subject.log(tmp) }
+        expect { logger.log(tmp) }
           .to raise_error PolishGeeks::DevTools::Errors::RequirementsError
       end
     end
@@ -69,10 +69,10 @@ RSpec.describe PolishGeeks::DevTools::Logger do
       end
 
       it 'displays "OK" text' do
-        expect(subject)
+        expect(logger)
           .to receive(:printf)
           .with('%-50s %2s', 'Rubocop ', "\e[32mOK\e[0m\n")
-        subject.send(:info, task)
+        logger.send(:info, task)
       end
     end
 
@@ -96,10 +96,10 @@ RSpec.describe PolishGeeks::DevTools::Logger do
       end
 
       it 'displays "OK" text' do
-        expect(subject)
+        expect(logger)
           .to receive(:printf)
           .with('%-50s %2s', 'Rubocop ', "\e[32mGENERATED\e[0m\n")
-        subject.send(:info, task)
+        logger.send(:info, task)
       end
     end
 
@@ -120,7 +120,7 @@ RSpec.describe PolishGeeks::DevTools::Logger do
       end
 
       it 'raises UnknownTaskType' do
-        expect { subject.send(:info, tmp) }
+        expect { logger.send(:info, tmp) }
           .to raise_error PolishGeeks::DevTools::Errors::UnknownTaskType
       end
     end
@@ -138,10 +138,10 @@ RSpec.describe PolishGeeks::DevTools::Logger do
       end
 
       it 'returns a message' do
-        expect(subject)
+        expect(logger)
           .to receive(:printf)
           .with('%-30s %20s', 'Rubocop ', "\e[31mFAILURE\e[0m\n\n")
-        subject.send(:fatal, task)
+        logger.send(:fatal, task)
       end
     end
   end
@@ -155,7 +155,7 @@ RSpec.describe PolishGeeks::DevTools::Logger do
       end
 
       it 'returns the label' do
-        expect(subject.send(:label, task)).to eq 'Rubocop'
+        expect(logger.send(:label, task)).to eq 'Rubocop'
       end
     end
   end
