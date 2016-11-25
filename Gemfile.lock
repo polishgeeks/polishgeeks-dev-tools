@@ -58,7 +58,7 @@ GEM
       sexp_processor (~> 4.4)
     haml (4.0.7)
       tilt
-    haml_lint (0.17.1)
+    haml_lint (0.18.4)
       haml (~> 4.0)
       rake (>= 10, < 12)
       rubocop (>= 0.36.0)

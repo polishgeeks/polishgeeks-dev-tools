@@ -3,6 +3,7 @@
 ## master (unreleased)
 - bump to ruby 2.3.3
 - drop support for ruby 2.1.x
+- haml_lint 0.18.4
 
 ## 1.3.2 (27/06/2016)
 
