@@ -55,7 +55,7 @@ module PolishGeeks
           # @param [Array<String>] method_body
           # @return [Boolean] whether method is empty or not
           def method_is_empty?(method_body)
-            !method_body.inject(false) { |a, e| a || e.not_commented_or_empty? }
+            !method_body.inject(false) { |acc, elem| acc || elem.not_commented_or_empty? }
           end
 
           # Adds line number of empty method to empty_methods.
