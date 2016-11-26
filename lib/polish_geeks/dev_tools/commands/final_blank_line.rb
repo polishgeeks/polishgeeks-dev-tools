@@ -19,6 +19,8 @@ module PolishGeeks
           app/assets/fonts
           .DS_Store
           .gem
+          .swp
+          .swo
         ).freeze
 
         # Executes this command and set output and counter variables
