@@ -1,6 +1,9 @@
 # PolishGeeks Dev Tools Changelog
 
 ## master (unreleased)
+
+## 1.4.0 (26/11/2016)
+
 - bump to ruby 2.3.3
 - drop support for ruby 2.1.x
 - haml_lint 0.18.4
