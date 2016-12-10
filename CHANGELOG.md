@@ -1,6 +1,7 @@
 # PolishGeeks Dev Tools Changelog
 
 ## master (unreleased)
+- rubocop 0.46.0
 
 ## 1.4.0 (26/11/2016)
 
