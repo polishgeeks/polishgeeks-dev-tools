@@ -3,6 +3,7 @@
 ## master (unreleased)
 - rubocop 0.46.0
 - rubycritic 3.1.1
+- haml_lint 0.19.0
 
 ## 1.4.0 (26/11/2016)
 
