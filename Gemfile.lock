@@ -18,7 +18,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (5.0.0.1)
+    activesupport (5.0.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
       minitest (~> 5.1)
@@ -39,7 +39,7 @@ GEM
       virtus (~> 1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    concurrent-ruby (1.0.2)
+    concurrent-ruby (1.0.3)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
@@ -105,12 +105,12 @@ GEM
     ruby-progressbar (1.8.1)
     ruby_parser (3.8.3)
       sexp_processor (~> 4.1)
-    rubycritic (3.1.1)
+    rubycritic (3.1.3)
       flay (~> 2.8)
       flog (~> 4.4)
       launchy (= 2.4.3)
       parser (= 2.3.3.1)
-      rainbow
+      rainbow (~> 2.1)
       reek (~> 4.4)
       ruby_parser (~> 3.8)
       virtus (~> 1.0)
