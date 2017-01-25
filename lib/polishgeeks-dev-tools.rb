@@ -3,7 +3,6 @@
   yard
   fileutils
   timecop
-  faker
   ostruct
 ).each { |lib| require lib }
 
