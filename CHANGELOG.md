@@ -4,6 +4,7 @@
 - rubocop 0.46.0
 - rubycritic 3.1.3
 - haml_lint 0.19.0
+- #75: drop shoulda as we don't use it
 
 ## 1.4.0 (26/11/2016)
 

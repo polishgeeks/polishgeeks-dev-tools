@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'rubycritic'
   s.add_dependency 'yard'
   s.add_dependency 'faker'
-  s.add_dependency 'shoulda'
   s.add_dependency 'rspec'
   s.add_dependency 'rubocop'
   s.add_dependency 'rubocop-rspec'
