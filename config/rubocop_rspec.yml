@@ -3,6 +3,13 @@ RSpec/ExampleLength:
 RSpec/SubjectStub:
   Enabled: false
 RSpec/NestedGroups:
-  MaxNesting: 4
+  Max: 4
 RSpec/MessageChain:
   Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/MessageSpies:
+  Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
